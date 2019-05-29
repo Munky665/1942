@@ -1,7 +1,5 @@
 #pragma once
-#include "Player.h"
-#include <time.h>
-#include <random>
+#include "Enemy.h"
 
 class Background
 {
@@ -9,14 +7,16 @@ class Background
 		float x, y;
 	};
 
-	float speed = 500;
-	float topSpawn = 740;
-
-public:
-	aie::Texture* texture;
-	BackgroundPos pos{ 0, topSpawn };
 	
-	void Move(float deltaTime);
+	float topSpawn = rand() % 900 + 780;
+	float firstSpawn = rand() % 1280 + 1;
+public:
+	float landSpeed = 150;
+	float cloudSpeed = 300;
+	aie::Texture* texture;
+	BackgroundPos pos{ firstSpawn, topSpawn };
+	
+	void Move(float deltaTime, float speed);
 	
 	
 	Background();

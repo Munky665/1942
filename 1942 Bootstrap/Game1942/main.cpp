@@ -1,7 +1,7 @@
 #include "Game1942App.h"
 
 int main() {
-	srand(time(NULL));
+	srand(time(nullptr));
 	// allocation
 	auto app = new Game1942App();
 

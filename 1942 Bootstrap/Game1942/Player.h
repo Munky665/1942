@@ -6,6 +6,8 @@ class Player
 {
 	struct PlayerPos {
 		float x, y;
+		float height = 80;
+		float width = 90;
 	};
 
 	float speed = 500;
@@ -18,7 +20,7 @@ public:
 	Player();
 	aie::Texture* playerTexture;
 	void Move(aie::Input* input, float deltaTime);
-	void Stop();
+	void Contain();
 	~Player();
 };
 

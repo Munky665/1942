@@ -1,4 +1,5 @@
 #pragma once
+#include "SmallShip.h"
 #include "Application.h"
 #include "Background.h"
 #include "Renderer2D.h"
@@ -15,10 +16,17 @@ public:
 	void Create(Background* Item[], int numOfBg);
 	virtual void update(float deltaTime);
 	virtual void draw();
-	Background* backgroundItems[numOfBg];
+	
 protected:
-	
-	
+	Background* backgroundItems[numOfBg];
+	Background* land;
+	std::vector<Enemy*> smallShip{
+		new SmallShip,
+		new SmallShip,
+		new SmallShip,
+		new SmallShip,
+		new SmallShip,};
+
 	Player*	player;
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;

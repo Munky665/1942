@@ -61,7 +61,7 @@ void Player::Move(aie::Input* input, float deltaTime) {
 	
 }
 
-void Player::Stop() {
+void Player::Contain() {
 	if (pos.x > sWidth - sBuffer) {
 		pos.x = sWidth - sBuffer;
 	}
