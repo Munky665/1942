@@ -79,7 +79,12 @@ void Game1942App::update(float deltaTime) {
 				smallShip[i]->collided = false;
 			}
 	}
+	//
+	player->immune = false;
 	// exit the application
+	if (player->lives == 0) {
+		quit();
+	}
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
 }
@@ -93,7 +98,9 @@ void Game1942App::draw() {
 	m_2dRenderer->begin();
 
 	// draw your stuff here!
-	
+	//draw lives
+	player->RenderLives(m_2dRenderer, m_font);
+	player->RenderScore(m_2dRenderer, m_font, screenWidth, screenHeight);
 	//Draw Enemy
 	for (int i = 0; i < smallShip.size(); ++i) {
 		m_2dRenderer->drawSprite(smallShip[i]->texture, smallShip[i]->pos.x, smallShip[i]->pos.y, smallShip[i]->pos.w, smallShip[i]->pos.h, 0, 0);

@@ -51,7 +51,10 @@ bool Collider::Collision(Player* player, std::vector<Enemy*> enemy) {
 				((player->pos.y + player->pos.h) >= enemy[i]->pos.y && (player->pos.y + player->pos.h) <= (enemy[i]->pos.y + enemy[i]->pos.h))) {
 				//The sprites appear to overlap.
 				enemy[i]->collided = true;
-				//player.lives -= 1;
+				if (player->immune == false) {
+					player->lives -= 1;
+					player->immune = true;
+				}
 				return true;
 			}
 		}

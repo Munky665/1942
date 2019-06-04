@@ -75,3 +75,28 @@ void Player::Contain() {
 		pos.y = sBuffer;
 	}
 }
+//render lives in the top right of the screen
+void Player::RenderLives(aie::Renderer2D* m_2dRenderer, aie::Font* m_font) {
+	//for each life render a small ship in top right
+	for (int i = 0; i < lives; ++i) {
+		switch (i) {
+		case 0:
+			m_2dRenderer->drawSprite(playerTexture, livesPosX, livesPosY, livesWidthX, livesWidthY);
+			break;
+		case 1:
+			m_2dRenderer->drawSprite(playerTexture, livesPosX + 50, livesPosY, livesWidthX, livesWidthY);
+			break;
+		case 2:
+			m_2dRenderer->drawSprite(playerTexture, livesPosX + 100, livesPosY, livesWidthX, livesWidthY);
+			break;
+		}
+
+	}
+	m_2dRenderer->drawText(m_font, "Lives: ", livesPosX - 20, livesPosY + 20);
+}
+//render score in top left of game window
+void Player::RenderScore(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y) {
+	char result[64];
+	snprintf(result, 64, "Score: %f", score);
+	m_2dRenderer->drawText(m_font, result, (x - scorePosX), (y - scorePosY), 0);
+}
