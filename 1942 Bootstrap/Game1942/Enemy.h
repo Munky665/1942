@@ -9,8 +9,8 @@ public:
 	
 	virtual struct Position {
 		float x, y;
-		float height;
-		float width;
+		float h;
+		float w;
 		
 	}; 
 	
@@ -21,7 +21,7 @@ public:
 	float speed = 300;
 	float topSpawn = rand() % 740 + 720;
 	float firstSpawn = rand() % 1280 + 1;
-	
+	bool collided = false;
 	Position pos { firstSpawn, topSpawn};
 	
 	aie::Texture* texture;

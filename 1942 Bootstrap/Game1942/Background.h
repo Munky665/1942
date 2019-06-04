@@ -5,6 +5,7 @@ class Background
 {
 	struct BackgroundPos {
 		float x, y;
+		float w = 300, h = 300;
 	};
 
 	
@@ -15,7 +16,7 @@ public:
 	float cloudSpeed = 300;
 	aie::Texture* texture;
 	BackgroundPos pos{ firstSpawn, topSpawn };
-	
+
 	void Move(float deltaTime, float speed);
 	
 	

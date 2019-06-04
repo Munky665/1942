@@ -20,3 +20,5 @@ void Background::Move(float deltaTime , float speed) {
 	}
 }
 
+
+

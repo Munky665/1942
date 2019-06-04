@@ -8,25 +8,27 @@ Game1942App::~Game1942App() {
 
 }
 
-void Game1942App::Create(Background* Item[], int numOfBg) {
-	for (int i = 0; i < numOfBg; ++i) {
-		Item[i]->texture = new aie::Texture("./textures/Cloud.png");
+
+
+void Game1942App::Create(Background Item[], int num) {
+	for (int i = 0; i < num; ++i) {
+		if(num == numOfBg)
+		Item[i].texture = new aie::Texture("./textures/Cloud.png");
 	}
 }
+
 
 bool Game1942App::startup() {
 	setBackgroundColour(0, 0.51, 2.55, 0.9);
 	m_2dRenderer = new aie::Renderer2D();
 	player = new Player();
-	land = new Background();
-	for (int i = 0; i < numOfBg; ++i) {
-		backgroundItems[i] = new Background();
-	}
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	player->playerTexture = new aie::Texture("./textures/player.png");
-	land->texture = new aie::Texture("./textures/land.png");
+	for (int i = 0; i < numOfBg; ++i) {
+		land[i].texture = new aie::Texture("./textures/land.png");
+	}
 	Create(backgroundItems, numOfBg);
 	for (int i = 0; i < smallShip.size(); ++i) {
 		smallShip[i]->textureEnemy();
@@ -47,16 +49,35 @@ void Game1942App::update(float deltaTime) {
 	
 	//move background items
 	for (int i = 0; i < numOfBg; ++i) {
-		backgroundItems[i]->Move(deltaTime, backgroundItems[i]->cloudSpeed);
+		backgroundItems[i].Move(deltaTime, backgroundItems[i].cloudSpeed);
+		land[i].Move(deltaTime, land[i].landSpeed);
+		for (int j = i + 1; j < numOfBg; ++j) {
+			if (col->Collision(land[i], land[j]) == true) {
+				land[j].pos.x = rand() % screenWidth + 1;
+				land[j].pos.y += displacment;
+			}
+			if (col->Collision(backgroundItems[i], backgroundItems[j]) == true) {
+				backgroundItems[j].pos.x = rand() % screenWidth + 1;
+				backgroundItems[j].pos.y += displacment;
+			}
+		}
 	}
-	//move land
-	land->Move(deltaTime, land->landSpeed);
 	//move the player
 	player->Move(input, deltaTime);
 	player->Contain();
 	//move Enemy
 	for (int i = 0; i < smallShip.size(); ++i) {
 		smallShip[i]->Move(deltaTime);
+	}
+
+	//check for collisions between player and 
+	for (int i = 0; i < smallShip.size(); ++i) {
+		col->Collision(player, smallShip);
+			if (smallShip[i]->collided == true) {
+				smallShip[i]->pos.x = rand() % screenWidth + 1;
+				smallShip[i]->pos.y = screenHeight + displacment;
+				smallShip[i]->collided = false;
+			}
 	}
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -72,21 +93,23 @@ void Game1942App::draw() {
 	m_2dRenderer->begin();
 
 	// draw your stuff here!
+	
 	//Draw Enemy
 	for (int i = 0; i < smallShip.size(); ++i) {
-		m_2dRenderer->drawSprite(smallShip[i]->texture, smallShip[i]->pos.x, smallShip[i]->pos.y, smallShip[i]->pos.width, smallShip[i]->pos.height, 0, 0);
+		m_2dRenderer->drawSprite(smallShip[i]->texture, smallShip[i]->pos.x, smallShip[i]->pos.y, smallShip[i]->pos.w, smallShip[i]->pos.h, 0, 0);
 	}
-	//draw land
-	m_2dRenderer->drawSprite(land->texture, land->pos.x, land->pos.y, 300, 300, 0, 100);
-	//draw clouds
+
 	for (int i = 0; i < numOfBg; ++i) {
-			m_2dRenderer->drawSprite(backgroundItems[i]->texture,
-				backgroundItems[i]->pos.x,
-				backgroundItems[i]->pos.y,300,300,0,100);
-		
+		//draw clouds	
+		m_2dRenderer->drawSprite(backgroundItems[i].texture,
+				backgroundItems[i].pos.x,
+				backgroundItems[i].pos.y,300,300,0,99);
+			//draw land
+		m_2dRenderer->drawSprite(land[i].texture, land[i].pos.x, 
+								 land[i].pos.y, 300, 300, 0, 100);
 	}
 	//draw player
-	m_2dRenderer->drawSprite(player->playerTexture, player->pos.x, player->pos.y, player->pos.width, player->pos.width, 0 , 1);
+	m_2dRenderer->drawSprite(player->playerTexture, player->pos.x, player->pos.y, player->pos.w + 30, player->pos.h + 30, 0 , 1);
 	// output some text, uses the last used colour
 	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
 

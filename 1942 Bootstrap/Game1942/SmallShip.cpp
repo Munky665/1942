@@ -4,6 +4,7 @@
 
 SmallShip::SmallShip()
 {
+	Size();
 }
 
 
@@ -42,6 +43,6 @@ void SmallShip::textureEnemy() {
 }
 
 void SmallShip::Size() {
-	pos.height = 64;
-	pos.width = 64;
+	pos.h = 64;
+	pos.w = 64;
 }
