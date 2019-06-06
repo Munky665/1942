@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+#include "BigShip.h"
 #include "SmallShip.h"
 #include "Application.h"
 #include "Background.h"
@@ -24,7 +25,7 @@ public:
 	void CheckCollision(Player* p, std::vector<Enemy*> e, int s);
 	void CheckCollision(std::vector<Bullet*> b, std::vector<Enemy*> e, int bs, int es);
 	void CheckCollision(std::vector<Bullet*> b, Player* p);
-
+	int temp = 0;
 	
 
 protected:
@@ -36,6 +37,7 @@ protected:
 	Background* land = new Background[numOfBg];
 	std::vector<Enemy*> smallShip;
 	std::vector<Bullet*> bullet;
+	std::vector<Bullet*> eBullet;
 
 	Collider* col;
 	Player*	player;

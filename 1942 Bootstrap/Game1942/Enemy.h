@@ -22,6 +22,7 @@ public:
 	float topSpawn = rand() % 740 + 720;
 	float firstSpawn = rand() % 1280 + 1;
 	bool collided = false;
+	bool hasFired = false;
 	Position pos { firstSpawn, topSpawn};
 	
 	aie::Texture* texture;

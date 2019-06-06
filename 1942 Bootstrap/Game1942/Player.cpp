@@ -4,6 +4,7 @@
 
 Player::Player()
 {
+	playerTexture = new aie::Texture("./textures/player.png");
 }
 
 

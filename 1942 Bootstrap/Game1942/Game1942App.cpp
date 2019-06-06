@@ -53,13 +53,20 @@ bool Game1942App::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("./font/consolas.ttf", 32);
-	player->playerTexture = new aie::Texture("./textures/player.png");
 	for (int i = 0; i < numOfBg; ++i) {
 		land[i].texture = new aie::Texture("./textures/land.png");
 	}
 	Create(backgroundItems, numOfBg);
 	for (int i = 0; i < numOfSShips; ++i) {
-		smallShip.push_back(new SmallShip());
+		temp = rand() % 2 + 1;
+		switch (temp) {
+		case 1:
+			smallShip.push_back(new SmallShip());
+			break;
+		case 2:
+			smallShip.push_back(new BigShip());
+			break;
+		}
 	}
 	return true;
 }
@@ -117,6 +124,23 @@ void Game1942App::update(float deltaTime) {
 	//move Enemy
 	for (int i = 0; i < smallShip.size(); ++i) {
 		smallShip[i]->Move(deltaTime);
+
+		eBullet.push_back(new Bullet(smallShip[i]));
+		smallShip[i]->hasFired = true;
+	}
+	for (int i = 0; i < smallShip.size(); ++i) {		
+		//move each bullet that has been fired
+		if (smallShip[i]->hasFired != false) {
+			for (int i = 0; i < eBullet.size(); ++i) {
+				eBullet[i]->Move(deltaTime);
+				if (eBullet[i]->pos.y > screenHeight) {
+					eBullet.erase(eBullet.begin() + i);
+				}
+				else if (eBullet[i]->collided == true) {
+					eBullet.erase(eBullet.begin() + i);
+				}
+			}
+		}
 	}
 
 	//check for collisions
@@ -147,6 +171,13 @@ void Game1942App::draw() {
 	if (player->playerFired != false) {
 		for (int i = 0; i < bullet.size(); ++i) {
 			m_2dRenderer->drawSprite(bullet[i]->texture, bullet[i]->pos.x, bullet[i]->pos.y, bullet[i]->pos.w, bullet[i]->pos.h);
+		}
+	}
+	for (int i = 0; i < smallShip.size(); ++i) {
+		if (smallShip[i]->hasFired != false) {
+			for (int j = 0; j < eBullet.size(); ++j) {
+				m_2dRenderer->drawSprite(eBullet[j]->texture, eBullet[j]->pos.x, eBullet[j]->pos.y, eBullet[j]->pos.w, eBullet[j]->pos.h);
+			}
 		}
 	}
 	//draw lives
