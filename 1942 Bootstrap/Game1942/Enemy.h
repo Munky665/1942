@@ -15,7 +15,7 @@ public:
 	}; 
 	
 
-	
+	float scoreValue = 0;
 	float sWidth = 1280;
 	float sHeight = 720;
 	float speed = 300;

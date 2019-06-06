@@ -5,6 +5,8 @@
 SmallShip::SmallShip()
 {
 	Size();
+	textureEnemy();
+	scoreValue = 20;
 }
 
 

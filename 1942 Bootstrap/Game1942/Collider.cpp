@@ -62,3 +62,20 @@ bool Collider::Collision(Player* player, std::vector<Enemy*> enemy) {
 	//The sprites do not overlap:
 	return false;
 }
+bool Collider::Collision(Bullet* b, std::vector<Enemy*> enemy) {
+	for (int i = 0; i < enemy.size(); ++i) {
+		//If the leftmost or rightmost point of the first sprite lies somewhere inside the second, continue.
+		if ((b->pos.x >= enemy[i]->pos.x && b->pos.x <= (enemy[i]->pos.x + enemy[i]->pos.w)) ||
+			((b->pos.x + b->pos.w) >= enemy[i]->pos.x && (b->pos.x + b->pos.w) <= (enemy[i]->pos.x + enemy[i]->pos.w))) {
+			//Now we look at the y axis:
+			if ((b->pos.y >= enemy[i]->pos.y && b->pos.y <= (enemy[i]->pos.y + enemy[i]->pos.h)) ||
+				((b->pos.y + b->pos.h) >= enemy[i]->pos.y && (b->pos.y + b->pos.h) <= (enemy[i]->pos.y + enemy[i]->pos.h))) {
+				//The sprites appear to overlap.
+				enemy[i]->collided = true;
+				return true;
+			}
+		}
+	}
+	//The sprites do not overlap:
+	return false;
+}

@@ -23,7 +23,6 @@ public:
 	virtual void shutdown() = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void draw() = 0;
-
 	// wipes the screen clear to begin a frame of drawing
 	void clearScreen();
 

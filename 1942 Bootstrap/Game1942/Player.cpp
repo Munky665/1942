@@ -97,6 +97,18 @@ void Player::RenderLives(aie::Renderer2D* m_2dRenderer, aie::Font* m_font) {
 //render score in top left of game window
 void Player::RenderScore(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y) {
 	char result[64];
-	snprintf(result, 64, "Score: %f", score);
+	snprintf(result, 64, "Score:%i", score);
+	if (score >= 10 && scorePosX == originalScorePosX) {
+		scorePosX += fontSize;
+	}
+	else if (score >= 100 && scorePosX == originalScorePosX + fontSize) {
+		scorePosX += fontSize;
+	}
+	else if (score >= 1000 && scorePosX == originalScorePosX + (fontSize * 2)) {
+		scorePosX += fontSize;
+	}
+	else if (score >= 10000 && scorePosX == originalScorePosX + (fontSize * 3)) {
+		scorePosX += fontSize;
+	}
 	m_2dRenderer->drawText(m_font, result, (x - scorePosX), (y - scorePosY), 0);
 }

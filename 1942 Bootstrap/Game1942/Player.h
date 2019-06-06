@@ -15,7 +15,7 @@ class Player
 	int sWidth = 1280;
 	int sHeight = 720;
 	int sBuffer = 45;
-	float score = 00000000000;
+
 	float rightOfWindow = 1250;
 	float leftOfWindow = 30;
 	float livesPosX = 40;
@@ -23,11 +23,15 @@ class Player
 	float livesWidthX = 40;
 	float livesWidthY = 40;
 	float scorePosX = 150;
+	float originalScorePosX = 150;
 	float scorePosY = 20;
+	int fontSize = 10;
 public:
+	int score = 0;
 	PlayerPos pos{ 600, 100 };
 	int lives = 3;
 	bool immune = false;
+	bool playerFired = false;
 	Player();
 	aie::Texture* playerTexture;
 	void Move(aie::Input* input, float deltaTime);
