@@ -16,10 +16,10 @@ Bullet::Bullet(Player* p)
 	pfire = true;
 }
 //constructor for Enemy Bullets
-Bullet::Bullet(Enemy* e)
+Bullet::Bullet(Enemy e)
 {
-	pos.x = e->pos.x;
-	pos.y = e->pos.y + displacement;
+	pos.x = e.pos.x;
+	pos.y = e.pos.y + displacement;
 	texture = new aie::Texture("./textures/bullet.png");
 	exists = true;
 	efire = true;

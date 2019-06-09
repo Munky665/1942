@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "Bullet.h"
 #include "BigShip.h"
 #include "SmallShip.h"
@@ -22,12 +23,12 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 	virtual void Pause(aie::Input* input);
-	void CheckCollision(Player* p, std::vector<Enemy*> e, int s);
-	void CheckCollision(std::vector<Bullet*> b, std::vector<Enemy*> e, int bs, int es);
-	void CheckCollision(std::vector<Bullet*> b, Player* p);
+	void CheckCollision(Player* p, Enemy e[], int s);
+	void CheckCollision(std::vector<Bullet*> b, Enemy e[], int bs, int es);
+	void CheckCollision(std::vector<Bullet*> b, Player* p, int size);
 	int temp = 0;
 	
-
+	Enemy* smallShip;
 protected:
 	bool paused = false;
 	int screenWidth = 1280;
@@ -35,7 +36,7 @@ protected:
 	int displacment = 100;
 	Background* backgroundItems = new Background[numOfBg];
 	Background* land = new Background[numOfBg];
-	std::vector<Enemy*> smallShip;
+	
 	std::vector<Bullet*> bullet;
 	std::vector<Bullet*> eBullet;
 

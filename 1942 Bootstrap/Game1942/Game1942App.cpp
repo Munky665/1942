@@ -17,57 +17,57 @@ void Game1942App::Create(Background Item[], int num) {
 	}
 }
 
-void Game1942App::CheckCollision(Player* p, std::vector<Enemy*> e, int s) {
+void Game1942App::CheckCollision(Player* p, Enemy e[], int s) {
+	int temp = 0;
 	for (int i = 0; i < s; ++i) {
-		col->Collision(p, e);
-		if (e[i]->collided == true) {
-			e[i]->pos.x = rand() % screenWidth + 1;
-			e[i]->pos.y = screenHeight + displacment;
-			e[i]->collided = false;
+		col->Collision(p, e, s);
+		if (e[i].collided == true) {
 		}
 	}
 }
-void Game1942App::CheckCollision(std::vector<Bullet*> b, std::vector<Enemy*> e, int bs, int es) {
+void Game1942App::CheckCollision(std::vector<Bullet*> b, Enemy e[], int bs, int es) {
 	for (int j = 0; j < bs; j++){
 		for (int i = 0; i < es; ++i) {
-			if(col->Collision(b[j], e) == true){
-				if (e[i]->collided == true) {
-					e[i]->pos.x = rand() % screenWidth + 1;
-					e[i]->pos.y = screenHeight + displacment;
-					e[i]->collided = false;
-					player->score += e[i]->scoreValue;
+			if(col->Collision(b[j], e, bs) == true){
+				if (e[i].collided == true) {
+					e[i].pos.x = rand() % screenWidth + 1;
+					e[i].pos.y = screenHeight + displacment;
+					e[i].collided = false;
+					player->score += e[i].scoreValue;
 					b[j]->collided = true;
 				}
 			}
 		}
 	}
 }
-void Game1942App::CheckCollision(std::vector<Bullet*> b, Player* p) {
-
+void Game1942App::CheckCollision(std::vector<Bullet*> b, Player* p, int size) {
+	for (int i = 0; i < size; ++i) {
+		col->Collision(b[i], p);
+		if (b[i]->collided == true && p->immune == false) {
+			p->lives -= 1;
+			p->immune = true;
+		}
+	}
 }
 
+
 bool Game1942App::startup() {
+	smallShip = new SmallShip[numOfSShips];
 	setBackgroundColour(0, 0.51, 2.55, 0.9);
 	m_2dRenderer = new aie::Renderer2D();
 	player = new Player();
+	std::cout << "loaded Player" << std::endl;
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	for (int i = 0; i < numOfBg; ++i) {
 		land[i].texture = new aie::Texture("./textures/land.png");
+		std::cout << "Loaded land" << i << std::endl;
 	}
 	Create(backgroundItems, numOfBg);
-	for (int i = 0; i < numOfSShips; ++i) {
-		temp = rand() % 2 + 1;
-		switch (temp) {
-		case 1:
-			smallShip.push_back(new SmallShip());
-			break;
-		case 2:
-			smallShip.push_back(new BigShip());
-			break;
-		}
-	}
+	std::cout << "Loaded Clouds" << std::endl;
+	smallShip->Allocate(smallShip, numOfSShips);
+	std::cout << "Loaded small Ships" << std::endl;
 	return true;
 }
 
@@ -122,36 +122,45 @@ void Game1942App::update(float deltaTime) {
 	player->Move(input, deltaTime);
 	player->Contain();
 	//move Enemy
-	for (int i = 0; i < smallShip.size(); ++i) {
-		smallShip[i]->Move(deltaTime);
-
-		eBullet.push_back(new Bullet(smallShip[i]));
-		smallShip[i]->hasFired = true;
+	for (int i = 0; i < numOfSShips; ++i) {
+		smallShip[i].Move(deltaTime);
+		if (eBullet.size() < maxBullets && smallShip[i].hasFired == false) {
+			eBullet.push_back(new Bullet(smallShip[i]));
+			smallShip[i].hasFired = true;
+		}
 	}
-	for (int i = 0; i < smallShip.size(); ++i) {		
+	for (int i = 0; i < numOfSShips; ++i) {		
 		//move each bullet that has been fired
-		if (smallShip[i]->hasFired != false) {
+		if (smallShip[i].hasFired != false) {
 			for (int i = 0; i < eBullet.size(); ++i) {
 				eBullet[i]->Move(deltaTime);
-				if (eBullet[i]->pos.y > screenHeight) {
+
+				if (eBullet[i]->pos.y < 0) {
 					eBullet.erase(eBullet.begin() + i);
+					smallShip[i].hasFired = false;
 				}
 				else if (eBullet[i]->collided == true) {
 					eBullet.erase(eBullet.begin() + i);
+					smallShip[i].hasFired = false;
 				}
 			}
 		}
 	}
 
-	//check for collisions
-	CheckCollision(player, smallShip, smallShip.size());
+	//check for player bullet collisions
+	CheckCollision(player, smallShip, numOfSShips);
 	if (player->playerFired == true) {
-		CheckCollision(bullet, smallShip, bullet.size(), smallShip.size());
+		CheckCollision(bullet, smallShip, bullet.size(), numOfSShips);
+	}
+	//check for enemy bullet collisions
+	for (int i = 0; i < numOfSShips; ++i) {
+		CheckCollision(eBullet, player, eBullet.size());
 	}
 	//cese imunity after collision check
 	player->immune = false;
+
 	// exit the application
-	if (player->lives == 0) {
+	if (player->lives <= 0) {
 		quit();
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -173,8 +182,8 @@ void Game1942App::draw() {
 			m_2dRenderer->drawSprite(bullet[i]->texture, bullet[i]->pos.x, bullet[i]->pos.y, bullet[i]->pos.w, bullet[i]->pos.h);
 		}
 	}
-	for (int i = 0; i < smallShip.size(); ++i) {
-		if (smallShip[i]->hasFired != false) {
+	for (int i = 0; i < numOfSShips; ++i) {
+		if (smallShip[i].hasFired != false) {
 			for (int j = 0; j < eBullet.size(); ++j) {
 				m_2dRenderer->drawSprite(eBullet[j]->texture, eBullet[j]->pos.x, eBullet[j]->pos.y, eBullet[j]->pos.w, eBullet[j]->pos.h);
 			}
@@ -184,8 +193,8 @@ void Game1942App::draw() {
 	player->RenderLives(m_2dRenderer, m_font);
 	player->RenderScore(m_2dRenderer, m_font, screenWidth, screenHeight);
 	//Draw Enemy
-	for (int i = 0; i < smallShip.size(); ++i) {
-		m_2dRenderer->drawSprite(smallShip[i]->texture, smallShip[i]->pos.x, smallShip[i]->pos.y, smallShip[i]->pos.w, smallShip[i]->pos.h, 0, 0);
+	for (int i = 0; i < numOfSShips; ++i) {
+		m_2dRenderer->drawSprite(smallShip[i].texture, smallShip[i].pos.x, smallShip[i].pos.y, smallShip[i].pos.w, smallShip[i].pos.h, 0, 0);
 	}
 
 	for (int i = 0; i < numOfBg; ++i) {

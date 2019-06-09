@@ -19,7 +19,7 @@ public:
 	Position pos;
 	Bullet();
 	Bullet(Player* p);
-	Bullet(Enemy* e);
+	Bullet(Enemy e);
 	void Move(float deltaTime);
 	bool collided = false;
 	~Bullet();
