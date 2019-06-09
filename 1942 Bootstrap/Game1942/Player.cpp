@@ -5,6 +5,8 @@
 Player::Player()
 {
 	playerTexture = new aie::Texture("./textures/player.png");
+	healthBar = new aie::Texture("./textures/Health.png");
+	health = maxHealth;
 }
 
 
@@ -61,8 +63,8 @@ void Player::Move(aie::Input* input, float deltaTime) {
 	
 	
 }
-
-void Player::Contain() {
+//makes sure player stays within confines of window
+void Player::Contain(int sWidth, int sHeight) {
 	if (pos.x > sWidth - sBuffer) {
 		pos.x = sWidth - sBuffer;
 	}
@@ -72,28 +74,28 @@ void Player::Contain() {
 	if (pos.x < sBuffer) {
 		pos.x = sBuffer;
 	}
-	if (pos.y < sBuffer) {
-		pos.y = sBuffer;
+	if (pos.y < sBuffer + livesWidthY) {
+		pos.y = sBuffer + livesWidthY;
 	}
 }
 //render lives in the top right of the screen
-void Player::RenderLives(aie::Renderer2D* m_2dRenderer, aie::Font* m_font) {
+void Player::RenderLives(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int y) {
 	//for each life render a small ship in top right
 	for (int i = 0; i < lives; ++i) {
 		switch (i) {
 		case 0:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX, livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(playerTexture, livesPosX, y - livesPosY, livesWidthX, livesWidthY);
 			break;
 		case 1:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX + 50, livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(playerTexture, livesPosX + 50, y - livesPosY, livesWidthX, livesWidthY);
 			break;
 		case 2:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX + 100, livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(playerTexture, livesPosX + 100, y - livesPosY, livesWidthX, livesWidthY);
 			break;
 		}
 
 	}
-	m_2dRenderer->drawText(m_font, "Lives: ", livesPosX - 20, livesPosY + 20);
+	m_2dRenderer->drawText(m_font, "Lives: ", livesPosX - 20, y - 20);
 }
 //render score in top left of game window
 void Player::RenderScore(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y) {
@@ -112,4 +114,8 @@ void Player::RenderScore(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x
 		scorePosX += fontSize;
 	}
 	m_2dRenderer->drawText(m_font, result, (x - scorePosX), (y - scorePosY), 0);
+}
+
+void Player::RenderHealth(aie::Renderer2D* renderer) {
+	renderer->drawSprite(healthBar, livesPosX, 20, health * 10, livesWidthX, 0,0);
 }

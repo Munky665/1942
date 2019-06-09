@@ -9,21 +9,25 @@ class Bullet
 		float h = 10;
 	};
 
-	int displacement = 40;
-	float velocity = 250;
+	
+	float velocity = 400;
 	bool isSmall = true;
-	bool pfire = false;
-	bool efire = false;
+
+	int bigDamage = 10;
+	int smallDamage = 5;
 public:
+	int displacement = 40;
+	int damage = 0;
 	aie::Texture* texture;
 	Position pos;
 	Bullet();
-	Bullet(Player* p);
-	Bullet(Enemy e);
+	void PlayerFired(Player* p);
+	void EnemyFired(Enemy* e);
 	void Move(float deltaTime);
 	bool collided = false;
 	~Bullet();
-
+	bool pfire = false;
+	bool efire = false;
 	bool exists = false;
 };
 

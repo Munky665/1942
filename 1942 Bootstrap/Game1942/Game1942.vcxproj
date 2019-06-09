@@ -87,8 +87,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)temp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Users\ADMIN\Documents\Aie\Code Design and data structures\!942\1942 Bootstrap\dependencies\Bootstrap\x64\Debug;$(SolutionDir)bootstrap;$(SolutionDir)dependencies/imgui;$(SolutionDir)dependencies/glm;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\bootstrap\$(Platform)\$(Configuration);C:\Users\ADMIN\Documents\Aie\Code Design and data structures\!942\1942 Bootstrap\dependencies\glfw\lib-vc2015;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>D:\Aie Classes\1942\1942 Bootstrap\dependencies\glfw\include\GLFW;C:\Users\ADMIN\Documents\Aie\Code Design and data structures\!942\1942 Bootstrap\dependencies\Bootstrap\x64\Debug;$(SolutionDir)bootstrap;$(SolutionDir)dependencies/imgui;$(SolutionDir)dependencies/glm;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>D:\Aie Classes\1942\1942 Bootstrap\dependencies\glfw\include\GLFW;$(SolutionDir)dependencies\bootstrap\$(Platform)\$(Configuration);C:\Users\ADMIN\Documents\Aie\Code Design and data structures\!942\1942 Bootstrap\dependencies\glfw\lib-vc2015;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

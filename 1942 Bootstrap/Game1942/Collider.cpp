@@ -41,20 +41,16 @@ bool Collider::Collision(Player* player, Enemy enemy) {
 	return false;
 }
 
-bool Collider::Collision(Player* player, Enemy enemy[], int size) {
+bool Collider::Collision(Player* player, Enemy* enemy, int size) {
 	for (int i = 0; i < size; ++i) {
 		//If the leftmost or rightmost point of the first sprite lies somewhere inside the second, continue.
-		if	((player->pos.x >= enemy[i].pos.x && player->pos.x <= (enemy[i].pos.x + enemy[i].pos.w)) ||
-			((player->pos.x + player->pos.w) >= enemy[i].pos.x && (player->pos.x + player->pos.w) <= (enemy[i].pos.x + enemy[i].pos.w))) {
+		if	((player->pos.x >= enemy->pos.x && player->pos.x <= (enemy->pos.x + enemy->pos.w)) ||
+			((player->pos.x + player->pos.w) >= enemy->pos.x && (player->pos.x + player->pos.w) <= (enemy->pos.x + enemy->pos.w))) {
 			//Now we look at the y axis:
-			if	((player->pos.y >= enemy[i].pos.y && player->pos.y <= (enemy[i].pos.y + enemy[i].pos.h)) ||
-				((player->pos.y + player->pos.h) >= enemy[i].pos.y && (player->pos.y + player->pos.h) <= (enemy[i].pos.y + enemy[i].pos.h))) {
+			if	((player->pos.y >= enemy->pos.y && player->pos.y <= (enemy->pos.y + enemy->pos.h)) ||
+				((player->pos.y + player->pos.h) >= enemy->pos.y && (player->pos.y + player->pos.h) <= (enemy->pos.y + enemy->pos.h))) {
 				//The sprites appear to overlap.
-				enemy[i].collided = true;
-				if (player->immune == false) {
-					player->lives -= 1;
-					player->immune = true;
-				}
+				enemy->collided = true;
 				return true;
 			}
 		}
@@ -62,16 +58,16 @@ bool Collider::Collision(Player* player, Enemy enemy[], int size) {
 	//The sprites do not overlap:
 	return false;
 }
-bool Collider::Collision(Bullet* b, Enemy enemy[], int size) {
+bool Collider::Collision(Bullet* b, Enemy* enemy, int size) {
 	for (int i = 0; i < size; ++i) {
 		//If the leftmost or rightmost point of the first sprite lies somewhere inside the second, continue.
-		if ((b->pos.x >= enemy[i].pos.x && b->pos.x <= (enemy[i].pos.x + enemy[i].pos.w)) ||
-			((b->pos.x + b->pos.w) >= enemy[i].pos.x && (b->pos.x + b->pos.w) <= (enemy[i].pos.x + enemy[i].pos.w))) {
+		if ((b->pos.x >= enemy->pos.x && b->pos.x <= (enemy->pos.x + enemy->pos.w)) ||
+			((b->pos.x + b->pos.w) >= enemy->pos.x && (b->pos.x + b->pos.w) <= (enemy->pos.x + enemy->pos.w))) {
 			//Now we look at the y axis:
-			if ((b->pos.y >= enemy[i].pos.y && b->pos.y <= (enemy[i].pos.y + enemy[i].pos.h)) ||
-				((b->pos.y + b->pos.h) >= enemy[i].pos.y && (b->pos.y + b->pos.h) <= (enemy[i].pos.y + enemy[i].pos.h))) {
+			if ((b->pos.y >= enemy->pos.y && b->pos.y <= (enemy->pos.y + enemy->pos.h)) ||
+				((b->pos.y + b->pos.h) >= enemy->pos.y && (b->pos.y + b->pos.h) <= (enemy->pos.y + enemy->pos.h))) {
 				//The sprites appear to overlap.
-				enemy[i].collided = true;
+				enemy->collided = true;
 				return true;
 			}
 		}

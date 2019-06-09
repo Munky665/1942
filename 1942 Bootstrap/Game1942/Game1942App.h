@@ -8,6 +8,8 @@
 #include "Renderer2D.h"
 #include "Collider.h"
 #include <vector>
+#include <glfw3.h>
+
 
 class Game1942App : public aie::Application {
 public:
@@ -23,20 +25,21 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 	virtual void Pause(aie::Input* input);
-	void CheckCollision(Player* p, Enemy e[], int s);
-	void CheckCollision(std::vector<Bullet*> b, Enemy e[], int bs, int es);
-	void CheckCollision(std::vector<Bullet*> b, Player* p, int size);
+	void CheckPVECollision(Player* p, Enemy* e, int s);
+	void CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es);
+	void CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size);
 	int temp = 0;
-	
-	Enemy* smallShip;
-protected:
-	bool paused = false;
 	int screenWidth = 1280;
 	int screenHeight = 720;
+	
+protected:
+	bool paused = false;
+	bool keyPressed = false;
 	int displacment = 100;
 	Background* backgroundItems = new Background[numOfBg];
 	Background* land = new Background[numOfBg];
 	
+	std::vector<Enemy*> smallShip;
 	std::vector<Bullet*> bullet;
 	std::vector<Bullet*> eBullet;
 

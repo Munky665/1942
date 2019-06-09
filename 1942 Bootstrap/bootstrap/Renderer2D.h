@@ -49,6 +49,7 @@ public:
 	// specify the camera scale/zoom
 	void  setCameraScale(float scale) { m_cameraScale = scale; }
 	float getCameraScale() { return m_cameraScale; }
+	
 
 protected:
 
@@ -62,7 +63,7 @@ protected:
 
 	// the camera position
 	float				m_cameraX, m_cameraY;
-	
+
 	// the camera scale (zoom) - lower = zoomed in, higher = zoomed out
 	float				m_cameraScale;
 

@@ -7,6 +7,7 @@ SmallShip::SmallShip()
 	Size();
 	textureEnemy();
 	scoreValue = 20;
+	isAlive = true;
 }
 
 
@@ -14,7 +15,7 @@ SmallShip::~SmallShip()
 {
 }
 
-void SmallShip::Move(float deltaTime) {
+void SmallShip::Move(float deltaTime, int sW, int sH) {
 	switch (temp) {
 	case 1:
 		pos.x -= speed * deltaTime;
@@ -31,9 +32,9 @@ void SmallShip::Move(float deltaTime) {
 	}
 	
 
-	if (pos.x < 0 || pos.x > sWidth) {
-		pos.x = rand() % 1280 + 1;
-		pos.y = sHeight;
+	if (pos.x < 0 || pos.x > sW) {
+		pos.x = rand() % sW + 1;
+		pos.y = sH;
 		temp = rand() % 2 + 1;
 		
 		
@@ -47,4 +48,12 @@ void SmallShip::textureEnemy() {
 void SmallShip::Size() {
 	pos.h = 64;
 	pos.w = 64;
+}
+
+void SmallShip::Reset(int sW, int sH) {
+	pos.x = rand() % sW + 1;
+	pos.y = sH;
+	temp = rand() % 2 + 1;
+	isAlive = true;
+	hasFired = false;
 }
