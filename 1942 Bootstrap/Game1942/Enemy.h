@@ -13,8 +13,9 @@ public:
 		float w;
 
 	};
-
-
+	clock_t start = clock();
+	double duration = 0;
+	double pauseTime = 5;
 	float scoreValue = 0;
 	float sWidth = 1280;
 	float sHeight = 720;
@@ -32,7 +33,9 @@ public:
 	virtual void textureEnemy();
 	virtual void Size();
 	virtual void Reset(int sW, int sH);
+	void PauseFlight();
 	bool isBig = false;
+	bool hasStopped;
 	Enemy();
 	~Enemy();
 };

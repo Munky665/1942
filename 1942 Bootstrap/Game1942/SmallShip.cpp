@@ -56,4 +56,5 @@ void SmallShip::Reset(int sW, int sH) {
 	temp = rand() % 2 + 1;
 	isAlive = true;
 	hasFired = false;
+	hasStopped = false;
 }

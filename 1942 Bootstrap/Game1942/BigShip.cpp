@@ -41,4 +41,5 @@ void BigShip::Reset(int sW, int sH) {
 	pos.y = sH;
 	isAlive = true;
 	hasFired = false;
+	hasStopped = false;
 }

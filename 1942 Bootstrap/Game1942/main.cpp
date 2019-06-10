@@ -1,7 +1,10 @@
 #include "Game1942App.h"
+#include "MainMenu.h"
+
 
 int main() {
 	srand(time(nullptr));
+	
 	// allocation
 	auto app = new Game1942App();
 
@@ -10,6 +13,5 @@ int main() {
 
 	// deallocation
 	delete app;
-
 	return 0;
 }

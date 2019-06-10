@@ -111,6 +111,7 @@ void Game1942App::shutdown() {
 
 void Game1942App::update(float deltaTime) {
 
+
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 	int reverse = numOfSShips - 1;
@@ -175,10 +176,20 @@ void Game1942App::update(float deltaTime) {
 	//move Enemy
 	for (int i = 0; i < numOfSShips; ++i)
 	{
-		if (smallShip[i]->isAlive == true)
+		if (smallShip[i]->isAlive == true && smallShip[i]->hasStopped != true)
+		{
+			if (smallShip[i]->pos.y < screenHeight * 0.5)
+			{
+				smallShip[i]->PauseFlight();
+			}
+			else
+				smallShip[i]->Move(deltaTime, screenWidth, screenHeight);
+		}
+		else if (smallShip[i]->isAlive == true && smallShip[i]->hasStopped == true)
 		{
 			smallShip[i]->Move(deltaTime, screenWidth, screenHeight);
 		}
+		
 		for (int b = 0; b < maxBullets; ++b) {
 			for (int i = 0; i < numOfSShips; ++i)
 			{
@@ -205,12 +216,18 @@ void Game1942App::update(float deltaTime) {
 				eBullet[b]->exists = false;
 				eBullet[b]->efire = false;
 				std::cout << "bullet removed" << std::endl;
+				if (b < numOfSShips && eBullet[b]->exists == false) {
+					smallShip[b]->hasFired = false;
+				}
 			}
-			else if (eBullet[b]->collided != false)
+			else if (eBullet[b]->collided != false )
 			{
 				eBullet[b]->efire = false;
 				eBullet[b]->exists = false;
 				std::cout << "bullet removed" << std::endl;
+				if (b < numOfSShips && eBullet[b]->exists == false) {
+					smallShip[b]->hasFired = false;
+				}
 			}
 		}
 
@@ -229,7 +246,7 @@ void Game1942App::update(float deltaTime) {
 	//check for enemy bullet collisions
 	for (int i = 0; i < numOfSShips; ++i) {
 		CheckBVPCollision(eBullet, player, maxBullets);
-		smallShip[i]->hasFired = false;
+
 
 	}
 	//cese imunity after collision check
@@ -242,7 +259,7 @@ void Game1942App::update(float deltaTime) {
 	}
 
 	// exit the application
-	if (player->lives <= 0) {
+	if (player->lives < 0) {
 		quit();
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
