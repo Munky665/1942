@@ -38,6 +38,7 @@ public:
 
 
 protected:
+	bool con = false;
 	bool paused		= false;
 	bool pauseL		= false;
 	bool keyPressed = false;

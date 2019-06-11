@@ -80,7 +80,7 @@ void PauseMenu::Draw(float x, float y)
 {	
 	m_renderer->begin();
 	m_renderer->setRenderColour(0, 0, 0, 1);
-	m_renderer->drawText(m_headerFont, "PAUSED"  ,	x * 0.5, y		   * 0.5);
+	m_renderer->drawText(m_headerFont, "PAUSED"  ,	x * 0.5, y		   * 0.5, 0);
 	if (conSelected == true)
 	{
 		m_renderer->setRenderColour(1, 1, 1, 1);
@@ -89,7 +89,7 @@ void PauseMenu::Draw(float x, float y)
 	{
 		m_renderer->setRenderColour(0, 0, 0, 1);
 	}
-	m_renderer->drawText(m_font,	   "Continue",	x * 0.5, (y -  80) * 0.5);
+	m_renderer->drawText(m_font,	   "Continue",	x * 0.5, (y -  80) * 0.5, 0);
 	if (exitSelected == true)
 	{
 		m_renderer->setRenderColour(1, 1, 1, 1);
@@ -98,6 +98,6 @@ void PauseMenu::Draw(float x, float y)
 	{
 		m_renderer->setRenderColour(0, 0, 0, 1);
 	}
-	m_renderer->drawText(m_font,	   "Exit"	 ,	x * 0.5, (y - 160) * 0.5);
+	m_renderer->drawText(m_font,	   "Exit"	 ,	x * 0.5, (y - 160) * 0.5, 0);
 	m_renderer->end();
 }

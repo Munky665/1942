@@ -99,15 +99,16 @@ bool Game1942App::startup() {
 			case 2:
 				m_smallShip.push_back(new BigShip());
 			};
-			std::cout << "Loaded Ships" << std::endl;
 		}
+		std::cout << "Loaded Ships" << std::endl;
+		std::cout << "gameState Loded" << std::endl;
 		return true;
 	}
 }
 
 void Game1942App::shutdown() {
 	
-
+	//checks if pause menu is active
 	if (gameState == true  &&
 		paused	  == false &&
 		menuState == false   )
@@ -116,25 +117,46 @@ void Game1942App::shutdown() {
 			delete m_pauseMenu;
 
 	}
+	//deletes main menu from memory
 	if (menuState == true)
 	{
 		m_menu->shutdown();
 		delete m_menu;
 	}
-	else if (gameState == true) 
+	//checks if game state is active
+	else if (gameState == true ) 
 	{
-		delete[] m_backgroundItems;
-		delete[] m_land;
-		delete m_font;
-		delete m_2dRenderer;
-		std::cout << "game State deleted" << std::endl;
+		if (m_gameOver == true) {
+			delete[] m_backgroundItems;
+			std::cout << "clouds" << std::endl;
+			delete[] m_land;
+			std::cout << "Land" << std::endl;
+			delete m_player;
+			std::cout << "player" << std::endl;
+			delete m_font;
+			std::cout << "font" << std::endl;
+			delete m_2dRenderer;
+			std::cout << "renderer" << std::endl;
+			std::cout << "game State deleted" << std::endl;
+		}
+		else if (con != true)
+		{
+			for (int i = 0; i < maxBullets; ++i) {
+				m_bullet[i]->exists = false;
+				m_eBullet[i]->exists = false;
+			}
+			for (int i = 0; i < numOfSShips; ++i)
+			{
+				m_smallShip[i]->Reset(screenWidth, screenHeight);
+			}
+		}
 	}
 
 }
 
 void Game1942App::update(float deltaTime) 
 {
-
+	//checks if main menu is active
 	if (menuState == true) {
 		m_menu->Menu(gameState, quitState);
 		if (gameState == true) 
@@ -171,7 +193,6 @@ void Game1942App::update(float deltaTime)
 				if (m_bullet[i]->exists != true && m_player->playerFired != true) 
 				{
 					m_bullet[i]->PlayerFired(m_player);
-					std::cout << "bullet fired" << std::endl;
 				}
 			}
 		}
@@ -269,7 +290,6 @@ void Game1942App::update(float deltaTime)
 				{
 					m_eBullet[b]->exists = false;
 					m_eBullet[b]->efire = false;
-					std::cout << "bullet removed" << std::endl;
 					if (b < numOfSShips && m_eBullet[b]->exists == false) 
 					{
 						m_smallShip[b]->hasFired = false;
@@ -279,7 +299,6 @@ void Game1942App::update(float deltaTime)
 				{
 					m_eBullet[b]->efire = false;
 					m_eBullet[b]->exists = false;
-					std::cout << "bullet removed" << std::endl;
 					if (b < numOfSShips && m_eBullet[b]->exists == false) 
 					{
 						m_smallShip[b]->hasFired = false;
@@ -351,7 +370,9 @@ void Game1942App::update(float deltaTime)
 		}
 		if (paused == false && quitState != true) 
 		{
+			con = true;
 			shutdown();
+			con = false;
 			pauseL = false;
 
 		}
@@ -443,7 +464,6 @@ void Game1942App::draw() {
 			m_player->pos.w + 30,
 			m_player->pos.h + 30, 0, 1);
 		// output some text, uses the last used colour
-		m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
 
 		// done drawing sprites
 		m_2dRenderer->end();
