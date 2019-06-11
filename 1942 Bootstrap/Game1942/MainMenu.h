@@ -4,26 +4,28 @@
 #include "Application.h"
 #include <Renderer2D.h>
 #include <Font.h>
-#include <glfw3.h>
 #include <iostream>
 class MainMenu
 {
 private:
-	aie::Font* font;
-	aie::Font* titleFont;
-	aie::Renderer2D* renderer;
-	aie::Input* input;
-	float screenX = 1280;
-	float screenY = 720;
-	bool Startselected = false;
-	bool ExitSelected = false;
+
+	float screenX			= 100;
+	float screenY			= 720;
+	float planePositionX	= 900;
+	bool startSelected		= true;
+	bool exitSelected		= false;
 	int switchy = 0;
 public:
 	MainMenu();
-	virtual bool startup();
-	virtual void shutdown() ;
-	bool Menu();
-	virtual void draw();
-	virtual ~MainMenu();
+	void startup();
+	void shutdown();
+	void Menu(bool &state, bool &quit);
+	void draw();
+	 ~MainMenu();
+	 aie::Texture*		m_plane;
+	 aie::Font*			m_font;
+	 aie::Font*			m_titleFont;
+	 aie::Renderer2D*	m_renderer;
+	 aie::Input*		m_input;
 };
 
