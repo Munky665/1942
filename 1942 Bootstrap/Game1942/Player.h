@@ -8,36 +8,36 @@ class Player
 
 	struct PlayerPos {
 		float x, y;
-		float h = 50;
-		float w = 60;
+		float h				 = 50;
+		float w				 = 60;
 	};
 
-	float speed = 500;
-	int sBuffer = 45;
+	float speed				= 500;
+	int sBuffer				= 45;
 
-	float rightOfWindow = 1250;
-	float leftOfWindow = 30;
-	float livesPosX = 40;
-	float livesPosY = 40;
-	float livesWidthX = 40;
-	float livesWidthY = 40;
-	float scorePosX = 150;
+	float rightOfWindow		= 1250;
+	float leftOfWindow		= 30;
+	float livesPosX			= 40;
+	float livesPosY			= 40;
+	float livesWidthX		= 40;
+	float livesWidthY		= 40;
+	float scorePosX			= 150;
 	float originalScorePosX = 150;
-	float scorePosY = 20;
-	int fontSize = 10;
+	float scorePosY			= 20;
+	int fontSize			= 10;
 
 
 
-	aie::Texture* healthBar;
+	aie::Texture*			healthBar;
 public:
-	int health = 0;
-	int maxHealth = 100;
-	aie::Texture* playerTexture;
-	int score = 0;
-	PlayerPos pos{ 600, 100 };
-	int lives = 3;
-	bool immune = false;
-	bool playerFired = false;
+	int health				 = 0;
+	int maxHealth			= 100;
+	aie::Texture*			playerTexture;
+	int score				= 0;
+	PlayerPos				pos{ 600, 100 };
+	int lives				= 3;
+	bool immune				= false;
+	bool playerFired		= false;
 	Player();
 
 	void Move(aie::Input* input, float deltaTime);

@@ -224,17 +224,19 @@ void Game1942App::update(float deltaTime)
 			{
 
 				m_bullet[i]->Move(deltaTime);
-
+				//remove bullet if it leaves screen
 				if (m_bullet[i]->pos.y > screenHeight) 
 				{
 					m_bullet[i]->exists   = false;
 				}
+				//remove bullet if it has collided
 				else if (m_bullet[i]->collided == true) 
 				{
 					m_bullet[i]->exists   = false;
 					m_bullet[i]->collided = false;
 				}
 			}
+			//move bullets back to player position while non-existant
 			else if (m_bullet[i]->exists != true) 
 			{
 				m_bullet[i]->pos.x = m_player->pos.x;
@@ -250,12 +252,13 @@ void Game1942App::update(float deltaTime)
 
 			for (int j = i + 1; j < numOfBg; ++j) 
 			{
+				//check if land collides with one another
 				if (m_col->Collision(m_land[i], m_land[j]) == true) 
 				{
 					m_land[j].pos.x = rand() % screenWidth + 1;
 					m_land[j].pos.y += displacment;
 				}
-
+				//check if clouds collide with one another
 				if (m_col->Collision(m_backgroundItems[i], m_backgroundItems[j]) == true) 
 				{
 					m_backgroundItems[j].pos.x = rand() % screenWidth + 1;

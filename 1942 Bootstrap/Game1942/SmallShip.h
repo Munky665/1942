@@ -4,7 +4,7 @@
 class SmallShip : public Enemy
 {
 private:
-	int temp = 0;
+	int temp	  = 0;
 	float respwan = rand() % 1280 + 1;
 public:
 	SmallShip();
