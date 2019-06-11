@@ -91,3 +91,4 @@ bool Collider::Collision(Bullet* b, Player* p) {
 	//The sprites do not overlap:
 	return false;
 }
+

@@ -11,9 +11,9 @@ public:
 	bool Collision(Player* player, Enemy* enemy, int size);
 	bool Collision(Bullet* b, Enemy* enemy, int size);
 	bool Collision(Bullet* b, Player* p);
-	int screenWidth = 1280;
+	int screenWidth  = 1280;
 	int screenHeight = 720;
-	int displacment = 100;
+	int displacment  = 100;
 	Collider();
 	~Collider();
 };

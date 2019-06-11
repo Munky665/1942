@@ -10,53 +10,66 @@ Game1942App::~Game1942App() {
 
 
 //creates clouds and land
-void Game1942App::Create(Background Item[], int num) {
-	for (int i = 0; i < num; ++i) {
+void Game1942App::Create(Background Item[], int num) 
+{
+	for (int i = 0; i < num; ++i) 
+	{
 		if(num == numOfBg)
 		Item[i].texture = new aie::Texture("./textures/Cloud.png");
 	}
 }
 //checks player vs enemy collisions
-void Game1942App::CheckPVECollision(Player* p, Enemy* e, int s) {
-	for (int i = 0; i < s; ++i) {
-		if (m_col->Collision(p, e, s) == true && p->immune == false) {
-			p->immune = true;
-			p->health -= e->crashDamage;
-			p->score = p->score + e->scoreValue;
-			e->isAlive = false;
+void Game1942App::CheckPVECollision(Player* p, Enemy* e, int s) 
+{
+	for (int i = 0; i < s; ++i) 
+	{
+		if (m_col->Collision(p, e, s) == true && p->immune == false) 
+		{
+			p->immune	= true;
+			p->health	-= e->crashDamage;
+			p->score	= p->score + e->scoreValue;
+			e->isAlive	= false;
 			std::cout << "Player Collided with ship" << std::endl;
 		}
 	}
 }
 //checks player bullet vs enemy collisions
-void Game1942App::CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es) {
-	for (int j = 0; j < bs; j++) {
-		if (m_col->Collision(b[j], e, bs) == true) {
-			if (e->collided == true) {
+void Game1942App::CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es) 
+{
+	for (int j = 0; j < bs; j++) 
+	{
+		if (m_col->Collision(b[j], e, bs) == true) 
+		{
+			if (e->collided == true) 
+			{
 				m_player->score = m_player->score + e->scoreValue;
-				e->isAlive = false;
-				b[j]->collided = true;
+				e->isAlive		= false;
+				b[j]->collided	= true;
 				std::cout << "Player Bullet " << b[j] << " Collided with " << e << std::endl;
 			}
 		}
 	}
 }
 //checks enemy bullet vs player collisions 
-void Game1942App::CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size) {
+void Game1942App::CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size) 
+{
 	for (int i = 0; i < size; ++i) {
-		if (m_col->Collision(b[i], p) == true && p->immune == false) {
-			p->health -= b[i]->damage;
-			b[i]->collided = true;
-			p->immune = true;
+		if (m_col->Collision(b[i], p) == true && p->immune == false) 
+		{
+			p->health		-= b[i]->damage;
+			b[i]->collided	= true;
+			p->immune		= true;
 			std::cout << "Bullet Collided with Player" << std::endl;
 		}
 	}
 }
 
 
-bool Game1942App::startup() {
+bool Game1942App::startup() 
+{
 	
-	if (menuState == true) {
+	if (menuState == true) 
+	{
 		//build menu
 		setBackgroundColour(0, 0, 0, 0);
 		m_menu = new MainMenu();
@@ -64,8 +77,8 @@ bool Game1942App::startup() {
 		return true;
 	}
 	
-	else if (gameState == true) {
-
+	else if (gameState == true) 
+	{
 		//set background colour
 		setBackgroundColour(0, 0.51, 2.55, 0.9);
 		//create renderer
@@ -76,12 +89,14 @@ bool Game1942App::startup() {
 		//create font
 		m_font = new aie::Font("./font/consolas.ttf", 32);
 		//allocate pngs to land in background
-		for (int i = 0; i < numOfBg; ++i) {
+		for (int i = 0; i < numOfBg; ++i)
+		{
 			m_land[i].texture = new aie::Texture("./textures/land.png");
 		}
 		std::cout << "Loaded land" << std::endl;
 		//create bullets
-		for (int i = 0; i < maxBullets; ++i) {
+		for (int i = 0; i < maxBullets; ++i) 
+		{
 			m_bullet.push_back(new Bullet());
 			m_eBullet.push_back(new Bullet());
 		}
@@ -90,9 +105,11 @@ bool Game1942App::startup() {
 		Create(m_backgroundItems, numOfBg);
 		std::cout << "Loaded Clouds" << std::endl;
 		//Create Enemies
-		for (int i = 0; i < numOfSShips; ++i) {
+		for (int i = 0; i < numOfSShips; ++i) 
+		{
 			temp = rand() % 2 + 1;
-			switch (temp) {
+			switch (temp) 
+			{
 			case 1:
 				m_smallShip.push_back(new SmallShip());
 				break;
@@ -106,8 +123,8 @@ bool Game1942App::startup() {
 	}
 }
 
-void Game1942App::shutdown() {
-	
+void Game1942App::shutdown() 
+{
 	//checks if pause menu is active
 	if (gameState == true  &&
 		paused	  == false &&
@@ -142,8 +159,9 @@ void Game1942App::shutdown() {
 		}
 		else if (con != true)
 		{
-			for (int i = 0; i < maxBullets; ++i) {
-				m_bullet[i]->exists = false;
+			for (int i = 0; i < maxBullets; ++i)
+			{
+				m_bullet[i]->exists  = false;
 				m_eBullet[i]->exists = false;
 			}
 			for (int i = 0; i < numOfSShips; ++i)
@@ -202,18 +220,18 @@ void Game1942App::update(float deltaTime)
 		//move each bullet that has been fired
 		for (int i = 0; i < maxBullets; ++i) 
 		{
-			if (m_bullet[i]->exists != false) 
+			if (m_bullet[i]->exists		 != false) 
 			{
 
 				m_bullet[i]->Move(deltaTime);
 
 				if (m_bullet[i]->pos.y > screenHeight) 
 				{
-					m_bullet[i]->exists = false;
+					m_bullet[i]->exists   = false;
 				}
 				else if (m_bullet[i]->collided == true) 
 				{
-					m_bullet[i]->exists = false;
+					m_bullet[i]->exists   = false;
 					m_bullet[i]->collided = false;
 				}
 			}
@@ -290,7 +308,7 @@ void Game1942App::update(float deltaTime)
 				if (m_eBullet[b]->pos.y <= 0)
 				{
 					m_eBullet[b]->exists = false;
-					m_eBullet[b]->efire = false;
+					m_eBullet[b]->efire  = false;
 					if (b < numOfSShips && m_eBullet[b]->exists == false) 
 					{
 						m_smallShip[b]->hasFired = false;
@@ -298,7 +316,7 @@ void Game1942App::update(float deltaTime)
 				}
 				else if (m_eBullet[b]->collided != false)
 				{
-					m_eBullet[b]->efire = false;
+					m_eBullet[b]->efire  = false;
 					m_eBullet[b]->exists = false;
 					if (b < numOfSShips && m_eBullet[b]->exists == false) 
 					{
@@ -339,7 +357,7 @@ void Game1942App::update(float deltaTime)
 			m_player->health = m_player->maxHealth;
 		}
 
-		// exit the application
+		// exit the gameState if player has no lives left
 		if (m_player->lives < 0)
 		{
 			quitState = true;
@@ -350,6 +368,7 @@ void Game1942App::update(float deltaTime)
 			quitState = false;
 
 		}
+		//pause if player presses pause
 		if (input->isKeyDown(aie::INPUT_KEY_ESCAPE)) {
 			paused = true;
 		}
@@ -361,11 +380,12 @@ void Game1942App::update(float deltaTime)
 	}
 	if (paused == true)
 	{
+		//initialise pause menu
 		if (pauseL == false)
 		{
 			m_pauseMenu = new PauseMenu();
 			m_pauseMenu->StartUp();
-			pauseL = true;
+			pauseL	 = true;
 		}
 		else if(pauseL == true)
 		{
@@ -373,10 +393,10 @@ void Game1942App::update(float deltaTime)
 		}
 		if (paused == false && quitState != true) 
 		{
-			con = true;
+			con		= true;
 			shutdown();
-			con = false;
-			pauseL = false;
+			con		= false;
+			pauseL  = false;
 
 		}
 		else if (quitState == true) 
@@ -392,12 +412,15 @@ void Game1942App::update(float deltaTime)
 	}
 }
 
-void Game1942App::draw() {
+void Game1942App::draw()
+{
 	clearScreen();
-	if (menuState == true) {
+	if (menuState == true)
+	{
 		m_menu->draw();
 	}
-	else if (gameState == true) {
+	else if (gameState == true)
+	{
 		if (paused == true)
 		{
 			m_pauseMenu->Draw(screenWidth, screenHeight);
