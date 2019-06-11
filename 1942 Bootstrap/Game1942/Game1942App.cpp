@@ -111,7 +111,8 @@ void Game1942App::shutdown() {
 	//checks if pause menu is active
 	if (gameState == true  &&
 		paused	  == false &&
-		menuState == false   )
+		menuState == false &&
+		quitState != true   )
 	{
 			m_pauseMenu->ShutDown();
 			delete m_pauseMenu;
@@ -341,10 +342,12 @@ void Game1942App::update(float deltaTime)
 		// exit the application
 		if (m_player->lives < 0)
 		{
+			quitState = true;
 			shutdown();
 			gameState = false;
 			menuState = true;
 			startup();
+			quitState = false;
 
 		}
 		if (input->isKeyDown(aie::INPUT_KEY_ESCAPE)) {
