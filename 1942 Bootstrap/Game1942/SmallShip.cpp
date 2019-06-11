@@ -15,8 +15,10 @@ SmallShip::~SmallShip()
 {
 }
 
-void SmallShip::Move(float deltaTime, int sW, int sH) {
-	switch (temp) {
+void SmallShip::Move(float deltaTime, int sW, int sH)
+{
+	switch (temp) 
+	{
 	case 1:
 		pos.x -= speed * deltaTime;
 		pos.y -= speed * deltaTime;
@@ -41,16 +43,19 @@ void SmallShip::Move(float deltaTime, int sW, int sH) {
 	}
 }
 
-void SmallShip::textureEnemy() {
+void SmallShip::textureEnemy() 
+{
 	texture = new aie::Texture("./textures/Smallplane.png");
 }
 
-void SmallShip::Size() {
+void SmallShip::Size() 
+{
 	pos.h = 64;
 	pos.w = 64;
 }
 
-void SmallShip::Reset(int sW, int sH) {
+void SmallShip::Reset(int sW, int sH) 
+{
 	pos.x = rand() % sW + 1;
 	pos.y = sH;
 	temp = rand() % 2 + 1;

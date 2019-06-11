@@ -11,23 +11,28 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Move(float deltaTime, int sW, int sH) {
+void Enemy::Move(float deltaTime, int sW, int sH)
+{
 
 }
 
-void Enemy::textureEnemy() {
+void Enemy::textureEnemy() 
+{
 
 }
 
-void Enemy::Size() {
+void Enemy::Size() 
+{
 
 }
 
-void Enemy::Reset(int sW, int sH) {
+void Enemy::Reset(int sW, int sH) 
+{
 
 }
 
-void Enemy::PauseFlight() {
+void Enemy::PauseFlight() 
+{
 
 	duration = (clock() - start) / (double)CLOCKS_PER_SEC;
 	if (duration < pauseTime && hasStopped != true)

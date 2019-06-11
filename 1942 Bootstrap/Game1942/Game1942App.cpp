@@ -272,6 +272,7 @@ void Game1942App::update(float deltaTime)
 		//move Enemy
 		for (int i = 0; i < numOfSShips; ++i)
 		{
+			//pause ship flight and move
 			if (m_smallShip[i]->isAlive == true && m_smallShip[i]->hasStopped != true)
 			{
 				if (m_smallShip[i]->pos.y < screenHeight * 0.5)
@@ -285,7 +286,7 @@ void Game1942App::update(float deltaTime)
 			{
 				m_smallShip[i]->Move(deltaTime, screenWidth, screenHeight);
 			}
-
+			//check if enemy has fired bullet
 			for (int b = 0; b < maxBullets; ++b) 
 			{
 				for (int i = 0; i < numOfSShips; ++i)
@@ -307,12 +308,12 @@ void Game1942App::update(float deltaTime)
 			{
 
 				m_eBullet[b]->Move(deltaTime);
-
+				//if bullet passes out of bottom of screen remove
 				if (m_eBullet[b]->pos.y <= 0)
 				{
 					m_eBullet[b]->exists = false;
 					m_eBullet[b]->efire  = false;
-					if (b < numOfSShips && m_eBullet[b]->exists == false) 
+					if (b < numOfSShips) 
 					{
 						m_smallShip[b]->hasFired = false;
 					}
@@ -321,7 +322,8 @@ void Game1942App::update(float deltaTime)
 				{
 					m_eBullet[b]->efire  = false;
 					m_eBullet[b]->exists = false;
-					if (b < numOfSShips && m_eBullet[b]->exists == false) 
+					m_eBullet[b]->collided = false;
+					if (b < numOfSShips) 
 					{
 						m_smallShip[b]->hasFired = false;
 					}
