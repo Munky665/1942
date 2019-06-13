@@ -14,6 +14,8 @@ Player::~Player()
 }
 
 void Player::Reset() {
+	pos.x = 600;
+	pos.y = 100;
 	health = maxHealth;
 	lives = 3;
 }

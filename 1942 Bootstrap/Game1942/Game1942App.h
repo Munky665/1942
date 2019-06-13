@@ -14,6 +14,7 @@
 #include "HealthBar.h"
 #include "Clouds.h"
 #include "Land.h"
+#include "GameOver.h"
 
 
 class Game1942App : public aie::Application {
@@ -30,7 +31,6 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	void Create(Background Item[], int numOfBg);
 
 	int temp		 = 0;
 	int screenWidth  = 1280;
@@ -38,6 +38,7 @@ public:
 
 
 protected:
+	bool isDead = false;
 	bool firstpass = true;
 	bool con		= false;
 	bool paused		= false;
@@ -46,6 +47,7 @@ protected:
 	bool gameState  = false;
 	bool menuState  = true;
 	bool quitState  = false;
+	bool deathState = false;
 	int displacment = 100;
 	int m_duration = 2;
 	int m_waitTime = 2;
@@ -62,6 +64,7 @@ protected:
 	PauseMenu*			m_pauseMenu;
 	Collider*			m_col;
 	Player*				m_player;
+	GameOver*			m_death;
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;
 };

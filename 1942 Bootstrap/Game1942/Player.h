@@ -25,7 +25,7 @@ class Player
 	float m_originalScorePosX	= 150;
 	float m_scorePosY			= 20;
 	int m_fontSize				= 10;
-
+	
 	aie::Texture*			m_playerTexture;
 public:
 	int health				 = 0;

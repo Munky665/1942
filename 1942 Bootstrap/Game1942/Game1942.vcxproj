@@ -169,6 +169,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game1942App.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Land.cpp" />
     <ClCompile Include="main.cpp" />
@@ -185,12 +186,17 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game1942App.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SmallShip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game1942.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

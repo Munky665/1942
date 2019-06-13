@@ -56,15 +56,17 @@ void PauseMenu::Pause(bool &con, bool &exit)
 		{
 			con		= false;
 			exit	= false;
+			released = false;
 		}
 		else if (exitSelected	 == true)
 		{
 			con		= false;
 			exit	= true;
 			selected = 1;
+			released = false;
 		}
 	}
-	if (m_input->wasKeyReleased(aie::INPUT_KEY_ESCAPE))
+	if (m_input->wasKeyReleased(aie::INPUT_KEY_ESCAPE) && released == false)
 	{
 		released = true;
 	}
@@ -73,6 +75,7 @@ void PauseMenu::Pause(bool &con, bool &exit)
 		con = false;
 		exit = false;
 		selected = 1;
+		released = false;
 	}
 	switch (selected)
 	{
@@ -89,25 +92,25 @@ void PauseMenu::Pause(bool &con, bool &exit)
 void PauseMenu::Draw(float x, float y)
 {	
 	m_renderer->begin();
-	m_renderer->setRenderColour(0, 0, 0, 1);
-	m_renderer->drawText(m_headerFont, "PAUSED"  ,	x * 0.5, y		   * 0.5, 0);
+	m_renderer->setRenderColour(1, 1, 1, 1);
+	m_renderer->drawText(m_headerFont, "PAUSED"  , (x * 0.5) - 100, y		   * 0.5, 0);
 	if (conSelected == true)
 	{
-		m_renderer->setRenderColour(1, 1, 1, 1);
+		m_renderer->setRenderColour(0, 0, 0, 1);
 	}
 	else
 	{
-		m_renderer->setRenderColour(0, 0, 0, 1);
+		m_renderer->setRenderColour(1, 1, 1, 1);
 	}
-	m_renderer->drawText(m_font,	   "Continue",	x * 0.5, (y -  80) * 0.5, 0);
+	m_renderer->drawText(m_font,	   "Continue", (x * 0.5) - 100, (y -  80) * 0.5, 0);
 	if (exitSelected == true)
 	{
-		m_renderer->setRenderColour(1, 1, 1, 1);
+		m_renderer->setRenderColour(0, 0, 0, 1);
 	}
 	else
 	{
-		m_renderer->setRenderColour(0, 0, 0, 1);
+		m_renderer->setRenderColour(1, 1, 1, 1);
 	}
-	m_renderer->drawText(m_font,	   "Exit"	 ,	x * 0.5, (y - 160) * 0.5, 0);
+	m_renderer->drawText(m_font,	   "Exit"	 , (x * 0.5) - 100, (y - 160) * 0.5, 0);
 	m_renderer->end();
 }

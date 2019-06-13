@@ -26,6 +26,7 @@ bool Game1942App::startup()
 	if (gameState == true)
 	{
 		if (firstpass == true) {
+			m_death = new GameOver();
 			m_pauseMenu = new PauseMenu();
 			m_pauseMenu->StartUp();
 			m_bar = new HealthBar(screenWidth * 0.5f, screenHeight - 20, 400, 20);
@@ -93,7 +94,7 @@ bool Game1942App::startup()
 void Game1942App::shutdown() 
 {
 	//checks if game state is active
-	if (gameState ==  true && pauseL == true && con != true) 
+	if (gameState ==  true && paused == false && con != true) 
 	{
 		if (m_gameOver == true) {
 			m_bullet.~vector();
@@ -102,6 +103,7 @@ void Game1942App::shutdown()
 			delete m_bar;
 			delete m_menu;
 			delete m_pauseMenu;
+			delete m_death;
 			m_clouds.~vector();
 			m_land.~vector();
 			delete m_player;
@@ -153,7 +155,7 @@ void Game1942App::update(float deltaTime)
 
 	// input example
 	aie::Input* input = aie::Input::getInstance();
-	if (gameState == true && paused == false) 
+	if (gameState == true && paused == false && deathState == false) 
 	{
 		m_bar->SetValue(m_player->health);
 		m_player->immune = false;
@@ -302,45 +304,47 @@ void Game1942App::update(float deltaTime)
 		{
 			m_player->lives -= 1;
 			m_player->health = m_player->maxHealth;
-		}
-
-		// exit the gameState if player has no lives left
-		if (m_player->lives < 0)
-		{
-			quitState = true;
-			shutdown();
-			gameState = false;
-			menuState = true;
-			startup();
-			quitState = false;
-
+			//enter gameover state
+			if (m_player->lives < 0) {
+				deathState = true;
+			}
 		}
 		//pause if player presses pause
 		if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 			paused = true;
 		}
-
-
 		//check screen size
 		auto window = glfwGetCurrentContext();
 		glfwGetWindowSize(window, &screenWidth, &screenHeight);
 	}
+	//enter gameover state when player has no lives left
+	if (deathState == true)
+	{
+		isDead = m_death->DeathMenu();
+		if (isDead == true) {
+			shutdown();
+			startup();
+			deathState = false;
+		}
+		if (isDead == false) {
+			shutdown();
+			gameState = false;
+			menuState = true;
+			startup();
+			deathState = false;
+		}
+
+	}
 	if (paused == true)
 	{
 		//initialise pause menu
-		if (pauseL == false)
-		{
-			pauseL	 = true;
-		}
-		else if(pauseL == true)
-		{
-			m_pauseMenu->Pause(paused, quitState);
-		}
+		m_pauseMenu->Pause(paused, quitState);
+		//if continue is selected
 		if (paused == false && quitState != true) 
 		{
 			con = true;
-			pauseL  = false;
 		}
+		//if exit is selected
 		else if (quitState == true) 
 		{
 			shutdown();
@@ -348,29 +352,34 @@ void Game1942App::update(float deltaTime)
 			menuState = true;
 			startup();
 			quitState = false;
-			pauseL	  = false;
-		}
-		
+		}	
 	}
 }
 
 void Game1942App::draw()
 {
+	// wipe the screen to the background colour
 	clearScreen();
+	//check if menu should be drawn
 	if (menuState == true)
 	{
 		m_menu->draw();
 	}
+	//check if gamestate should be drawn
 	else if (gameState == true)
 	{
+		//check if pause menu should be drawn
 		if (paused == true)
 		{
 			m_pauseMenu->Draw(screenWidth, screenHeight);
 		}
-		// wipe the screen to the background colour
+		if (deathState == true) {
+			m_death->Draw(screenWidth, screenHeight, m_player->score);
+		}
 		// begin drawing sprites
 		m_2dRenderer->begin();
 		// draw your stuff here!
+		
 		//draw health bar
 		m_bar->Draw(m_2dRenderer);
 		//draw bullet
