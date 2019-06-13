@@ -22,5 +22,11 @@ void Background::Move(float deltaTime , float speed)
 	}
 }
 
+void Background::Reset() {
+	pos.x = firstSpawn;
+	pos.y = topSpawn;
+	Active = true;
+}
+
 
 

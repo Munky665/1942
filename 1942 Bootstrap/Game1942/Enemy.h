@@ -14,8 +14,10 @@ public:
 
 	};
 	clock_t start		= clock();
-	
-	double duration		= 0;
+	clock_t wait        = clock();
+	double stopDuration	= 0;
+	double waitDuration	= 0;
+	double fireWait		= 4;
 	double pauseTime	= 5;
 	float scoreValue	= 0;
 	float sWidth		= 1280;
@@ -38,6 +40,7 @@ public:
 	virtual void textureEnemy();
 	virtual void Size();
 	virtual void Reset(int sW, int sH);
+	void WaitToFire();
 	void PauseFlight();
 	bool isBig = false;
 	bool hasStopped;

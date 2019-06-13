@@ -4,6 +4,7 @@
 
 PauseMenu::PauseMenu()
 {
+	exists = true;
 }
 
 

@@ -4,8 +4,7 @@
 
 Player::Player()
 {
-	playerTexture = new aie::Texture("./textures/player.png");
-	healthBar = new aie::Texture("./textures/Health.png");
+	m_playerTexture = new aie::Texture("./textures/player.png");
 	health = maxHealth;
 }
 
@@ -14,108 +13,112 @@ Player::~Player()
 {
 }
 
+void Player::Reset() {
+	health = maxHealth;
+	lives = 3;
+}
 
 void Player::Move(aie::Input* input, float deltaTime) {
 	
 	if (input->isKeyDown(aie::INPUT_KEY_LEFT) && input->isKeyDown(aie::INPUT_KEY_UP))
 	{
-	pos.x -= speed * deltaTime;
-	pos.y += speed * deltaTime;
+	pos.x -= m_speed * deltaTime;
+	pos.y += m_speed * deltaTime;
 	}
 
 	else if (input->isKeyDown(aie::INPUT_KEY_UP) && input->isKeyDown(aie::INPUT_KEY_RIGHT))
 	{
-	pos.x += speed * deltaTime;
-	pos.y += speed * deltaTime;
+	pos.x += m_speed * deltaTime;
+	pos.y += m_speed * deltaTime;
 	}
 	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT) && input->isKeyDown(aie::INPUT_KEY_DOWN))
 	{
-	pos.x += speed * deltaTime;
-	pos.y -= speed * deltaTime;
+	pos.x += m_speed * deltaTime;
+	pos.y -= m_speed * deltaTime;
 	}
 
 	else if (input->isKeyDown(aie::INPUT_KEY_DOWN) && input->isKeyDown(aie::INPUT_KEY_LEFT))
 	{
-	pos.x -= speed * deltaTime;
-	pos.y -= speed * deltaTime;
+	pos.x -= m_speed * deltaTime;
+	pos.y -= m_speed * deltaTime;
 	}
 
 	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT)) 
 	{
-		 pos.x += speed * deltaTime;
+		 pos.x += m_speed * deltaTime;
 	}
 
 	else if (input->isKeyDown(aie::INPUT_KEY_LEFT))
 	{
-		 pos.x -= speed * deltaTime;
+		 pos.x -= m_speed * deltaTime;
 	}
 
 	else if (input->isKeyDown(aie::INPUT_KEY_UP))
 	{
-		 pos.y += speed * deltaTime;
+		 pos.y += m_speed * deltaTime;
 	}
 
 
 	else if (input->isKeyDown(aie::INPUT_KEY_DOWN))
 	{
-		 pos.y -= speed * deltaTime;
+		 pos.y -= m_speed * deltaTime;
 	}
 	
 	
 }
 //makes sure player stays within confines of window
 void Player::Contain(int sWidth, int sHeight) {
-	if (pos.x > sWidth - sBuffer) {
-		pos.x = sWidth - sBuffer;
+	if (pos.x > sWidth - m_sBuffer) {
+		pos.x = sWidth - m_sBuffer;
 	}
-	else if (pos.y > sHeight - sBuffer ) {
-		pos.y = sHeight - sBuffer;
+	else if (pos.y > sHeight - m_sBuffer ) {
+		pos.y = sHeight - m_sBuffer;
 	}
-	if (pos.x < sBuffer) {
-		pos.x = sBuffer;
-	}
-	if (pos.y < sBuffer + livesWidthY) {
-		pos.y = sBuffer + livesWidthY;
+	if (pos.x < m_sBuffer) {
+		pos.x = m_sBuffer;
+	}		
+	if (pos.y < m_sBuffer + m_livesWidthY) {
+		pos.y = m_sBuffer + m_livesWidthY;
 	}
 }
-//render lives in the top right of the screen
-void Player::RenderLives(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int y) {
-	//for each life render a small ship in top right
+//render score in top left of game window
+void Player::Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y) {
+	char result[64];
+	snprintf(result, 64, "Score:%i", score);
+	if (score >= 10 && m_scorePosX == m_originalScorePosX) {
+		m_scorePosX += m_fontSize;
+	}
+	else if (score >= 100 && m_scorePosX == m_originalScorePosX + m_fontSize) {
+		m_scorePosX += m_fontSize;
+	}
+	else if (score >= 1000 && m_scorePosX == m_originalScorePosX + (m_fontSize * 2)) {
+		m_scorePosX += m_fontSize;
+	}
+	else if (score >= 10000 && m_scorePosX == m_originalScorePosX + (m_fontSize * 3)) {
+		m_scorePosX += m_fontSize;
+	}
+	m_2dRenderer->drawText(m_font, result, (x - m_scorePosX), (y - m_scorePosY), 0);
+	//draw player
+	m_2dRenderer->drawSprite(m_playerTexture,
+		pos.x,
+		pos.y,
+		pos.w + 30,
+		pos.h + 30, 0, 1);
+	//render Lives
 	for (int i = 0; i < lives; ++i) {
 		switch (i) {
 		case 0:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX, y - livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(m_playerTexture, m_livesPosX, y - m_livesPosY, m_livesWidthX, m_livesWidthY);
 			break;
 		case 1:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX + 50, y - livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(m_playerTexture, m_livesPosX + 50, y - m_livesPosY, m_livesWidthX, m_livesWidthY);
 			break;
 		case 2:
-			m_2dRenderer->drawSprite(playerTexture, livesPosX + 100, y - livesPosY, livesWidthX, livesWidthY);
+			m_2dRenderer->drawSprite(m_playerTexture, m_livesPosX + 100, y - m_livesPosY, m_livesWidthX, m_livesWidthY);
 			break;
 		}
 
 	}
-	m_2dRenderer->drawText(m_font, "Lives: ", livesPosX - 20, y - 20);
-}
-//render score in top left of game window
-void Player::RenderScore(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y) {
-	char result[64];
-	snprintf(result, 64, "Score:%i", score);
-	if (score >= 10 && scorePosX == originalScorePosX) {
-		scorePosX += fontSize;
-	}
-	else if (score >= 100 && scorePosX == originalScorePosX + fontSize) {
-		scorePosX += fontSize;
-	}
-	else if (score >= 1000 && scorePosX == originalScorePosX + (fontSize * 2)) {
-		scorePosX += fontSize;
-	}
-	else if (score >= 10000 && scorePosX == originalScorePosX + (fontSize * 3)) {
-		scorePosX += fontSize;
-	}
-	m_2dRenderer->drawText(m_font, result, (x - scorePosX), (y - scorePosY), 0);
+	m_2dRenderer->drawText(m_font, "Lives: ", m_livesPosX - 20, y - 20);
 }
 
-void Player::RenderHealth(aie::Renderer2D* renderer) {
-	renderer->drawSprite(healthBar, livesPosX, 20, health * 10, livesWidthX, 0,0);
-}

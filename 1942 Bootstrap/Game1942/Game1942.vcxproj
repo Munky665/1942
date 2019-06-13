@@ -165,9 +165,12 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BigShip.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Clouds.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game1942App.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
+    <ClCompile Include="Land.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
@@ -178,9 +181,12 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="BigShip.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Clouds.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game1942App.h" />
+    <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="Land.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />

@@ -36,9 +36,9 @@ void Bullet::EnemyFired(Enemy* e)
 {
 	exists = true;
 	efire = true;
+	collided = false;
 	pos.x = e->pos.x;
 	pos.y = e->pos.y - displacement;
-	e->hasFired = true;
 
 	if (e->isBig == true & pos.h == 10 && pos.w == 10) 
 	{
@@ -59,4 +59,11 @@ void Bullet::EnemyFired(Enemy* e)
 	{
 		damage = smallDamage;
 	}
+}
+
+void Bullet::Reset() {
+	pos = pos;
+	pfire = false;
+	efire = false;
+	exists = false;
 }

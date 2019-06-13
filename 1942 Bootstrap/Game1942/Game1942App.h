@@ -11,6 +11,9 @@
 #include <glfw3.h>
 #include "MainMenu.h"
 #include "PauseMenu.h"
+#include "HealthBar.h"
+#include "Clouds.h"
+#include "Land.h"
 
 
 class Game1942App : public aie::Application {
@@ -27,9 +30,6 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	void CheckPVECollision(Player* p, Enemy* e, int s);
-	void CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es);
-	void CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size);
 	void Create(Background Item[], int numOfBg);
 
 	int temp		 = 0;
@@ -38,7 +38,8 @@ public:
 
 
 protected:
-	bool con = false;
+	bool firstpass = true;
+	bool con		= false;
 	bool paused		= false;
 	bool pauseL		= false;
 	bool keyPressed = false;
@@ -46,14 +47,17 @@ protected:
 	bool menuState  = true;
 	bool quitState  = false;
 	int displacment = 100;
+	int m_duration = 2;
+	int m_waitTime = 2;
 
-	Background* m_backgroundItems = new Background[numOfBg];
-	Background* m_land			  = new Background[numOfBg];
+	std::vector<Background*> m_clouds;
+	std::vector<Background*> m_land			 ;
 
 	std::vector<Enemy*>  m_smallShip;
 	std::vector<Bullet*> m_bullet;
 	std::vector<Bullet*> m_eBullet;
 
+	HealthBar*			m_bar;
 	MainMenu*			m_menu;
 	PauseMenu*			m_pauseMenu;
 	Collider*			m_col;
