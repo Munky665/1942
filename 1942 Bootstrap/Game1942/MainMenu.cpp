@@ -79,14 +79,14 @@ void MainMenu::draw()
 	m_renderer->drawText(m_titleFont, "Fighter Pilot", screenX, screenY * 0.5);
 	if (startSelected == true)
 	{
-		m_renderer->setRenderColour(0, 0, 100, 0.5);
+		m_renderer->setRenderColour(1, 1, 1, 1);
 	}
 	else
 		m_renderer->setRenderColour(0, 0, 100, 0.8);
 	m_renderer->drawText(m_font, "Start Game", screenX + 100, (screenY - 80) * 0.5);
 	if (exitSelected == true) 
 	{
-		m_renderer->setRenderColour(0, 0, 100, 0.5);
+		m_renderer->setRenderColour(1, 1, 1, 1);
 	}
 	else 
 		m_renderer->setRenderColour(0, 0, 100, 0.8);
