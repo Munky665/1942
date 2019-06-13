@@ -12,18 +12,22 @@ Game1942App::~Game1942App() {
 bool Game1942App::startup() 
 {
 	
-	if (menuState == true) 
+	if (menuState == true && firstpass == true ) 
 	{
 		//build menu
-		setBackgroundColour(0, 0, 0, 0);
+		setBackgroundColour(0, 0, 0, 1);
 		m_menu = new MainMenu();
 		m_menu->startup();
 		return true;
 	}
-	
-	else if (gameState == true)
+	else if (menuState == true && firstpass == false) {
+		setBackgroundColour(0, 0, 0, 1);
+	}
+	if (gameState == true)
 	{
 		if (firstpass == true) {
+			m_pauseMenu = new PauseMenu();
+			m_pauseMenu->StartUp();
 			m_bar = new HealthBar(screenWidth * 0.5f, screenHeight - 20, 400, 20);
 			//create player
 			m_player = new Player();
@@ -88,21 +92,6 @@ bool Game1942App::startup()
 
 void Game1942App::shutdown() 
 {
-	//checks if pause menu is active
-	if (pauseL == true  &&
-		paused == false  )
-	{
-			m_pauseMenu->ShutDown();
-			delete m_pauseMenu;
-			std::cout << "Closed  paused Menu" << std::endl;
-
-	}
-	//deletes main menu from memory
-	if (menuState == true)
-	{
-		m_menu->shutdown();
-		delete m_menu;
-	}
 	//checks if game state is active
 	if (gameState ==  true && pauseL == true && con != true) 
 	{
@@ -111,6 +100,8 @@ void Game1942App::shutdown()
 			m_eBullet.~vector();
 			m_smallShip.~vector();
 			delete m_bar;
+			delete m_menu;
+			delete m_pauseMenu;
 			m_clouds.~vector();
 			m_land.~vector();
 			delete m_player;
@@ -149,8 +140,8 @@ void Game1942App::update(float deltaTime)
 		m_menu->Menu(gameState, quitState);
 		if (gameState == true) 
 		{
-			shutdown();
 			menuState = false;
+			m_menu->isActive = false;
 			startup();
 		}
 		else if (quitState == true) 
@@ -325,7 +316,7 @@ void Game1942App::update(float deltaTime)
 
 		}
 		//pause if player presses pause
-		if (input->isKeyDown(aie::INPUT_KEY_ESCAPE)) {
+		if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 			paused = true;
 		}
 
@@ -339,8 +330,6 @@ void Game1942App::update(float deltaTime)
 		//initialise pause menu
 		if (pauseL == false)
 		{
-			m_pauseMenu = new PauseMenu();
-			m_pauseMenu->StartUp();
 			pauseL	 = true;
 		}
 		else if(pauseL == true)
@@ -350,10 +339,7 @@ void Game1942App::update(float deltaTime)
 		if (paused == false && quitState != true) 
 		{
 			con = true;
-			shutdown();
 			pauseL  = false;
-
-
 		}
 		else if (quitState == true) 
 		{

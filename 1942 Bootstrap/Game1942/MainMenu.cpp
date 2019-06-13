@@ -4,7 +4,7 @@
 
 MainMenu::MainMenu()
 {
-	
+
 }
 
 MainMenu::~MainMenu()
@@ -17,6 +17,7 @@ void MainMenu::startup()
 	m_font		= new aie::Font("./font/1942.ttf", 32);
 	m_plane		= new aie::Texture("./textures/player.png");
 	m_renderer  = new aie::Renderer2D();
+	isActive = true;
 }
 
 void MainMenu::shutdown() 
@@ -91,4 +92,7 @@ void MainMenu::draw()
 		m_renderer->setRenderColour(0, 0, 100, 0.8);
 	m_renderer->drawText(m_font, "Exit Game", screenX + 100, (screenY - 140) * 0.5);
 	m_renderer->end();
+}
+void MainMenu::Reset() {
+
 }

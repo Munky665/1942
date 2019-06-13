@@ -15,13 +15,16 @@ private:
 	bool startSelected		= true;
 	bool exitSelected		= false;
 	int switchy = 0;
+
 public:
 	MainMenu();
 	void startup();
 	void shutdown();
 	void Menu(bool &state, bool &quit);
+	void Reset();
 	void draw();
 	 ~MainMenu();
+	 bool isActive = false;
 	 aie::Texture*		m_plane;
 	 aie::Font*			m_font;
 	 aie::Font*			m_titleFont;

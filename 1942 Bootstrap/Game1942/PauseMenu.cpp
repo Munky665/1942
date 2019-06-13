@@ -61,17 +61,26 @@ void PauseMenu::Pause(bool &con, bool &exit)
 		{
 			con		= false;
 			exit	= true;
+			selected = 1;
 		}
+	}
+	if (m_input->wasKeyReleased(aie::INPUT_KEY_ESCAPE))
+	{
+		released = true;
+	}
+	if (m_input->wasKeyPressed(aie::INPUT_KEY_ESCAPE) && released == true)
+	{
+		con = false;
+		exit = false;
+		selected = 1;
 	}
 	switch (selected)
 	{
 	case 1:
-		restartSelected = false;
 		conSelected		= true;
 		exitSelected	= false;
 		break;
 	case 2:
-		restartSelected = false;
 		conSelected		= false;
 		exitSelected	= true;
 		break;

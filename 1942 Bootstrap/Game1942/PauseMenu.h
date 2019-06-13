@@ -13,6 +13,8 @@ protected:
 	bool restartSelected  = false;
 	bool conSelected	  = true;
 	bool exitSelected	  = false;
+	bool released		  = false;
+	bool pressed		  = true;
 
 public:
 	PauseMenu();
