@@ -356,6 +356,7 @@ void Game1942App::draw()
 			m_pauseMenu->Draw(screenWidth, screenHeight);
 		}
 		if (deathState == true) {
+			m_bar->Draw(m_2dRenderer);
 			m_death->Draw(screenWidth, screenHeight, m_player->score);
 		}
 		// begin drawing sprites
