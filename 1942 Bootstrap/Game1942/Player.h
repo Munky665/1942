@@ -13,11 +13,11 @@ class Player
 	};
 
 	float m_speed				= 500;
-	int m_sBuffer				= 45;
+	float m_sBuffer				= 45;
 
 	float m_rightOfWindow		= 1250;
 	float m_leftOfWindow		= 30;
-	float m_livesPosX			= 40;
+	int m_livesPosX			= 40;
 	float m_livesPosY			= 40;
 	float m_livesWidthX			= 40;
 	float m_livesWidthY			= 40;

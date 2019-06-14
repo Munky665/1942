@@ -16,6 +16,7 @@ protected:
 	aie::Renderer2D* renderer;
 	bool exists = false;
 	float travelSpeed = 150;
+	const int variance = 50;
 	float temp;
 
 

@@ -277,6 +277,7 @@ void Game1942App::update(float deltaTime)
 			for (int i = 0; i < numOfSShips; ++i)
 			{
 				m_col->CheckBVECollision(m_bullet, m_smallShip[i], maxBullets, numOfSShips, m_player);
+				//when enemy dies check to see if health should spawn
 				if (m_smallShip[i]->isAlive == false && m_smallShip[i]->collided == true) {
 					m_healthPickUp->SpawnHealth(m_smallShip[i]->pos.x, m_smallShip[i]->pos.y);
 				}
@@ -286,8 +287,8 @@ void Game1942App::update(float deltaTime)
 		}
 		m_healthPickUp->Move(deltaTime);
 		if (m_col->Collision(m_healthPickUp, m_player) == true) {
-			m_healthPickUp->DeActivate();
 			m_player->Heal();
+			m_healthPickUp->DeActivate();
 		}
 		//health check
 		if (m_player->health <= 0)

@@ -26,7 +26,7 @@ void HealthPickUp::Move(float deltaTime)
 
 void HealthPickUp::SpawnHealth(float x, float y) 
 {
-	temp = rand() % 100 + 1;
+	temp = rand() % variance + 1;
 	if (temp == 6 && exists == false) {
 		exists = true;
 		pos.x = x;

@@ -7,7 +7,7 @@ class Enemy
 {
 public:
 
-	virtual struct Position {
+	struct Position {
 		float x, y;
 		float h;
 		float w;
@@ -19,13 +19,13 @@ public:
 	double waitDuration	= 0;
 	double fireWait		= 4;
 	double pauseTime	= 5;
-	float scoreValue	= 0;
+	int scoreValue	= 0;
 	float sWidth		= 1280;
 	float sHeight		= 720;
 	float speed			= 300;
 	float maxFired		= 4;
 	float topSpawn		= rand() % 740 + 720;
-	float firstSpawn	= rand() % 1280 + 1;
+	float firstSpawn		= rand() % 1280 + 1;
 	bool collided		= false;
 	bool hasFired		= false;
 	bool isAlive		= false;
