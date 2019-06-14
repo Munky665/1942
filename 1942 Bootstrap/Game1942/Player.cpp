@@ -132,3 +132,11 @@ void Player::Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y
 	m_2dRenderer->drawText(m_font, "Lives: ", m_livesPosX - 20, y - 20);
 }
 
+void Player::Heal() {
+	if (health <= maxHealth) {
+		health = health + m_heal;
+		if (health >= maxHealth)
+			health = maxHealth;
+	}
+}
+

@@ -1,6 +1,7 @@
 #pragma once
 #include "Background.h"
 #include "Bullet.h"
+#include "HealthPickUp.h"
 
 
 class Collider
@@ -14,6 +15,8 @@ public:
 	bool Collision(Bullet* b, Enemy* enemy, int size);
 	//checks if bullet has collided with player
 	bool Collision(Bullet* b, Player* p);
+	//checks if Health is picked up by player
+	bool Collision(HealthPickUp* b, Player* p);
 
 	void CheckPVECollision(Player* p, Enemy* e, int s);
 	void CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es, Player* p);

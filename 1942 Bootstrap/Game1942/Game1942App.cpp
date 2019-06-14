@@ -26,6 +26,7 @@ bool Game1942App::startup()
 	if (gameState == true)
 	{
 		if (firstpass == true) {
+			m_healthPickUp = new HealthPickUp();
 			m_death = new GameOver();
 			m_pauseMenu = new PauseMenu();
 			m_pauseMenu->StartUp();
@@ -276,11 +277,18 @@ void Game1942App::update(float deltaTime)
 			for (int i = 0; i < numOfSShips; ++i)
 			{
 				m_col->CheckBVECollision(m_bullet, m_smallShip[i], maxBullets, numOfSShips, m_player);
+				if (m_smallShip[i]->isAlive == false && m_smallShip[i]->collided == true) {
+					m_healthPickUp->SpawnHealth(m_smallShip[i]->pos.x, m_smallShip[i]->pos.y);
+				}
 			}
 			//check for player bullet collisions
 			m_col->CheckBVPCollision(m_eBullet, m_player, maxBullets);
 		}
-
+		m_healthPickUp->Move(deltaTime);
+		if (m_col->Collision(m_healthPickUp, m_player) == true) {
+			m_healthPickUp->DeActivate();
+			m_player->Heal();
+		}
 		//health check
 		if (m_player->health <= 0)
 		{
@@ -359,12 +367,14 @@ void Game1942App::draw()
 			m_bar->Draw(m_2dRenderer);
 			m_death->Draw(screenWidth, screenHeight, m_player->score);
 		}
+		m_healthPickUp->Draw();
 		// begin drawing sprites
 		m_2dRenderer->begin();
 		// draw your stuff here!
 		
 		//draw health bar
 		m_bar->Draw(m_2dRenderer);
+		
 		//draw bullets
 		for (int i = 0; i < maxBullets; ++i)
 		{

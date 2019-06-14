@@ -25,6 +25,7 @@ class Player
 	float m_originalScorePosX	= 150;
 	float m_scorePosY			= 20;
 	int m_fontSize				= 10;
+	float m_heal			    = 20;
 	
 	aie::Texture*			m_playerTexture;
 public:
@@ -41,6 +42,7 @@ public:
 	void Move(aie::Input* input, float deltaTime);
 	void Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y);
 	void Contain(int sWidth, int sHeight);
+	void Heal();
 	~Player();
 };
 

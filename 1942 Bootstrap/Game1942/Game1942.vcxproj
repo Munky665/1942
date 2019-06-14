@@ -171,6 +171,7 @@
     <ClCompile Include="Game1942App.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="HealthBar.cpp" />
+    <ClCompile Include="HealthPickUp.cpp" />
     <ClCompile Include="Land.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Game1942App.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="HealthPickUp.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />

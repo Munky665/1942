@@ -90,6 +90,24 @@ bool Collider::Collision(Bullet* b, Player* p)
 	return false;
 }
 
+bool Collider::Collision(HealthPickUp* b, Player* p)
+{
+	//If the leftmost or rightmost point of the bullet lies somewhere inside the player, continue.
+	if ((b->pos.x >= p->pos.x && b->pos.x <= (p->pos.x + p->pos.w)) ||
+		((b->pos.x + b->pos.w) >= p->pos.x && (b->pos.x + b->pos.w) <= (p->pos.x + p->pos.w)))
+	{
+		//check y axis:
+		if ((b->pos.y >= p->pos.y && b->pos.y <= (p->pos.y + p->pos.h)) ||
+			((b->pos.y + b->pos.h) >= p->pos.y && (b->pos.y + b->pos.h) <= (p->pos.y + p->pos.h)))
+		{
+			//The bullet and player appear to overlap.
+			return true;
+		}
+	}
+	//The sprites do not overlap:
+	return false;
+}
+
 //checks player vs enemy collisions
 void Collider::CheckPVECollision(Player* p, Enemy* e, int s)
 {

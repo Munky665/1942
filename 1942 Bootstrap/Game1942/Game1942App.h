@@ -15,6 +15,7 @@
 #include "Clouds.h"
 #include "Land.h"
 #include "GameOver.h"
+#include "HealthPickUp.h"
 
 
 class Game1942App : public aie::Application {
@@ -63,6 +64,7 @@ protected:
 	HealthBar*			m_bar;
 	MainMenu*			m_menu;
 	PauseMenu*			m_pauseMenu;
+	HealthPickUp*		m_healthPickUp;
 	Collider*			m_col;
 	Player*				m_player;
 	GameOver*			m_death;
