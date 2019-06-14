@@ -94,7 +94,7 @@ bool Game1942App::startup()
 void Game1942App::shutdown() 
 {
 	//checks if game state is active
-	if (gameState ==  true && paused == false && con != true) 
+	if (gameState == true && paused == false && con != true)
 	{
 		if (m_gameOver == true) {
 			m_bullet.~vector();
@@ -111,24 +111,7 @@ void Game1942App::shutdown()
 			delete m_2dRenderer;
 		}
 		else if (menuState == false) {
-			for (int i = 0; i < numOfBg; ++i)
-			{
-				m_land[i]->Active = false;
-				m_clouds[i]->Active = false;
-			}
-			//create bullets
-			for (int i = 0; i < maxBullets; ++i)
-			{
-				m_bullet[i]->exists = false;
-				m_eBullet[i]->exists = false;
-			}
-			//Create Enemies
-			for (int i = 0; i < numOfSShips; ++i)
-			{
-				m_smallShip[i]->isAlive = false;
-			}
-			m_bar->isActive = false;
-
+			DeActivate();
 		}
 	}
 	con = false;
@@ -158,9 +141,9 @@ void Game1942App::update(float deltaTime)
 	if (gameState == true && paused == false && deathState == false) 
 	{
 		m_bar->SetValue(m_player->health);
+		
 		m_player->immune = false;
-		int reverse = numOfSShips - 1;
-
+		
 		for (int i = 0; i < numOfSShips; ++i) 
 		{
 			if (m_smallShip[i]->isAlive == false) 
@@ -169,7 +152,7 @@ void Game1942App::update(float deltaTime)
 			}
 		}
 
-		//player fire Bullet
+		//player fire Bullet one bullet per press
 		if (input->wasKeyPressed(aie::INPUT_KEY_SPACE)) {
 			for (int i = 0; i < maxBullets; ++i) {
 				if (m_bullet[i]->exists != true && m_player->playerFired != true) 
@@ -178,7 +161,6 @@ void Game1942App::update(float deltaTime)
 				}
 			}
 		}
-
 		m_player->playerFired = false;
 		//move each bullet that has been fired
 		for (int i = 0; i < maxBullets; ++i) 
@@ -382,7 +364,7 @@ void Game1942App::draw()
 		
 		//draw health bar
 		m_bar->Draw(m_2dRenderer);
-		//draw bullet
+		//draw bullets
 		for (int i = 0; i < maxBullets; ++i)
 		{
 			if (m_bullet[i]->exists != false)
@@ -393,16 +375,13 @@ void Game1942App::draw()
 					m_bullet[i]->pos.w,
 					m_bullet[i]->pos.h);
 			}
-		}
-		for (int j = 0; j < maxBullets; ++j)
-		{
-			if (m_eBullet[j]->exists != false)
+			if (m_eBullet[i]->exists != false)
 			{
-				m_2dRenderer->drawSprite(m_eBullet[j]->texture,
-					m_eBullet[j]->pos.x,
-					m_eBullet[j]->pos.y,
-					m_eBullet[j]->pos.w,
-					m_eBullet[j]->pos.h);
+				m_2dRenderer->drawSprite(m_eBullet[i]->texture,
+					m_eBullet[i]->pos.x,
+					m_eBullet[i]->pos.y,
+					m_eBullet[i]->pos.w,
+					m_eBullet[i]->pos.h);
 			}
 		}
 		//draw lives
@@ -439,4 +418,25 @@ void Game1942App::draw()
 
 
 	}
+}
+
+void Game1942App::DeActivate() {
+	for (int i = 0; i < numOfBg; ++i)
+	{
+		m_land[i]->Active = false;
+		m_clouds[i]->Active = false;
+	}
+	//create bullets
+	for (int i = 0; i < maxBullets; ++i)
+	{
+		m_bullet[i]->exists = false;
+		m_eBullet[i]->exists = false;
+	}
+	//Create Enemies
+	for (int i = 0; i < numOfSShips; ++i)
+	{
+		m_smallShip[i]->isAlive = false;
+	}
+	m_bar->isActive = false;
+
 }

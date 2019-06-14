@@ -30,6 +30,7 @@ public:
 	virtual void shutdown();
 	virtual void update(float deltaTime);
 	virtual void draw();
+	void DeActivate();
 
 
 	int temp		 = 0;

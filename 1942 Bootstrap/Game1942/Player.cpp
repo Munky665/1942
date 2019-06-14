@@ -22,46 +22,54 @@ void Player::Reset() {
 
 void Player::Move(aie::Input* input, float deltaTime) {
 	
-	if (input->isKeyDown(aie::INPUT_KEY_LEFT) && input->isKeyDown(aie::INPUT_KEY_UP))
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT) && input->isKeyDown(aie::INPUT_KEY_UP) ||
+		input->isKeyDown(aie::INPUT_KEY_A) && input->isKeyDown(aie::INPUT_KEY_W))
 	{
 	pos.x -= m_speed * deltaTime;
 	pos.y += m_speed * deltaTime;
 	}
 
-	else if (input->isKeyDown(aie::INPUT_KEY_UP) && input->isKeyDown(aie::INPUT_KEY_RIGHT))
+	else if (input->isKeyDown(aie::INPUT_KEY_UP) && input->isKeyDown(aie::INPUT_KEY_RIGHT)
+		  || input->isKeyDown(aie::INPUT_KEY_W) && input->isKeyDown(aie::INPUT_KEY_D))
 	{
 	pos.x += m_speed * deltaTime;
 	pos.y += m_speed * deltaTime;
 	}
-	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT) && input->isKeyDown(aie::INPUT_KEY_DOWN))
+	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT) && input->isKeyDown(aie::INPUT_KEY_DOWN)
+		||   input->isKeyDown(aie::INPUT_KEY_D) && input->isKeyDown(aie::INPUT_KEY_S))
 	{
 	pos.x += m_speed * deltaTime;
 	pos.y -= m_speed * deltaTime;
 	}
 
-	else if (input->isKeyDown(aie::INPUT_KEY_DOWN) && input->isKeyDown(aie::INPUT_KEY_LEFT))
+	else if (input->isKeyDown(aie::INPUT_KEY_DOWN) && input->isKeyDown(aie::INPUT_KEY_LEFT)
+		  || input->isKeyDown(aie::INPUT_KEY_S) && input->isKeyDown(aie::INPUT_KEY_A))
 	{
 	pos.x -= m_speed * deltaTime;
 	pos.y -= m_speed * deltaTime;
 	}
 
-	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT)) 
+	else if (input->isKeyDown(aie::INPUT_KEY_RIGHT)
+		  || input->isKeyDown(aie::INPUT_KEY_D))
 	{
 		 pos.x += m_speed * deltaTime;
 	}
 
-	else if (input->isKeyDown(aie::INPUT_KEY_LEFT))
+	else if (input->isKeyDown(aie::INPUT_KEY_LEFT)
+		  || input->isKeyDown(aie::INPUT_KEY_A))
 	{
 		 pos.x -= m_speed * deltaTime;
 	}
 
-	else if (input->isKeyDown(aie::INPUT_KEY_UP))
+	else if (input->isKeyDown(aie::INPUT_KEY_UP)
+		  || input->isKeyDown(aie::INPUT_KEY_W))
 	{
 		 pos.y += m_speed * deltaTime;
 	}
 
 
-	else if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+	else if (input->isKeyDown(aie::INPUT_KEY_DOWN)
+		  || input->isKeyDown(aie::INPUT_KEY_S))
 	{
 		 pos.y -= m_speed * deltaTime;
 	}
