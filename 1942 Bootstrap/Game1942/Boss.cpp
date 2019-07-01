@@ -18,7 +18,7 @@ void Boss::Move(float deltaTime)
 {
 	//move from starting position to inposition
 	if (inPosition == false) {
-		vector3 downDistance = stoppingPointOne - pos;
+		vector2 downDistance = stoppingPointOne - pos;
 		downDistance.x = 0;
 		magOne = downDistance.magnitued();
 
@@ -35,7 +35,7 @@ void Boss::Move(float deltaTime)
 	//move to right when in position
 	if (right == true) {
 
-		vector3 rightDistance = rightscreen - pos;
+		vector2 rightDistance = rightscreen - pos;
 		rightDistance.y = 0;
 		magOne = rightDistance.magnitued();
 
@@ -52,7 +52,7 @@ void Boss::Move(float deltaTime)
 	else if (left == true)
 	{
 
-		vector3 leftDistance = leftscreen - pos;
+		vector2 leftDistance = leftscreen - pos;
 		leftDistance.y = 0;
 		magOne = leftDistance.magnitued();
 

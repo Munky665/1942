@@ -8,16 +8,16 @@ class Cannon :
 protected:
 
 
-	vector3 stoppingPointTwo = { 0,295,0 };
-	vector3 cannonOne = { 390,1200,0 };
-	vector3 cannonTwo = { 172,1100,0 };
-	vector3 cannonThree = { 890,1200,0 };
-	vector3 cannonFour = { 1108,1100,0 };
+	vector2 stoppingPointTwo = { 0,295 };
+	vector2 cannonOne = { 390,1200 };
+	vector2 cannonTwo = { 172,1100 };
+	vector2 cannonThree = { 890,1200 };
+	vector2 cannonFour = { 1108,1100 };
 
-	vector3 rightscreenC{ 1272,0,0 };
-	vector3 rightscreenC2{ 1490,0,0 };
-	vector3 leftscreenC{ -48,0,0 };
-	vector3 leftscreenC2{ -266,0,0 };
+	vector2 rightscreenC{ 1272,0 };
+	vector2 rightscreenC2{ 1490,0 };
+	vector2 leftscreenC{ -48,0 };
+	vector2 leftscreenC2{ -266,0 };
 
 	bool isActive = false;
 	float firstOffSetX = 250;
@@ -52,7 +52,7 @@ public:
 	void Draw() override;
 	bool toggled = false;
 	bool isAlive = true;
-	vector3 cannonPosition = { 0,0,0 };
+	vector2 cannonPosition = { 0,0 };
 	float height = 54;
 	float width = 57;
 	~Cannon();

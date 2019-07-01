@@ -1,7 +1,7 @@
 #pragma once
 #include <Texture.h>
 #include <Renderer2D.h>
-#include "Vector3.h"
+#include "Vector2.h"
 #include <vector>
 #include "Bullet.h"
 #include <vector>
@@ -29,10 +29,10 @@ protected:
 	float screenRight = 1180;
 
 
-	vector3 pos = { m_xPosition, m_startingY, 0 };
-	vector3 stoppingPointOne = { 0,400,0 };
-	vector3 rightscreen{ 1020,0,0 };
-	vector3 leftscreen{ 200,0,0 };
+	vector2 pos = { m_xPosition, m_startingY };
+	vector2 stoppingPointOne = { 0,400 };
+	vector2 rightscreen{ 1020,0 };
+	vector2 leftscreen{ 200,0 };
 	aie::Renderer2D*	m_renderer;
 	aie::Texture*		m_texture;
 public:

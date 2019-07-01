@@ -40,7 +40,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 	if (inPosition == false) {
 		//sets inside cannon position on plane wings
 		if (outsideCannon == false) {
-			vector3 downDistance = stoppingPointOne - cannonPosition;
+			vector2 downDistance = stoppingPointOne - cannonPosition;
 			downDistance.x = 0;
 			magOne = downDistance.magnitued();
 
@@ -56,7 +56,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 		//set outside cannon position on plane wings
 		else if (outsideCannon == true) {
 
-			vector3 downDistance = stoppingPointTwo - cannonPosition;
+			vector2 downDistance = stoppingPointTwo - cannonPosition;
 			downDistance.x = 0;
 			magOne = downDistance.magnitued();
 
@@ -75,7 +75,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 	{
 		if (outsideCannon == false) {
 			if (can3 == true) {
-				vector3 rightDistance = rightscreenC - cannonPosition;
+				vector2 rightDistance = rightscreenC - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
@@ -89,7 +89,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				}
 			}
 			else if (can1 == true) {
-				vector3 rightDistance = rightscreenC - cannonPosition;
+				vector2 rightDistance = rightscreenC - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
@@ -105,7 +105,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 		}
 		else if (outsideCannon == true) {
 			if (can4 == true) {
-				vector3 rightDistance = rightscreenC2 - cannonPosition;
+				vector2 rightDistance = rightscreenC2 - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
@@ -119,7 +119,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				}
 			}
 			else if (can2 == true) {
-				vector3 rightDistance = rightscreenC2 - cannonPosition;
+				vector2 rightDistance = rightscreenC2 - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
@@ -139,7 +139,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 	{
 		if (outsideCannon == false) {
 			if (can1 == true) {
-				vector3 leftDistance = leftscreenC - cannonPosition;
+				vector2 leftDistance = leftscreenC - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
 
@@ -153,7 +153,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				}
 			}
 			else if (can3 == true) {
-				vector3 leftDistance = leftscreenC - cannonPosition;
+				vector2 leftDistance = leftscreenC - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
 
@@ -169,7 +169,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 		}
 		if (outsideCannon == true) {
 			if (can2 == true) {
-				vector3 leftDistance = leftscreenC2 - cannonPosition;
+				vector2 leftDistance = leftscreenC2 - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
 
@@ -183,7 +183,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				}
 			}
 			else if (can4 == true) {
-				vector3 leftDistance = leftscreenC2 - cannonPosition;
+				vector2 leftDistance = leftscreenC2 - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
 
@@ -239,7 +239,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				bullets[i]->Reset();
 			}
 			//check if player fire is hitting cannon
-			vector3 collider = pB[i]->pos - cannonPosition;
+			vector2 collider = pB[i]->pos - cannonPosition;
 			float col = collider.magnitued();
 			//remove bullet if it collides with cannon and do 1 point of damage
 			if (col < 50) {
