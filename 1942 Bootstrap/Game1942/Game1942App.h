@@ -55,11 +55,11 @@ protected:
 	bool enemyState = false;
 	bool bossActive = false;
 	int startTimer = 5;
-	int bossTimer	= 180;
+	int bossTimer	= 120;
 	int displacment = 100;
 	int m_duration	= 2;
 	int m_waitTime	= 2;
-
+	int cannonDestroyed = 4;
 	clock_t start = clock();
 	clock_t wait = clock();
 	float duration;

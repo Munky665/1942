@@ -26,7 +26,7 @@ protected:
 	float rotate = 5;
 	float value = 2;
 	int maxBullets = 50;
-	bool isAlive = true;
+
 	int positionN = 1;
 	clock_t start = clock();
 	clock_t wait = clock();
@@ -34,11 +34,12 @@ protected:
 	float duration;
 	bool hasFired = false;
 	float velocity = 400;
+
 	bool can1 = false,
 		 can2 = false,
 		 can3 = false,
 		 can4 = false;
-
+	int score = 100;
 	int health = 50;
 	aie::Texture* destroyed;
 	std::vector<Bullet*> bullets;
@@ -49,6 +50,8 @@ public:
 	void Move(float deltaTime, Player* p, std::vector<Bullet*> pB);
 	void Reset(int i) override;
 	void Draw() override;
+	bool toggled = false;
+	bool isAlive = true;
 	vector3 cannonPosition = { 0,0,0 };
 	float height = 54;
 	float width = 57;

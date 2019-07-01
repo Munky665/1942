@@ -237,6 +237,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 			}
 			if (health < 1) {
 				isAlive = false;
+				p->score += score;
 			}
 
 		}

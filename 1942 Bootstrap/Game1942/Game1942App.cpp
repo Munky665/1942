@@ -363,6 +363,16 @@ void Game1942App::update(float deltaTime)
 				m_smallShip[i]->pos.y = 0;
 			}
 			m_healthPickUp->DeActivate();
+			for (int i = 0; i < 4; ++i) {
+				if (m_turrets[i]->isAlive == false && m_turrets[i]->toggled == false) {
+					cannonDestroyed += 1;
+					m_turrets[i]->toggled == true;
+				}
+			}
+			if (cannonDestroyed == 4) {
+				m_player->score += 2000;
+				deathState == true;
+			}
 		}
 	}
 	//enter gameover state when player has no lives left
