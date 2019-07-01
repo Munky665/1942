@@ -12,7 +12,7 @@ HealthPickUp::HealthPickUp()
 HealthPickUp::~HealthPickUp()
 {
 }
-
+//moves health pickup down the screen if it exists.
 void HealthPickUp::Move(float deltaTime) 
 {
 	if (exists == true) {
@@ -23,7 +23,7 @@ void HealthPickUp::Move(float deltaTime)
 		}
 	}
 }
-
+//spawn health if random number matches at destroyed enemy position
 void HealthPickUp::SpawnHealth(float x, float y) 
 {
 	temp = rand() % variance + 1;
@@ -34,6 +34,7 @@ void HealthPickUp::SpawnHealth(float x, float y)
 	}
 
 }
+//draws health
 void HealthPickUp::Draw() 
 {
 	if (exists == true)
@@ -43,7 +44,7 @@ void HealthPickUp::Draw()
 		renderer->end();
 	}
 }
-
+//resets health position when picked up
 void HealthPickUp::DeActivate()
 {
 	exists = false;

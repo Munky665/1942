@@ -12,14 +12,14 @@ Player::Player()
 Player::~Player()
 {
 }
-
+//resets player position health and lives
 void Player::Reset() {
 	pos.x = 600;
 	pos.y = 100;
 	health = maxHealth;
 	lives = 3;
 }
-
+//moves player based on key input
 void Player::Move(aie::Input* input, float deltaTime) {
 	
 	if (input->isKeyDown(aie::INPUT_KEY_LEFT) && input->isKeyDown(aie::INPUT_KEY_UP) ||
@@ -131,7 +131,7 @@ void Player::Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y
 	}
 	m_2dRenderer->drawText(m_font, "Lives: ", m_livesPosX - 20, y - 20);
 }
-
+//heal player if health pickup is collected
 void Player::Heal() {
 	if (health <= maxHealth && healed == false) {
 		health = health + m_heal;

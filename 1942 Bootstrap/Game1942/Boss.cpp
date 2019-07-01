@@ -16,7 +16,7 @@ Boss::~Boss()
 
 void Boss::Move(float deltaTime)
 {
-
+	//move from starting position to inposition
 	if (inPosition == false) {
 		vector3 downDistance = stoppingPointOne - pos;
 		downDistance.x = 0;
@@ -32,7 +32,7 @@ void Boss::Move(float deltaTime)
 			right = true;
 		}
 	}
-
+	//move to right when in position
 	if (right == true) {
 
 		vector3 rightDistance = rightscreen - pos;
@@ -48,6 +48,7 @@ void Boss::Move(float deltaTime)
 			left = true;
 		}
 	}
+	//move to left if in position
 	else if (left == true)
 	{
 

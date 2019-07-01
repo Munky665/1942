@@ -38,6 +38,7 @@ Cannon::Cannon(int i)
 void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 {
 	if (inPosition == false) {
+		//sets inside cannon position on plane wings
 		if (outsideCannon == false) {
 			vector3 downDistance = stoppingPointOne - cannonPosition;
 			downDistance.x = 0;
@@ -52,6 +53,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				inPosition = true;
 			}
 		}
+		//set outside cannon position on plane wings
 		else if (outsideCannon == true) {
 
 			vector3 downDistance = stoppingPointTwo - cannonPosition;
@@ -68,6 +70,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 			}
 		}
 	}
+	//once inposition move cannons with boss to the right.
 	if (right == true)
 	{
 		if (outsideCannon == false) {
@@ -131,6 +134,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 			}
 		}
 	}
+	//once in position move cannons with boss to the left
 	if (left == true)
 	{
 		if (outsideCannon == false) {
@@ -194,6 +198,7 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 			}
 		}
 	}
+	//fire rate count down.
 	if (inPosition == true && isAlive == true) {
 
 		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
@@ -204,19 +209,22 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 		}
 		else
 			hasFired = true;
-
+		//check if boss has fired
 		for (int i = 0; i < maxBullets; ++i) {
 			if (hasFired == false && bullets[i]->exists == false) {
 				bullets[i]->BossFired();
 				bullets[i]->pos.x = cannonPosition.x;
 				bullets[i]->pos.y = cannonPosition.y;
-				bullets[i]->pos.y - 20;
+				bullets[i]->pos.y -= 20;
 			}
+			//if bullet exists move towards bottom of screen at velocity
 			if (bullets[i]->exists == true) {
 				bullets[i]->pos.y -= velocity * deltaTime;
+				//if bullet reaches bottom of screen reset
 				if (bullets[i]->pos.y < 0) {
 					bullets[i]->Reset();
 				}
+				//if bullet collides with player cause damage
 				if (col->Collision(bullets[i], p) == true && bullets[i]->exists == true) {
 					if (p->immune == false) {
 						p->health = p->health - bullets[i]->damage;
@@ -226,21 +234,26 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 					bullets[i]->efire = false;
 				}
 			}
+			//reset bullet if exists not true
 			if (bullets[i]->exists != true) {
 				bullets[i]->Reset();
 			}
+			//check if player fire is hitting cannon
 			vector3 collider = pB[i]->pos - cannonPosition;
 			float col = collider.magnitued();
+			//remove bullet if it collides with cannon and do 1 point of damage
 			if (col < 50) {
 				pB[i]->exists = false;
  				health -= 1;
 			}
+			//if health is less than one destroy cannon
 			if (health < 1) {
 				isAlive = false;
 				p->score += score;
 			}
 
 		}
+		//allow player to take damage again
 		p->immune = false;
 	}
 }
@@ -250,13 +263,16 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 Cannon::~Cannon()
 {
 }
+//draw cannons in positions
 void Cannon::Draw()
 {
 
 	m_renderer->begin();
+	//draw not destroyed cannon
 	if (isAlive == true) {
 		m_renderer->drawSprite(m_texture, cannonPosition.x, cannonPosition.y, 0, 0, 0, 50);
 	}
+	//draw destroyed cannon
 	else if(isAlive == false) {
 		m_renderer->drawSprite(destroyed, cannonPosition.x, cannonPosition.y, 0, 0, 0, 50);
 	}
@@ -266,7 +282,7 @@ void Cannon::Draw()
 	}
 	m_renderer->end();
 }
-
+//reset cannons position when game is reset
 void Cannon::Reset(int i) {
 	inPosition = false;
 	switch (i) {
