@@ -32,6 +32,12 @@ void Bullet::PlayerFired(Player* p)
 	p->playerFired = true;
 }
 
+void Bullet::BossFired() {
+	exists = true;
+	efire = true;
+	damage = bigDamage;
+}
+
 void Bullet::EnemyFired(Enemy* e) 
 {
 	exists = true;
@@ -40,19 +46,17 @@ void Bullet::EnemyFired(Enemy* e)
 	pos.x = e->pos.x;
 	pos.y = e->pos.y - displacement;
 
-	if (e->isBig == true & pos.h == 10 && pos.w == 10) 
+	if (e->isBig == true & size == 10) 
 	{
-		if (pos.h == 10 && pos.w == 10) 
+		if (size == 10) 
 		{
-			pos.h += 10;
-			pos.w += 10;
+			size += 10;
 		}
 		damage = bigDamage;
 	}
-	else if(e->isBig != true && pos.h > 10 && pos.w > 10)
+	else if(e->isBig != true && size > 10 )
 	{
-		pos.h = 10;
-		pos.w = 10;
+		size = 10;
 		damage = smallDamage;
 	}
 	else 

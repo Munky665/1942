@@ -133,8 +133,9 @@ void Player::Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y
 }
 
 void Player::Heal() {
-	if (health <= maxHealth) {
+	if (health <= maxHealth && healed == false) {
 		health = health + m_heal;
+		healed = true;
 		if (health >= maxHealth)
 			health = maxHealth;
 		else

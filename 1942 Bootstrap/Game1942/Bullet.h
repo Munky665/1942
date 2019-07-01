@@ -1,13 +1,10 @@
 #pragma once
 #include "Player.h"
 #include "SmallShip.h"
+#include "Vector3.h"
 class Bullet
 {
-	struct Position {
-		float x, y;
-		float w			= 10;
-		float h			= 10;
-	};
+
 
 	
 	float velocity		= 400;
@@ -21,13 +18,14 @@ public:
 	int damage			= 0;
 
 	aie::Texture*		 texture;
-	Position			 pos;
-	
+	vector3 pos = { 0,0,0 };
+	float size = 10;
 	Bullet();
 	void PlayerFired(Player* p);
 	void EnemyFired(Enemy* e);
 	void Move(float deltaTime);
 	void Reset();
+	void BossFired();
 	bool collided		= false;
 	~Bullet();
 	bool pfire			= false;

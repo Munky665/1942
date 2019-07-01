@@ -57,7 +57,7 @@ void SmallShip::Size()
 void SmallShip::Reset(int sW, int sH) 
 {
 	pos.x = rand() % sW + 1;
-	pos.y = sH;
+	pos.y = rand() % sW + sH;
 	temp = rand() % 2 + 1;
 	isAlive = true;
 	hasFired = false;

@@ -164,7 +164,9 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BigShip.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="Clouds.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -178,11 +180,14 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SmallShip.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="BigShip.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="Clouds.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
@@ -196,6 +201,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SmallShip.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game1942.rc" />

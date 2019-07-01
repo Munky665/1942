@@ -9,7 +9,7 @@ class Background
 	};
 
 	
-	float topSpawn = rand() % 900 + 780;
+	float topSpawn = rand() % 900 + 800;
 	float firstSpawn = rand() % 1280 + 1;
 public:
 	bool Active = true;
