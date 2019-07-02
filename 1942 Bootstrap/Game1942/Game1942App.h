@@ -59,7 +59,7 @@ protected:
 	int displacment = 100;
 	int m_duration	= 2;
 	int m_waitTime	= 2;
-	int cannonDestroyed = 4;
+	int cannonDestroyed = 0;
 	clock_t start = clock();
 	clock_t wait = clock();
 	float duration;

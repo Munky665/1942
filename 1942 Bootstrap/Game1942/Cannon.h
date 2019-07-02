@@ -12,7 +12,7 @@ protected:
 	vector2 cannonOne = { 390,1200 };
 	vector2 cannonTwo = { 172,1100 };
 	vector2 cannonThree = { 890,1200 };
-	vector2 cannonFour = { 1108,1100 };
+	vector2 cannonFour = { 1108,1100 }; //bottom right
 
 	vector2 rightscreenC{ 1272,0 };
 	vector2 rightscreenC2{ 1490,0 };

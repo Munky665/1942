@@ -393,13 +393,13 @@ void Game1942App::update(float deltaTime)
 				//check how many cannons are left
 				if (m_turrets[i]->isAlive == false && m_turrets[i]->toggled == false) {
 					cannonDestroyed += 1;
-					m_turrets[i]->toggled == true;
+					m_turrets[i]->toggled = true;
 				}
 			}
 			//if all cannons are destroyed end game
 			if (cannonDestroyed == 4) {
 				m_player->score += 2000;
-				deathState == true;
+				deathState = true;
 			}
 		}
 	}

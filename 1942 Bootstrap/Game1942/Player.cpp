@@ -18,6 +18,7 @@ void Player::Reset() {
 	pos.y = 100;
 	health = maxHealth;
 	lives = 3;
+	score = 0;
 }
 //moves player based on key input
 void Player::Move(aie::Input* input, float deltaTime) {

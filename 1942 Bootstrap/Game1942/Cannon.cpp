@@ -34,6 +34,7 @@ Cannon::Cannon(int i)
 		break;
 	}
 	col = new Collider();
+	isAlive = true;
 }
 void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 {
@@ -43,31 +44,35 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 			vector2 downDistance = stoppingPointOne - cannonPosition;
 			downDistance.x = 0;
 			magOne = downDistance.magnitued();
+		//if distance from y position less than 1 unit
+		if (magOne < 1)
+		{
+			right = true;
+			inPosition = true;
+		}
+		//if distance from y position greater than 1 unit
+		else if (magOne > 0) {
+				cannonPosition += downDistance.normalise(downDistance) * 200 * deltaTime;
+			}
 
-			if (magOne > 0) {
-				cannonPosition += downDistance.normalise(downDistance) * 2;
-			}
-			else if (magOne < 1)
-			{
-				right = true;
-				inPosition = true;
-			}
 		}
 		//set outside cannon position on plane wings
-		else if (outsideCannon == true) {
-
+		else if (outsideCannon == true) 
+		{
 			vector2 downDistance = stoppingPointTwo - cannonPosition;
 			downDistance.x = 0;
 			magOne = downDistance.magnitued();
-
-			if (magOne > 1) {
-				cannonPosition += downDistance.normalise(downDistance) * 2;
-			}
-			else if (magOne < 2)
+			//if distance from y position greater than 1 unit
+			if (magOne < 1)
 			{
 				right = true;
 				inPosition = true;
 			}
+			//if distance from y position less than 1 unit
+			else if (magOne > 0) {
+				cannonPosition += downDistance.normalise(downDistance) * 200 * deltaTime;
+			}
+
 		}
 	}
 	//once inposition move cannons with boss to the right.
@@ -78,29 +83,33 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				vector2 rightDistance = rightscreenC - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
-
-				if (magOne > 0) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 2;
-				}
-				else if (magOne < 1)
+				//if distance from right side less than one
+				if (magOne < 1)
 				{
 					right = false;
 					left = true;
 				}
+				//if distance from right side greater than one
+				else if (magOne > 0) {
+					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+				}
+
 			}
 			else if (can1 == true) {
 				vector2 rightDistance = rightscreenC - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
-				if (magOne > 500) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 2;
-				}
-				else if (magOne < 501)
+				if (magOne < 501)
 				{
 					right = false;
 					left = true;
 				}
+
+				else if (magOne > 500) {
+					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+				}
+
 			}
 		}
 		else if (outsideCannon == true) {
@@ -109,28 +118,31 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
 
-				if (magOne > 0) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 2;
-				}
-				else if (magOne < 1)
+				if (magOne < 1)
 				{
 					right = false;
 					left = true;
 				}
+
+				else if (magOne > 0) {
+					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+				}
+
 			}
 			else if (can2 == true) {
 				vector2 rightDistance = rightscreenC2 - cannonPosition;
 				rightDistance.y = 0;
 				magOne = rightDistance.magnitued();
-
-				if (magOne > 936) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 2;
-				}
-				else if (magOne < 937)
+				if (magOne < 937)
 				{
 					right = false;
 					left = true;
 				}
+
+				else if (magOne > 936) {
+					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+				}
+
 			}
 		}
 	}
@@ -143,28 +155,31 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
 
-				if (magOne > 0) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 2;
-				}
-				else if (magOne < 1)
+				if (magOne < 1)
 				{
 					right = true;
 					left = false;
 				}
+
+				else if (magOne > 0) {
+					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+				}
+
 			}
 			else if (can3 == true) {
 				vector2 leftDistance = leftscreenC - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
-
-				if (magOne > 500) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 2;
-				}
-				else if (magOne < 501)
+				if (magOne < 501)
 				{
 					right = true;
 					left = false;
 				}
+
+				else if (magOne > 500) {
+					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+				}
+
 			}
 		}
 		if (outsideCannon == true) {
@@ -172,89 +187,98 @@ void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
 				vector2 leftDistance = leftscreenC2 - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
-
-				if (magOne > 0) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 2;
-				}
-				else if (magOne < 1)
+				if (magOne < 1)
 				{
 					right = true;
 					left = false;
 				}
+
+				else if (magOne > 0) {
+					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+				}
+
 			}
 			else if (can4 == true) {
 				vector2 leftDistance = leftscreenC2 - cannonPosition;
 				leftDistance.y = 0;
 				magOne = leftDistance.magnitued();
-
-				if (magOne > 936) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 2;
-				}
-				else if (magOne < 937)
+				if (magOne < 937)
 				{
 					right = true;
 					left = false;
 				}
+
+				else if (magOne > 935) {
+					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+				}
+
 			}
 		}
 	}
-	//fire rate count down.
-	if (inPosition == true && isAlive == true) {
+	if (isAlive == true) {
+		//fire rate count down.
+		if (inPosition == true && isAlive == true) {
 
-		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-		if (duration > fireWait) {
-			hasFired = false;
-			wait = clock() - duration;
-			duration = 0;
-		}
-		else
-			hasFired = true;
-		//check if boss has fired
-		for (int i = 0; i < maxBullets; ++i) {
-			if (hasFired == false && bullets[i]->exists == false) {
-				bullets[i]->BossFired();
-				bullets[i]->pos.x = cannonPosition.x;
-				bullets[i]->pos.y = cannonPosition.y;
-				bullets[i]->pos.y -= 20;
+			duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
+			if (duration > fireWait) {
+				hasFired = false;
+				wait = clock() - duration;
+				duration = 0;
 			}
-			//if bullet exists move towards bottom of screen at velocity
-			if (bullets[i]->exists == true) {
-				bullets[i]->pos.y -= velocity * deltaTime;
-				//if bullet reaches bottom of screen reset
-				if (bullets[i]->pos.y < 0) {
+			else
+				hasFired = true;
+			//check if boss has fired
+			for (int i = 0; i < maxBullets; ++i) {
+				if (hasFired == false && bullets[i]->exists == false) {
+					bullets[i]->BossFired();
+					bullets[i]->pos.x = cannonPosition.x;
+					bullets[i]->pos.y = cannonPosition.y;
+					bullets[i]->pos.y -= 20;
+				}
+				//if bullet exists move towards bottom of screen at velocity
+				if (bullets[i]->exists == true) {
+					bullets[i]->pos.y -= velocity * deltaTime;
+					//if bullet reaches bottom of screen reset
+					if (bullets[i]->pos.y < 0) {
+						bullets[i]->Reset();
+					}
+					//if bullet collides with player cause damage
+					if (col->Collision(bullets[i], p) == true && bullets[i]->exists == true) {
+						if (p->immune == false) {
+							p->health = p->health - bullets[i]->damage;
+						}
+						p->immune = true;
+						bullets[i]->exists = false;
+						bullets[i]->efire = false;
+					}
+				}
+				//reset bullet if exists not true
+				if (bullets[i]->exists != true) {
 					bullets[i]->Reset();
 				}
-				//if bullet collides with player cause damage
-				if (col->Collision(bullets[i], p) == true && bullets[i]->exists == true) {
-					if (p->immune == false) {
-						p->health = p->health - bullets[i]->damage;
-					}
-					p->immune = true;
-					bullets[i]->exists = false;
-					bullets[i]->efire = false;
+				//check if player fire is hitting cannon
+				vector2 collider = pB[i]->pos - cannonPosition;
+				float col = collider.magnitued();
+				//remove bullet if it collides with cannon and do 1 point of damage
+				if (col < 50) {
+					pB[i]->exists = false;
+					health -= 1;
 				}
-			}
-			//reset bullet if exists not true
-			if (bullets[i]->exists != true) {
-				bullets[i]->Reset();
-			}
-			//check if player fire is hitting cannon
-			vector2 collider = pB[i]->pos - cannonPosition;
-			float col = collider.magnitued();
-			//remove bullet if it collides with cannon and do 1 point of damage
-			if (col < 50) {
-				pB[i]->exists = false;
- 				health -= 1;
-			}
-			//if health is less than one destroy cannon
-			if (health < 1) {
-				isAlive = false;
-				p->score += score;
-			}
+				//if health is less than one destroy cannon
+				if (health < 1) {
+					isAlive = false;
+					p->score += score;
+				}
 
+			}
+			//allow player to take damage again
+			p->immune = false;
 		}
-		//allow player to take damage again
-		p->immune = false;
+	}
+	else if (isAlive == false) {
+		for (int i = 0; i < maxBullets; ++i) {
+			bullets[i]->Reset();
+		}
 	}
 }
 

@@ -21,33 +21,37 @@ void Boss::Move(float deltaTime)
 		vector2 downDistance = stoppingPointOne - pos;
 		downDistance.x = 0;
 		magOne = downDistance.magnitued();
-
-		if (magOne > 0) 
+		if (magOne < 1)
 		{
-			pos += downDistance.normalise(downDistance) * 2;
-		}
-		else 
-		{
-			inPosition = true;
+			//inPosition = true;
 			right = true;
+			inPosition = true;
 		}
+
+		else if (magOne > 0) 
+		{
+			pos += downDistance.normalise(downDistance) * 200 * deltaTime;
+		}
+
 	}
+
 	//move to right when in position
 	if (right == true) {
 
 		vector2 rightDistance = rightscreen - pos;
 		rightDistance.y = 0;
 		magOne = rightDistance.magnitued();
-
-		if (magOne > 0) {
-			pos += rightDistance.normalise(rightDistance) * 2;
-		}
-		else
+		if (magOne < 1)
 		{
 			right = false;
 			left = true;
 		}
+		else if (magOne > 0) {
+			pos += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+		}
+
 	}
+
 	//move to left if in position
 	else if (left == true)
 	{
@@ -55,14 +59,14 @@ void Boss::Move(float deltaTime)
 		vector2 leftDistance = leftscreen - pos;
 		leftDistance.y = 0;
 		magOne = leftDistance.magnitued();
-
-		if (magOne > 0) {
-			pos += leftDistance.normalise(leftDistance) * 2;
-		}
-		else
+		if (magOne < 1)
 		{
 			left = false;
 			right = true;
+		}
+
+		else if (magOne > 0) {
+			pos += leftDistance.normalise(leftDistance) * 200 * deltaTime;
 		}
 	}
 		
