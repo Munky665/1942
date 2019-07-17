@@ -136,9 +136,13 @@ void Player::Heal() {
 	if (health <= maxHealth) {
 		health = health + m_heal;
 		if (health >= maxHealth)
+		{
 			health = maxHealth;
+		}
 		else
+		{
 			health = health;
+		}
 	}
 }
 

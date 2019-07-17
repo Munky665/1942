@@ -286,10 +286,12 @@ void Game1942App::update(float deltaTime)
 			m_col->CheckBVPCollision(m_eBullet, m_player, maxBullets);
 		}
 		m_healthPickUp->Move(deltaTime);
+		//check for health pick up collision
 		if (m_col->Collision(m_healthPickUp, m_player) == true) {
 			m_player->Heal();
 			m_healthPickUp->DeActivate();
 		}
+		
 		//health check
 		if (m_player->health <= 0)
 		{

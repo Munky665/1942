@@ -47,4 +47,6 @@ void HealthPickUp::Draw()
 void HealthPickUp::DeActivate()
 {
 	exists = false;
+	pos.x = 0;
+	pos.y = 0;
 }
