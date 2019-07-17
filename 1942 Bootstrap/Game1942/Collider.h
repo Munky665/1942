@@ -1,7 +1,7 @@
 #pragma once
 #include "Background.h"
-#include "Bullet.h"
 #include "HealthPickUp.h"
+#include "Bullet.h"
 
 
 class Collider

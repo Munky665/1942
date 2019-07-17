@@ -37,30 +37,25 @@ void MainMenu::Menu(bool &state, bool &quit)
 	{
 		exitSelected  = true;
 		startSelected = false;
-		std::cout << "Exit Selected" << std::endl;
 	}
 	else if (m_input->wasKeyPressed(aie::INPUT_KEY_UP) && exitSelected == true) 
 	{
 		exitSelected  = false;
 		startSelected = true;
-		std::cout << "Start Selected" << std::endl;
 	}
 	if (m_input->wasKeyPressed(aie::INPUT_KEY_DOWN) && startSelected == true) 
 	{
 		exitSelected  = true;
 		startSelected = false;
-		std::cout << "Exit Selected" << std::endl;
 	}
 	else if (m_input->wasKeyPressed(aie::INPUT_KEY_DOWN) && exitSelected == true)
 	{
 		exitSelected  = false;
 		startSelected = true;
-		std::cout << "Start Selected" << std::endl;
 	}
 
 	if (m_input->wasKeyPressed(aie::INPUT_KEY_ENTER)) 
 	{
-		std::cout << "Enter Pressed" << std::endl;
 		if (startSelected == true)
 		{
 			state = true;

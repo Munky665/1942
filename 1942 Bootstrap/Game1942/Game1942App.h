@@ -16,6 +16,7 @@
 #include "Land.h"
 #include "GameOver.h"
 #include "HealthPickUp.h"
+#include "Cannon.h"
 
 
 class Game1942App : public aie::Application {
@@ -40,8 +41,9 @@ public:
 
 
 protected:
-	bool isDead = false;
-	bool firstpass = true;
+	
+	bool isDead		= false;
+	bool firstpass	= true;
 	bool con		= false;
 	bool paused		= false;
 	bool pauseL		= false;
@@ -50,17 +52,27 @@ protected:
 	bool menuState  = true;
 	bool quitState  = false;
 	bool deathState = false;
+	bool enemyState = false;
+	bool bossActive = false;
+	int startTimer = 5;
+	int bossTimer	= 120;
 	int displacment = 100;
-	int m_duration = 2;
-	int m_waitTime = 2;
+	int m_duration	= 2;
+	int m_waitTime	= 2;
+	int cannonDestroyed = 0;
+	clock_t start = clock();
+	clock_t wait = clock();
+	float duration;
 
 	std::vector<Background*> m_clouds;
-	std::vector<Background*> m_land			 ;
+	std::vector<Background*> m_land;
 
 	std::vector<Enemy*>  m_smallShip;
 	std::vector<Bullet*> m_bullet;
 	std::vector<Bullet*> m_eBullet;
+	std::vector<Cannon*> m_turrets;
 
+	Boss*				m_boss;
 	HealthBar*			m_bar;
 	MainMenu*			m_menu;
 	PauseMenu*			m_pauseMenu;

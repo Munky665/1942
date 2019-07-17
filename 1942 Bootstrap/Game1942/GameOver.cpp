@@ -20,7 +20,7 @@ GameOver::~GameOver()
 bool GameOver::DeathMenu()
 {
 	m_input = aie::Input::getInstance();
-
+	//moves highlight up to next button, or to the bottom if at the top
 	if (m_input->wasKeyPressed(aie::INPUT_KEY_UP))
 	{
 		if (selected == 2)
@@ -32,6 +32,7 @@ bool GameOver::DeathMenu()
 			selected = 2;
 		}
 	}
+	//moves highlight down to next button, or to the top if at the bottom
 	if (m_input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 	{
 		if (selected == 1)
@@ -43,6 +44,7 @@ bool GameOver::DeathMenu()
 			selected = 1;
 		}
 	}
+	//select highlighted button
 	if (m_input->wasKeyPressed(aie::INPUT_KEY_ENTER)) {
 		if (restartSelected == true)
 		{
@@ -53,7 +55,7 @@ bool GameOver::DeathMenu()
 			return false;
 		}
 	}
-
+	//sets bool based on which button is highlighted
 	switch (selected)
 	{
 	case 1:
@@ -66,7 +68,7 @@ bool GameOver::DeathMenu()
 		break;
 	}
 }
-
+//draws the text on the screen for the gameover menu
 void GameOver::Draw(float x, float y, int score) 
 {
 	m_renderer->begin();
@@ -93,6 +95,6 @@ void GameOver::Draw(float x, float y, int score)
 	m_renderer->setRenderColour(1, 1, 1, 1);
 	char result[64];
 	snprintf(result, 64, "Score:%i", score);
-	m_renderer->drawText(m_font, result,		(x * 0.5) - 100, (y * 0.5) + 80, 0);
+	m_renderer->drawText(m_headerFont, result,		(x * 0.5) - 100, (y * 0.5) + 80, 0);
 	m_renderer->end();
 }

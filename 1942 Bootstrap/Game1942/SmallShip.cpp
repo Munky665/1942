@@ -17,6 +17,7 @@ SmallShip::~SmallShip()
 
 void SmallShip::Move(float deltaTime, int sW, int sH)
 {
+	//sets angle of flight
 	switch (temp) 
 	{
 	case 1:
@@ -33,11 +34,9 @@ void SmallShip::Move(float deltaTime, int sW, int sH)
 		break;
 	}
 	
-
+	//when small ship reaches bottom of screen, reset to top of screen
 	if (pos.x < 0 || pos.x > sW) {
-		pos.x = rand() % sW + 1;
-		pos.y = sH;
-		temp = rand() % 2 + 1;
+		Reset(sW, sH);
 		
 		
 	}
@@ -48,16 +47,17 @@ void SmallShip::textureEnemy()
 	texture = new aie::Texture("./textures/Smallplane.png");
 }
 
+//sets small ships width and height.
 void SmallShip::Size() 
 {
 	pos.h = 64;
 	pos.w = 64;
 }
-
+//resets small ship to random position on at the top of the screen 
 void SmallShip::Reset(int sW, int sH) 
 {
-	pos.x = rand() % sW + 1;
-	pos.y = sH;
+	pos.x = firstSpawn;
+	pos.y = topSpawn;
 	temp = rand() % 2 + 1;
 	isAlive = true;
 	hasFired = false;

@@ -55,11 +55,11 @@ bool Collider::Collision(Bullet* b, Enemy* enemy, int size)
 	{
 		//If the leftmost or rightmost point of the Bullet lies somewhere inside the Enemy, continue.
 		if ((b->pos.x >= enemy->pos.x && b->pos.x <= (enemy->pos.x + enemy->pos.w)) ||
-			((b->pos.x + b->pos.w) >= enemy->pos.x && (b->pos.x + b->pos.w) <= (enemy->pos.x + enemy->pos.w)))
+			((b->pos.x + b->size) >= enemy->pos.x && (b->pos.x + b->size) <= (enemy->pos.x + enemy->pos.w)))
 		{
 			//check y axis:
 			if ((b->pos.y >= enemy->pos.y && b->pos.y <= (enemy->pos.y + enemy->pos.h)) ||
-				((b->pos.y + b->pos.h) >= enemy->pos.y && (b->pos.y + b->pos.h) <= (enemy->pos.y + enemy->pos.h))) 
+				((b->pos.y + b->size) >= enemy->pos.y && (b->pos.y + b->size) <= (enemy->pos.y + enemy->pos.h))) 
 			{
 				//The bullet and enemy appear to overlap.
 				enemy->collided = true;
@@ -75,11 +75,11 @@ bool Collider::Collision(Bullet* b, Player* p)
 {
 		//If the leftmost or rightmost point of the bullet lies somewhere inside the player, continue.
 		if ((b->pos.x >=p->pos.x && b->pos.x <= (p->pos.x + p->pos.w)) ||
-			((b->pos.x + b->pos.w) >= p->pos.x && (b->pos.x + b->pos.w) <= (p->pos.x + p->pos.w)))
+			((b->pos.x + b->size) >= p->pos.x && (b->pos.x + b->size) <= (p->pos.x + p->pos.w)))
 		{
 			//check y axis:
 			if ((b->pos.y >= p->pos.y && b->pos.y <= (p->pos.y +p->pos.h)) ||
-				((b->pos.y + b->pos.h) >= p->pos.y && (b->pos.y + b->pos.h) <= (p->pos.y + p->pos.h)))
+				((b->pos.y + b->size) >= p->pos.y && (b->pos.y + b->size) <= (p->pos.y + p->pos.h)))
 			{
 				//The bullet and player appear to overlap.
 				b->collided = true;
@@ -89,6 +89,7 @@ bool Collider::Collision(Bullet* b, Player* p)
 	//The sprites do not overlap:
 	return false;
 }
+
 
 bool Collider::Collision(HealthPickUp* b, Player* p)
 {
@@ -127,7 +128,7 @@ void Collider::CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int e
 {
 	for (int j = 0; j < bs; j++)
 	{
-		if (Collision(b[j], e, bs) == true)
+		if (Collision(b[j], e, bs) == true && e->isAlive == true)
 		{
 			if (e->collided == true)
 			{

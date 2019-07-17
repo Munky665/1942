@@ -26,12 +26,13 @@ class Player
 	float m_scorePosY			= 20;
 	int m_fontSize				= 10;
 	float m_heal			    = 20;
+
 	
 	aie::Texture*			m_playerTexture;
 public:
 	int health				 = 0;
 	int maxHealth			= 100;
-	
+	bool healed = false;
 	int score				= 0;
 	PlayerPos				pos{ 600, 100 };
 	int lives				= 3;
