@@ -56,8 +56,8 @@ void SmallShip::Size()
 //resets small ship to random position on at the top of the screen 
 void SmallShip::Reset(int sW, int sH) 
 {
-	pos.x = rand() % sW + 1;
-	pos.y = rand() % sW + sH;
+	pos.x = firstSpawn;
+	pos.y = topSpawn;
 	temp = rand() % 2 + 1;
 	isAlive = true;
 	hasFired = false;

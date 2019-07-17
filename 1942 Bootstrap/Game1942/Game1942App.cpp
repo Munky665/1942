@@ -314,7 +314,7 @@ void Game1942App::update(float deltaTime)
 			{
 				m_eBullet[b]->Move(deltaTime);
 				//if bullet passes out of bottom of screen remove
-				if (m_eBullet[b]->pos.y <= 0)
+				if (m_eBullet[b]->pos.y <= 0 || m_bullet[b]->pos.y >= screenHeight)
 				{
 					m_eBullet[b]->collided = false;
 					m_eBullet[b]->exists = false;
