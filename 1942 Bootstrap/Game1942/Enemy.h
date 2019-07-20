@@ -20,10 +20,10 @@ public:
 	double fireWait		= 4;
 	double pauseTime	= 5;
 	int scoreValue		= 0;
-	float sWidth		= 1280.0f;
-	float sHeight		= 720.0f;
-	float speed			= 300.0f;
-	float maxFired		= 4.0f;
+	float sWidth		= 1280;
+	float sHeight		= 720;
+	float speed			= 300;
+	float maxFired		= 4;
 	float topSpawn		= rand() % 740 + 720;
 	float firstSpawn	= rand() % 1280 + 1;
 	bool collided		= false;
