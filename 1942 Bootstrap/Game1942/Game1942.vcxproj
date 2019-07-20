@@ -190,6 +190,7 @@
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Clouds.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game1942App.h" />
     <ClInclude Include="GameOver.h" />

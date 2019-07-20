@@ -5,7 +5,7 @@
 Cannon::Cannon(int i)
 {
 	for (int j = 0; j < maxBullets; ++j) {
-		bullets.push_back(new Bullet());
+		bullets.pushToEnd(new Bullet());
 	}
 	m_texture = new aie::Texture("./textures/Turret.png");
 
@@ -36,7 +36,7 @@ Cannon::Cannon(int i)
 	col = new Collider();
 	isAlive = true;
 }
-void Cannon::Move(float deltaTime, Player* p, std::vector<Bullet*> pB)
+void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 {
 	if (inPosition == false) {
 		//sets inside cannon position on plane wings

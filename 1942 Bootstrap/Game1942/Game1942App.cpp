@@ -49,14 +49,14 @@ bool Game1942App::startup()
 			//allocate pngs to land in background
 			for (int i = 0; i < numOfBg; ++i)
 			{
-				m_land.push_back(new Land());
-				m_clouds.push_back(new Clouds());
+				m_land.pushToEnd(new Land());
+				m_clouds.pushToEnd(new Clouds());
 			}
 			//create bullets
 			for (int i = 0; i < maxBullets; ++i)
 			{
-				m_bullet.push_back(new Bullet());
-				m_eBullet.push_back(new Bullet());
+				m_bullet.pushToEnd(new Bullet());
+				m_eBullet.pushToEnd(new Bullet());
 			}
 			//Create Enemies
 			for (int i = 0; i < numOfSShips; ++i)
@@ -65,14 +65,14 @@ bool Game1942App::startup()
 				switch (temp)
 				{
 				case 1:
-					m_smallShip.push_back(new SmallShip());
+					m_smallShip.pushToEnd(new SmallShip());
 					break;
 				case 2:
-					m_smallShip.push_back(new BigShip());
+					m_smallShip.pushToEnd(new BigShip());
 				};
 			}
 			for (int i = 0; i < 4; ++i) {
-				m_turrets.push_back(new Cannon(i));
+				m_turrets.pushToEnd(new Cannon(i));
 			}
 			firstpass = false;
 		}
@@ -124,15 +124,15 @@ void Game1942App::shutdown()
 		//delete items from ram
 		if (m_gameOver == true) {
 			delete m_boss;
-			m_bullet.~vector();
-			m_eBullet.~vector();
-			m_smallShip.~vector();
+			m_bullet.~DynamicArray();
+			m_eBullet.~DynamicArray();
+			m_smallShip.~DynamicArray();
 			delete m_bar;
 			delete m_menu;
 			delete m_pauseMenu;
 			delete m_death;
-			m_clouds.~vector();
-			m_land.~vector();
+			m_clouds.~DynamicArray();
+			m_land.~DynamicArray();
 			delete m_player;
 			delete m_font;
 			delete m_2dRenderer;
@@ -167,7 +167,7 @@ void Game1942App::update(float deltaTime)
 	}
 	//game state
 	aie::Input* input = aie::Input::getInstance();
-	if (gameState == true && paused == false && deathState == false)
+	if (gameState == true && paused == false && deathState == false && menuState == false)
 	{
 		//starts countdown to boss
 		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;

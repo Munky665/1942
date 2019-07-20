@@ -42,12 +42,12 @@ protected:
 	int score = 100;
 	int health = 50;
 	aie::Texture* destroyed;
-	std::vector<Bullet*> bullets;
+	DynamicArray<Bullet*> bullets;
 	Collider* col;
 
 public:
 	Cannon(int i);
-	void Move(float deltaTime, Player* p, std::vector<Bullet*> pB);
+	void Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
 	void Reset(int i) override;
 	void Draw() override;
 	bool toggled = false;

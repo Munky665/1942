@@ -2,9 +2,8 @@
 #include <Texture.h>
 #include <Renderer2D.h>
 #include "Vector2.h"
-#include <vector>
+#include "DynamicArray.h"
 #include "Bullet.h"
-#include <vector>
 #include <time.h>
 
 class Boss

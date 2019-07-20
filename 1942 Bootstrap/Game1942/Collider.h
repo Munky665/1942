@@ -2,6 +2,7 @@
 #include "Background.h"
 #include "HealthPickUp.h"
 #include "Bullet.h"
+#include "DynamicArray.h"
 
 
 class Collider
@@ -19,8 +20,8 @@ public:
 	bool Collision(HealthPickUp* b, Player* p);
 
 	void CheckPVECollision(Player* p, Enemy* e, int s);
-	void CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es, Player* p);
-	void CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size);
+	void CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, int es, Player* p);
+	void CheckBVPCollision(DynamicArray<Bullet*> b, Player* p, int size);
 	int screenWidth  = 1280;
 	int screenHeight = 720;
 	int displacment  = 100;

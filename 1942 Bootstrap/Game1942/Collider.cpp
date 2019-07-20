@@ -124,7 +124,7 @@ void Collider::CheckPVECollision(Player* p, Enemy* e, int s)
 	}
 }
 //checks player bullet vs enemy collisions
-void Collider::CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int es, Player* p)
+void Collider::CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, int es, Player* p)
 {
 	for (int j = 0; j < bs; j++)
 	{
@@ -140,7 +140,7 @@ void Collider::CheckBVECollision(std::vector<Bullet*> b, Enemy* e, int bs, int e
 	}
 }
 //checks enemy bullet vs player collisions 
-void Collider::CheckBVPCollision(std::vector<Bullet*> b, Player* p, int size)
+void Collider::CheckBVPCollision(DynamicArray<Bullet*> b, Player* p, int size)
 {
 	for (int i = 0; i < size; ++i) {
 		if (b[i]->collided == false && Collision(b[i], p) == true && p->immune == false)

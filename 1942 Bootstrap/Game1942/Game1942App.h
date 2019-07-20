@@ -7,7 +7,7 @@
 #include "Background.h"
 #include "Renderer2D.h"
 #include "Collider.h"
-#include <vector>
+#include "DynamicArray.h"
 #include <glfw3.h>
 #include "MainMenu.h"
 #include "PauseMenu.h"
@@ -64,13 +64,13 @@ protected:
 	clock_t wait = clock();
 	float duration;
 
-	std::vector<Background*> m_clouds;
-	std::vector<Background*> m_land;
+	DynamicArray<Background*> m_clouds;
+	DynamicArray<Background*> m_land;
 
-	std::vector<Enemy*>  m_smallShip;
-	std::vector<Bullet*> m_bullet;
-	std::vector<Bullet*> m_eBullet;
-	std::vector<Cannon*> m_turrets;
+	DynamicArray<Enemy*>  m_smallShip;
+	DynamicArray<Bullet*> m_bullet;
+	DynamicArray<Bullet*> m_eBullet;
+	DynamicArray<Cannon*> m_turrets;
 
 	Boss*				m_boss;
 	HealthBar*			m_bar;
