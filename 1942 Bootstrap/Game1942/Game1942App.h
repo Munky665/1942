@@ -32,8 +32,31 @@ public:
 	virtual void shutdown();
 	virtual void update(float deltaTime);
 	virtual void draw();
+	void FirstBoot();
+	void ResetItems();
 	void DeActivate();
+	void BossAndEnemyTimer();
+	void ResetShips();
+	void MoveBoss(float deltaTime);
+	void MovePlayerFiredBullets(float deltaTime);
+	void MoveEnemyFiredBullets(float deltaTime);
+	void MoveBackground(float deltaTime);
+	void MoveEnemyAndCheckFire(float deltaTime);
+	void CheckPlayerCollision();
+	void CheckEnemyCollision(int i);
+	void SpawnHealth(int i);
+	void PickUpHealth(float deltaTime);
+	void BossState();
+	void DeathState();
+	void PausedState();
 
+	void DrawDeathMenu(aie::Renderer2D* renderer);
+	void DrawBoss(aie::Renderer2D* renderer);
+	void DrawBullets(aie::Renderer2D* renderer);
+	void DrawEnemyShips(aie::Renderer2D* renderer);
+	void DrawBackground(aie::Renderer2D* renderer);
+
+	void DeleteFromMemory();
 
 	int temp		 = 0;
 	int screenWidth  = 1280;

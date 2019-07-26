@@ -44,12 +44,15 @@ protected:
 	aie::Texture* destroyed;
 	DynamicArray<Bullet*> bullets;
 	Collider* col;
+	
+	void CannonFired(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
 
 public:
 	Cannon(int i);
 	void Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
+	
 	void Reset(int i) override;
-	void Draw() override;
+	void Draw(aie::Renderer2D* m_renderer) override;
 	bool toggled = false;
 	bool isAlive = true;
 	vector2 cannonPosition = { 0,0 };

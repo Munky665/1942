@@ -1,17 +1,11 @@
 #pragma once
+#include "Vector2.h"
 #include "Texture.h"
 #include <Renderer2D.h>
 #include "Font.h"
 #include "Input.h"
 class Player
 {
-
-	struct PlayerPos {
-		float x, y;
-		float h				 = 50;
-		float w				 = 60;
-	};
-
 	float m_speed				= 500;
 	float m_sBuffer				= 45;
 
@@ -26,7 +20,7 @@ class Player
 	float m_scorePosY			= 20;
 	int m_fontSize				= 10;
 	float m_heal			    = 20;
-
+	
 	
 	aie::Texture*			m_playerTexture;
 public:
@@ -34,7 +28,8 @@ public:
 	int maxHealth			= 100;
 	bool healed = false;
 	int score				= 0;
-	PlayerPos				pos{ 600, 100 };
+	vector2 pos				= { 600, 100 };
+	vector2 size			= { 50,60 };
 	int lives				= 3;
 	bool immune				= false;
 	bool playerFired		= false;

@@ -72,11 +72,10 @@ void Boss::Move(float deltaTime)
 		
 }
 
-void Boss::Draw()
+void Boss::Draw(aie::Renderer2D* renderer)
 {
-	m_renderer->begin();
-	m_renderer->drawSprite(m_texture, pos.x, pos.y,0,0,0,50);
-	m_renderer->end();
+	renderer->drawSprite(m_texture, pos.x, pos.y,0,0,0,50);
+
 }
 
 void Boss::Reset(int i) {

@@ -76,7 +76,7 @@ void GameOver::Draw(float x, float y, int score)
 	m_renderer->drawText(m_headerFont, "GAME OVER", (x * 0.5) - 100, y		   * 0.5, 0);
 	if (restartSelected == true)
 	{
-		m_renderer->setRenderColour(0, 0, 0, 1);
+		m_renderer->setRenderColour(1, 0, 0, 1);
 	}
 	else
 	{
@@ -85,7 +85,7 @@ void GameOver::Draw(float x, float y, int score)
 	m_renderer->drawText(m_font, "Restart",		  (x * 0.5) - 100, (y - 80) * 0.5, 0);
 	if (exitSelected == true)
 	{
-		m_renderer->setRenderColour(0, 0, 0, 1);
+		m_renderer->setRenderColour(1, 0, 0, 1);
 	}
 	else
 	{

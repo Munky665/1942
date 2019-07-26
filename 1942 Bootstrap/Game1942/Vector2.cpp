@@ -1,6 +1,10 @@
 #include "Vector2.h"
 
 
+vector2::vector2()
+{
+}
+
 vector2::vector2(float vx, float vy) {
 	x = vx;
 	y = vy;

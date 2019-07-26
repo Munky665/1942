@@ -32,8 +32,9 @@ void BigShip::textureEnemy() {
 }
 
 void BigShip::Size() {
-	pos.h = 80;
-	pos.w = 80;
+	size.y = 80;
+	size.x = 80;
+	collided = false;
 }
 
 void BigShip::Reset(int sW, int sH) {

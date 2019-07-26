@@ -30,8 +30,8 @@ public:
 	bool hasFired		= false;
 	bool isAlive		= false;
 
-	Position pos{ firstSpawn, topSpawn };
-	
+	vector2 pos{ firstSpawn, topSpawn };
+	vector2 size;
 	int crashDamage		= 20;
 	
 	aie::Texture* texture;

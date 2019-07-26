@@ -113,8 +113,8 @@ void Player::Draw(aie::Renderer2D* m_2dRenderer, aie::Font* m_font, int x, int y
 	m_2dRenderer->drawSprite(m_playerTexture,
 		pos.x,
 		pos.y,
-		pos.w + 30,
-		pos.h + 30, 0, 1);
+		size.x + 30,
+		size.y + 30, 0, 1);
 	//render Lives
 	for (int i = 0; i < lives; ++i) {
 		switch (i) {
