@@ -69,6 +69,8 @@ void Game1942App::update(float deltaTime)
 			menuState = false;
 			m_menu->isActive = false;
 			startup();
+			start = clock();
+			wait = clock();
 		}
 		else if (quitState == true) 
 		{
@@ -91,11 +93,13 @@ void Game1942App::update(float deltaTime)
 		//boss movement is boss state active
 		MoveBoss(deltaTime);
 		//player fire Bullet one bullet per press
-		if (input->wasKeyPressed(aie::INPUT_KEY_SPACE)) {
+		if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
+		{
 			for (int i = 0; i < maxBullets; ++i) {
 				if (m_bullet[i]->exists != true && m_player->playerFired != true) 
 				{
 					m_bullet[i]->PlayerFired(m_player);
+					break;
 				}
 			}
 		}
@@ -317,17 +321,19 @@ void Game1942App::DeActivate() {
 //starts timers for enemys and boss spawn
 void Game1942App::BossAndEnemyTimer()
 {
-	//starts countdown to boss
-	duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-	if (duration > bossTimer) {
-		bossActive = true;
-		enemyState = false;
-	}
-	//start timer to turn on enemys
-	if (enemyState == false && bossActive == false) {
+	if (gameState != false && menuState == false) {
+		//starts countdown to boss
 		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-		if (duration > startTimer) {
-			enemyState = true;
+		if (duration > bossTimer) {
+			bossActive = true;
+			enemyState = false;
+		}
+		//start timer to turn on enemys
+		if (enemyState == false && bossActive == false) {
+			duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
+			if (duration > startTimer) {
+				enemyState = true;
+			}
 		}
 	}
 }
@@ -492,30 +498,36 @@ void Game1942App::CheckEnemyCollision(int i)
 //spawns health randomly at position of destroyed enemy
 void Game1942App::SpawnHealth(int i)
 {
-	if (m_smallShip[i]->isAlive == false && m_smallShip[i]->collided == true) {
+	if (m_smallShip[i]->isAlive == false && m_smallShip[i]->collided == true && bossActive == false) {
 		m_healthPickUp->SpawnHealth(m_smallShip[i]->pos.x, m_smallShip[i]->pos.y);
 	}
 }
 //moves health down the screen and heals player if collision occurs
 void Game1942App::PickUpHealth(float deltaTime)
 {
-	//move health pickup down the screen
-	m_healthPickUp->Move(deltaTime);
-	//check if player has collided with the health pick up
-	if (m_col->Collision(m_healthPickUp->pos, m_player->pos) == true) {
-		m_player->Heal();
-		m_healthPickUp->DeActivate();
-		m_player->healed = false;
-	}
-	//health check
-	if (m_player->health <= 0)
-	{
-		m_player->lives -= 1;
-		m_player->health = m_player->maxHealth;
-		//enter gameover state
-		if (m_player->lives < 0) {
-			deathState = true;
+	if (bossActive == false) {
+		//move health pickup down the screen
+		m_healthPickUp->Move(deltaTime);
+		//check if player has collided with the health pick up
+		if (m_col->Collision(m_healthPickUp->pos, m_player->pos) == true) {
+			m_player->Heal();
+			m_healthPickUp->DeActivate();
+			m_player->healed = false;
 		}
+		//health check
+		if (m_player->health <= 0)
+		{
+			m_player->lives -= 1;
+			m_player->health = m_player->maxHealth;
+			//enter gameover state
+			if (m_player->lives < 0) {
+				deathState = true;
+			}
+		}
+	}
+	else if (bossActive == true)
+	{
+		m_healthPickUp->DeActivate();
 	}
 }
 //activates boss and deactivates enemy ships
@@ -529,9 +541,9 @@ void Game1942App::BossState()
 	//deactivate Enemies
 	for (int i = 0; i < numOfSShips; ++i)
 	{
-		m_smallShip[i]->isAlive = false;
 		m_smallShip[i]->pos.x = 0;
 		m_smallShip[i]->pos.y = 0;
+		m_smallShip[i]->isAlive = false;
 	}
 	//prevent health pickups spawning while boss is active
 	m_healthPickUp->DeActivate();

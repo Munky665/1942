@@ -43,7 +43,7 @@ protected:
 	int health = 50;
 	aie::Texture* destroyed;
 	DynamicArray<Bullet*> bullets;
-	Collider* col;
+	Collider* coll;
 	
 	void CannonFired(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
 

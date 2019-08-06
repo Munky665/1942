@@ -22,9 +22,9 @@
 class Game1942App : public aie::Application {
 public:
 
-	static const int numOfBg	 = 4;
-	static const int numOfSShips = 10;
-	static const int maxBullets  = 50;
+	const int numOfBg	 = 4;
+	const int numOfSShips = 10;
+	const int maxBullets  = 100;
 	
 	Game1942App();
 	virtual ~Game1942App();
@@ -77,7 +77,7 @@ protected:
 	bool deathState = false;
 	bool enemyState = false;
 	bool bossActive = false;
-	int startTimer = 5;
+	int startTimer  = 5;
 	int bossTimer	= 120;
 	int displacment = 100;
 	int m_duration	= 2;

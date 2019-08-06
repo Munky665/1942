@@ -33,7 +33,7 @@ Cannon::Cannon(int i)
 		can4 = true;
 		break;
 	}
-	col = new Collider();
+	coll = new Collider();
 	isAlive = true;
 }
 //moves cannons in place with the ship
@@ -258,7 +258,7 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
 				bullets[i]->Reset();
 			}
 			//if bullet collides with player cause damage
-			if (col->Collision(bullets[i]->pos, p->pos) == true && bullets[i]->exists == true) {
+			if (coll->Collision( p->pos, bullets[i]->pos) == true && bullets[i]->exists == true) {
 				if (p->immune == false) {
 					p->health = p->health - bullets[i]->damage;
 				}
@@ -275,9 +275,11 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
 		vector2 collider = pB[i]->pos - cannonPosition;
 		float col = collider.magnitued();
 		//remove bullet if it collides with cannon and do 1 point of damage
-		if (col < 50) {
-			pB[i]->exists = false;
-			health -= 1;
+		if (pB[i]->exists == true) {
+			if (col < 50) {
+				pB[i]->exists = false;
+				health -= 1;
+			}
 		}
 		//if health is less than one destroy cannon
 		if (health < 1) {
