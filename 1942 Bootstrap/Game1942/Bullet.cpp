@@ -46,17 +46,17 @@ void Bullet::EnemyFired(Enemy* e)
 	pos.x = e->pos.x;
 	pos.y = e->pos.y - displacement;
 
-	if (e->isBig == true & size == 10) 
+	if (e->isBig == true & size == smallsize) 
 	{
-		if (size == 10) 
+		if (size == smallsize) 
 		{
-			size += 10;
+			size = bigsize;
 		}
 		damage = bigDamage;
 	}
-	else if(e->isBig != true && size > 10 )
+	else if(e->isBig != true && size > smallsize )
 	{
-		size = 10;
+		size = smallsize;
 		damage = smallDamage;
 	}
 	else 

@@ -50,8 +50,8 @@ void SmallShip::textureEnemy()
 //sets small ships width and height.
 void SmallShip::Size() 
 {
-	pos.h = 64;
-	pos.w = 64;
+	size.y = 64;
+	size.x = 64;
 }
 //resets small ship to random position on at the top of the screen 
 void SmallShip::Reset(int sW, int sH) 
@@ -62,4 +62,5 @@ void SmallShip::Reset(int sW, int sH)
 	isAlive = true;
 	hasFired = false;
 	hasStopped = false;
+	collided = false;
 }

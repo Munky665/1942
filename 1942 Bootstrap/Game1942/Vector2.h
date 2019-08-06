@@ -10,7 +10,7 @@ public:
 		};
 		float data[3];
 	};
-
+	vector2();
 	vector2(float vx, float vy);
 	float operator[](int index)const;
 	vector2 operator+(const vector2& other) const;

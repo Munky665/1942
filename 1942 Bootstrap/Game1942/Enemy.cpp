@@ -50,12 +50,11 @@ void Enemy::PauseFlight()
 }
 
 void Enemy::WaitToFire() {
-	waitDuration = (clock() - wait) / (double)CLOCKS_PER_SEC;
+	waitDuration = (clock() - wait) / (float)CLOCKS_PER_SEC;
 	if (waitDuration > fireWait) {
 		hasFired = false;
-		wait = clock() - waitDuration;
-		waitDuration = 0;
-		fireWait = rand() % 3 + 1;
+		fireWait = rand() % 2 + 1;
+		wait = clock();
 	}
 }
 	

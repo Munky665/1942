@@ -37,7 +37,7 @@ protected:
 public:
 	Boss();
 	virtual void Move(float deltaTime);
-	virtual void Draw();
+	virtual void Draw(aie::Renderer2D* renderer);
 	virtual void Reset(int i);
 	~Boss();
 	float magOne;

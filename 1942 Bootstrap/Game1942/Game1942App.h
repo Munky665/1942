@@ -22,9 +22,9 @@
 class Game1942App : public aie::Application {
 public:
 
-	static const int numOfBg	 = 4;
-	static const int numOfSShips = 10;
-	static const int maxBullets  = 50;
+	const int numOfBg	 = 4;
+	const int numOfSShips = 10;
+	const int maxBullets  = 100;
 	
 	Game1942App();
 	virtual ~Game1942App();
@@ -32,8 +32,31 @@ public:
 	virtual void shutdown();
 	virtual void update(float deltaTime);
 	virtual void draw();
+	void FirstBoot();
+	void ResetItems();
 	void DeActivate();
+	void BossAndEnemyTimer();
+	void ResetShips();
+	void MoveBoss(float deltaTime);
+	void MovePlayerFiredBullets(float deltaTime);
+	void MoveEnemyFiredBullets(float deltaTime);
+	void MoveBackground(float deltaTime);
+	void MoveEnemyAndCheckFire(float deltaTime);
+	void CheckPlayerCollision();
+	void CheckEnemyCollision(int i);
+	void SpawnHealth(int i);
+	void PickUpHealth(float deltaTime);
+	void BossState();
+	void DeathState();
+	void PausedState();
 
+	void DrawDeathMenu(aie::Renderer2D* renderer);
+	void DrawBoss(aie::Renderer2D* renderer);
+	void DrawBullets(aie::Renderer2D* renderer);
+	void DrawEnemyShips(aie::Renderer2D* renderer);
+	void DrawBackground(aie::Renderer2D* renderer);
+
+	void DeleteFromMemory();
 
 	int temp		 = 0;
 	int screenWidth  = 1280;
@@ -54,7 +77,7 @@ protected:
 	bool deathState = false;
 	bool enemyState = false;
 	bool bossActive = false;
-	int startTimer = 5;
+	int startTimer  = 5;
 	int bossTimer	= 120;
 	int displacment = 100;
 	int m_duration	= 2;

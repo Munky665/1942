@@ -9,7 +9,8 @@ class Bullet
 	
 	float velocity		= 400;
 	bool isSmall		= true;
-
+	int smallsize		= 15;
+	int bigsize			= 20;
 	int bigDamage		= 10;
 	int smallDamage		= 5;
 
@@ -19,7 +20,7 @@ public:
 
 	aie::Texture*		 texture;
 	vector2 pos = { 0,0 };
-	float size = 10;
+	float size = 15;
 	Bullet();
 	void PlayerFired(Player* p);
 	void EnemyFired(Enemy* e);

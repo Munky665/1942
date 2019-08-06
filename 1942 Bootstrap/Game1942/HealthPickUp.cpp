@@ -35,13 +35,11 @@ void HealthPickUp::SpawnHealth(float x, float y)
 
 }
 //draws health
-void HealthPickUp::Draw() 
+void HealthPickUp::Draw(aie::Renderer2D* renderer) 
 {
 	if (exists == true)
 	{
-		renderer->begin();
-		renderer->drawSprite(texture, pos.x, pos.y, pos.w, pos.h, 0, 49);
-		renderer->end();
+		renderer->drawSprite(texture, pos.x, pos.y, size.x, size.y, 0, 49);
 	}
 }
 //resets health position when picked up
