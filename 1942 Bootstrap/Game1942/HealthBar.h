@@ -10,7 +10,6 @@ class HealthBar
 	float m_currentValue;
 	float m_maxValue;
 public:
-
 	bool isActive = false;
 	HealthBar(float posX, float posY, float width, float height);
 	void SetValue(float value);

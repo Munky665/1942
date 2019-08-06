@@ -22,8 +22,7 @@ void BigShip::Move(float deltaTime, int sW, int sH) {
 			 * deltaTime;
 
 	if (pos.y < 0) {
-		pos.x = respwan;
-		pos.y = sH;
+		Reset(sW, sH);
 	}
 }
 
@@ -38,6 +37,9 @@ void BigShip::Size() {
 }
 
 void BigShip::Reset(int sW, int sH) {
+	
+	respwan = rand() % 1280 + 1;
+
 	pos.x = respwan;
 	pos.y = sH;
 	isAlive = true;
