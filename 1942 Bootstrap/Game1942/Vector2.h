@@ -31,4 +31,6 @@ public:
 	vector2 normalise(const vector2& v);
 	vector2& operator += (float scalar);
 	vector2& operator -= (float scalar);
+	vector2& operator >= (const vector2& other);
+	vector2& operator <= (const vector2& other);
 };

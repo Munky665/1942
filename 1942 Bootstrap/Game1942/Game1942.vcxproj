@@ -200,7 +200,6 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SmallShip.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
