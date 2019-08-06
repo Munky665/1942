@@ -514,18 +514,18 @@ void Game1942App::PickUpHealth(float deltaTime)
 			m_healthPickUp->DeActivate();
 			m_player->healed = false;
 		}
+	}
 		//health check
-		if (m_player->health <= 0)
-		{
-			m_player->lives -= 1;
-			m_player->health = m_player->maxHealth;
-			//enter gameover state
-			if (m_player->lives < 0) {
-				deathState = true;
-			}
+	if (m_player->health <= 0)
+	{
+		m_player->lives -= 1;
+		m_player->health = m_player->maxHealth;
+		//enter gameover state
+		if (m_player->lives < 0) {
+			deathState = true;
 		}
 	}
-	else if (bossActive == true)
+	if (bossActive == true)
 	{
 		m_healthPickUp->DeActivate();
 	}
@@ -560,6 +560,7 @@ void Game1942App::BossState()
 		deathState = true;
 	}
 }
+
 //ends game, when boss defeated or player defeted
 void Game1942App::DeathState()
 {
