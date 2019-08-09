@@ -42,7 +42,7 @@ bool Collider::Collision(vector2 player, vector2 enemy)
 
 
 //checks player vs enemy collisions
-void Collider::CheckPVECollision(Player* p, Enemy* e)
+bool Collider::CheckPVECollision(Player* p, Enemy* e)
 {
 		if (Collision(p->pos, e->pos) == true && p->immune == false)
 		{
@@ -50,10 +50,12 @@ void Collider::CheckPVECollision(Player* p, Enemy* e)
 			p->health -= e->crashDamage;
 			p->score = p->score + e->scoreValue;
 			e->isAlive = false;
+			return true;
 		}
+		return false;
 }
 //checks player bullet vs enemy collisions
-void Collider::CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, Player* p)
+bool Collider::CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, Player* p)
 {
 	for (int j = 0; j < bs; j++)
 	{
@@ -62,22 +64,28 @@ void Collider::CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, Play
 				p->score = p->score + e->scoreValue;
 				e->isAlive = false;
 				b[j]->collided = true;
+				return true;
 		}
 	}
+	return false;
 }
 //checks enemy bullet vs player collisions 
-void Collider::CheckBVPCollision(DynamicArray<Bullet*> b, Player* p, int size)
+bool Collider::CheckBVPCollision(DynamicArray<Bullet*> b, Player* p, int size)
 {
 	for (int i = 0; i < size; ++i) {
-		if (b[i]->collided == false && Collision(b[i]->pos, p->pos) == true)
-		{
-			if (p->immune == false) {
-				p->health -= b[i]->damage;
-				p->immune = true;
-				b[i]->exists = false;
-				b[i]->efire = false;
-				b[i]->collided = true;
+		if (b[i]->exists == true) {
+			if (b[i]->collided == false && Collision(b[i]->pos, p->pos) == true)
+			{
+				if (p->immune == false) {
+					p->health -= b[i]->damage;
+					p->immune = true;
+					b[i]->exists = false;
+					b[i]->efire = false;
+					b[i]->collided = true;
+					return true;
+				}
 			}
 		}
 	}
+	return false;
 }

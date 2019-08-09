@@ -24,6 +24,7 @@ bool Game1942App::startup()
 	}
 	//if not the first time loading set screen colour to black, from blue
 	else if (menuState == true && firstpass == false) {
+		music->stop();
 		setBackgroundColour(0, 0, 0, 1);
 	}
 	if (gameState == true)
@@ -36,6 +37,8 @@ bool Game1942App::startup()
 		else {
 			ResetItems();
 		}
+		music->play();
+		music->setLoop(true);
 			return true;
 	}
 }
@@ -47,6 +50,7 @@ void Game1942App::shutdown()
 	{
 		//delete items from ram
 		if (m_gameOver == true) {
+			music->stop();
 			DeleteFromMemory();
 		}
 		//deactivates  menu items
@@ -82,6 +86,7 @@ void Game1942App::update(float deltaTime)
 	aie::Input* input = aie::Input::getInstance();
 	if (gameState == true && paused == false && deathState == false && menuState == false)
 	{
+
 		//counts down to show enemies, then counts down to change to boss state
 		BossAndEnemyTimer();
 		//set health bar to player health level
@@ -96,10 +101,14 @@ void Game1942App::update(float deltaTime)
 		if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
 		{
 			for (int i = 0; i < maxBullets; ++i) {
+				//plays sound when bullet is activated from player
 				if (m_bullet[i]->exists != true && m_player->playerFired != true) 
 				{
 					m_bullet[i]->PlayerFired(m_player);
-					break;
+					buffer[0].loadFromFile("./Audio/playershoot.wav");
+					sound[0].setBuffer(buffer[0]);
+					sound[0].setVolume(shootVol);
+					sound[0].play();
 				}
 			}
 		}
@@ -111,10 +120,12 @@ void Game1942App::update(float deltaTime)
 
 		//move background items
 		MoveBackground(deltaTime);
+
+		//stop player from being able to fly out of the window bounds
+		m_player->Contain(screenWidth, screenHeight - 200);
 		//move the player
 		m_player->Move(input, deltaTime);
-		//stop player from being able to fly out of the window bounds
-		m_player->Contain(screenWidth, screenHeight);
+
 		//move Enemy
 		MoveEnemyAndCheckFire(deltaTime);
 		//move Enemy Bullets
@@ -126,12 +137,31 @@ void Game1942App::update(float deltaTime)
 			//check for bullet vs enemy collisions
 			for (int i = 0; i < numOfSShips; ++i)
 			{
-				CheckEnemyCollision(i);
+				if (m_smallShip[i]->isAlive == true) {
+					if (m_col->CheckBVECollision(m_bullet, m_smallShip[i], maxBullets, m_player) == true)
+					{
+						if (m_smallShip[i]->isAlive == false && m_smallShip[i]->collided == false) {
+							buffer[1].loadFromFile("./Audio/explosion.wav");
+							sound[1].setBuffer(buffer[1]);
+							sound[1].setVolume(explosionVol);
+							sound[1].play();
+							m_smallShip[i]->collided = true;
+							break;
+						}
+					}
+				}
 				//when enemy dies check to see if health should spawn
 				SpawnHealth(i);
+
 			}
 			//check for player bullet collisions
-			m_col->CheckBVPCollision(m_eBullet, m_player, maxBullets);
+			if (m_col->CheckBVPCollision(m_eBullet, m_player, maxBullets) == true)
+			{
+				buffer[3].loadFromFile("./Audio/hit.wav");
+				sound[3].setBuffer(buffer[3]);
+				sound[3].setVolume(hitvol);
+				sound[3].play();
+			}
 		}
 		//move and check collision of health
 		PickUpHealth(deltaTime);
@@ -139,6 +169,7 @@ void Game1942App::update(float deltaTime)
 		//pause if player presses pause
 		if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 			paused = true;
+			music->pause();
 		}
 		//check screen size
 		auto window = glfwGetCurrentContext();
@@ -147,6 +178,18 @@ void Game1942App::update(float deltaTime)
 		if (bossActive == true) {
 			//start boss state
 			void BossState();
+		}
+
+		for (int i = 0; i < 4; ++i) {
+			//check how many cannons are left
+			if (m_turrets[i]->isAlive == false && m_turrets[i]->toggled == false) {
+				cannonDestroyed = cannonDestroyed + 1;
+				m_turrets[i]->toggled = true;
+			}
+		}
+		//if all cannons are destroyed end game
+		if (cannonDestroyed == 4) {
+			deathState = true;
 		}
 	}
 	//enter gameover state when player has no lives left
@@ -163,6 +206,7 @@ void Game1942App::update(float deltaTime)
 		//Pause game
 		PausedState();
 	}
+	
 }
 
 void Game1942App::draw()
@@ -214,6 +258,7 @@ void Game1942App::draw()
 //creates all game items in memory
 void Game1942App::FirstBoot()
 {
+	LoadSounds();
 	enemyState = false;
 	m_boss = new Boss();
 	m_healthPickUp = new HealthPickUp();
@@ -265,7 +310,7 @@ void Game1942App::ResetItems()
 {
 	//reset boss
 	m_boss->Reset(0);
-	bossActive = false;
+	//bossActive = false;
 	//reset cannons
 	for (int i = 0; i < 4; ++i) {
 		m_turrets[i]->Reset(i);
@@ -463,17 +508,28 @@ void Game1942App::MoveEnemyAndCheckFire(float deltaTime)
 		//check if enemy has fired bullet
 		for (int b = 0; b < maxBullets; ++b)
 		{
-			for (int j = 0; j < numOfSShips; ++j)
-			{
-				m_smallShip[j]->WaitToFire();
-				if (m_eBullet[b]->exists != true && m_smallShip[j]->hasFired != true && m_smallShip[i]->pos.y < screenHeight)
-				{
-					m_eBullet[b]->EnemyFired(m_smallShip[j]);
-					m_smallShip[j]->hasFired = true;
-				}
-
+			if (m_eBullet[b]->exists == true) {
+				if (b < maxBullets)
+					b++;
+				else if (b == maxBullets)
+					break;
 			}
+			else if (m_eBullet[b]->exists == false) {
+				for (int j = 0; j < numOfSShips; ++j)
+				{
+					m_smallShip[j]->WaitToFire();
+					if (m_smallShip[j]->hasFired != true && m_smallShip[i]->pos.y < screenHeight)
+					{
+						m_eBullet[b]->EnemyFired(m_smallShip[j]);
+						buffer[2].loadFromFile("./Audio/enemyshoot.wav");
+						sound[2].setBuffer(buffer[2]);
+						sound[2].setVolume(shootVol);
+						sound[2].play();
+						m_smallShip[j]->hasFired = true;
+					}
 
+				}
+			}
 		}
 	}
 }
@@ -484,16 +540,19 @@ void Game1942App::CheckPlayerCollision()
 	{
 		//check if player collided with enemy
 		if (m_smallShip[i]->isAlive == true)
-			m_col->CheckPVECollision(m_player, m_smallShip[i]);
+			if (m_col->CheckPVECollision(m_player, m_smallShip[i]) == true)
+			{
+				buffer[3].loadFromFile("./Audio/hit.wav");
+				sound[3].setBuffer(buffer[3]);
+				sound[3].setVolume(100);
+				sound[3].play();
+			}
 	}
 }
 //checks if an enemy has collided with a player bullet or the player
 void Game1942App::CheckEnemyCollision(int i)
 {
-	if (m_smallShip[i]->isAlive == true) {
-		m_col->CheckBVECollision(m_bullet, m_smallShip[i], maxBullets, m_player);
-		m_smallShip[i]->collided = true;
-	}
+	
 }
 //spawns health randomly at position of destroyed enemy
 void Game1942App::SpawnHealth(int i)
@@ -530,6 +589,20 @@ void Game1942App::PickUpHealth(float deltaTime)
 		m_healthPickUp->DeActivate();
 	}
 }
+void Game1942App::LoadSounds()
+{
+
+		music = new sf::Music();
+		if (bossActive == false) {
+			music->openFromFile("./Audio/BackgroundMusic.wav");
+		}
+		else
+			music->openFromFile("./Audio/bossfight.wav");
+	for (int i = 0; i < numberOfSounds; ++i) {
+		sound.push_back(sf::Sound());
+		buffer.push_back(sf::SoundBuffer());
+	}
+}
 //activates boss and deactivates enemy ships
 void Game1942App::BossState()
 {
@@ -547,24 +620,15 @@ void Game1942App::BossState()
 	}
 	//prevent health pickups spawning while boss is active
 	m_healthPickUp->DeActivate();
-	for (int i = 0; i < 4; ++i) {
-		//check how many cannons are left
-		if (m_turrets[i]->isAlive == false && m_turrets[i]->toggled == false) {
-			cannonDestroyed += 1;
-			m_turrets[i]->toggled = true;
-		}
-	}
-	//if all cannons are destroyed end game
-	if (cannonDestroyed == 4) {
-		m_player->score += 2000;
-		deathState = true;
-	}
+	LoadSounds();
+
 }
 
 //ends game, when boss defeated or player defeted
 void Game1942App::DeathState()
 {
 	isDead = m_death->DeathMenu();
+	music->stop();
 	if (isDead == true) {
 		shutdown();
 		startup();
@@ -586,6 +650,8 @@ void Game1942App::PausedState()
 	//if continue is selected
 	if (paused == false && quitState != true)
 	{
+		music->play();
+		music->setVolume(musicVol);
 		con = true;
 		setBackgroundColour(0, 0.51, 2.55, 0.9);
 	}
@@ -669,6 +735,7 @@ void Game1942App::DrawBackground(aie::Renderer2D * renderer)
 //removes all game objects from memory upon shutdown
 void Game1942App::DeleteFromMemory()
 {
+	delete music;
 	delete m_boss;
 	m_bullet.~DynamicArray();
 	m_eBullet.~DynamicArray();

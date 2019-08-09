@@ -87,7 +87,14 @@ void Player::Contain(int sWidth, int sHeight) {
 	}
 	if (pos.x < m_sBuffer) {
 		pos.x = m_sBuffer;
-	}		
+	}
+	else if (pos.x > sWidth) {
+		pos.x = sWidth - m_sBuffer;
+	}
+	//prevents player leaving the top right of the window
+	if (pos.y > sHeight - m_sBuffer) {
+		pos.y = sHeight - m_sBuffer;
+	}
 	if (pos.y < m_sBuffer + m_livesWidthY) {
 		pos.y = m_sBuffer + m_livesWidthY;
 	}

@@ -45,4 +45,5 @@ void BigShip::Reset(int sW, int sH) {
 	isAlive = true;
 	hasFired = false;
 	hasStopped = false;
+	collided = false;
 }

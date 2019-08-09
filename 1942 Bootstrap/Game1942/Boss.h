@@ -10,7 +10,6 @@ class Boss
 {
 protected:
 	struct position {
-		float x, y;
 		float h = 600;
 		float w = 1280;
 	};
@@ -28,10 +27,12 @@ protected:
 	float screenRight = 1180;
 
 
-	vector2 pos = { m_xPosition, m_startingY };
+	
 	vector2 stoppingPointOne = { 0,400 };
-	vector2 rightscreen{ 1020,0 };
-	vector2 leftscreen{ 200,0 };
+	vector2 rightscreen = { 1020,0 };
+	vector2 leftscreen = { 200,0 };
+	vector2 movement = { 200,0 };
+	vector2 moveDown = { 0,200 };
 	aie::Renderer2D*	m_renderer;
 	aie::Texture*		m_texture;
 public:
@@ -41,5 +42,6 @@ public:
 	virtual void Reset(int i);
 	~Boss();
 	float magOne;
+	vector2 pos = { m_xPosition, m_startingY };
 };
 
