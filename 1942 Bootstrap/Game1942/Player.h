@@ -7,7 +7,7 @@
 class Player
 {
 	float m_speed				= 500;
-	float m_sBuffer				= 45;
+	float m_sBuffer				= 50;
 
 	float m_rightOfWindow		= 1250;
 	float m_leftOfWindow		= 30;

@@ -53,7 +53,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 		}
 		//if distance from y position greater than 1 unit
 		else if (magOne > 0) {
-				cannonPosition += downDistance.normalise(downDistance) * 200 * deltaTime;
+				cannonPosition -= moveDown * deltaTime;
 			}
 
 		}
@@ -71,13 +71,13 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 			}
 			//if distance from y position less than 1 unit
 			else if (magOne > 0) {
-				cannonPosition += downDistance.normalise(downDistance) * 200 * deltaTime;
+				cannonPosition -= moveDown * deltaTime;
 			}
 
 		}
 	}
 	//once inposition move cannons with boss to the right.
-	if (right == true)
+	if (right == true && inPosition == true)
 	{
 		if (outsideCannon == false) {
 			if (can3 == true) {
@@ -92,7 +92,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 				//if distance from right side greater than one
 				else if (magOne > 0) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+					cannonPosition += movement * deltaTime;
 				}
 
 			}
@@ -108,7 +108,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 500) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+					cannonPosition += movement * deltaTime;
 				}
 
 			}
@@ -126,7 +126,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 0) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+					cannonPosition += movement * deltaTime;
 				}
 
 			}
@@ -141,14 +141,14 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 936) {
-					cannonPosition += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+					cannonPosition += movement * deltaTime;
 				}
 
 			}
 		}
 	}
 	//once in position move cannons with boss to the left
-	if (left == true)
+	if (left == true && inPosition == true)
 	{
 		if (outsideCannon == false) {
 			if (can1 == true) {
@@ -163,7 +163,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 0) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+					cannonPosition -= movement * deltaTime;
 				}
 
 			}
@@ -178,7 +178,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 500) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+					cannonPosition -= movement * deltaTime;
 				}
 
 			}
@@ -195,7 +195,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 0) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+					cannonPosition -= movement * deltaTime;
 				}
 
 			}
@@ -210,7 +210,7 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 				}
 
 				else if (magOne > 935) {
-					cannonPosition += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+					cannonPosition -= movement * deltaTime;
 				}
 
 			}
@@ -282,9 +282,9 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
 			}
 		}
 		//if health is less than one destroy cannon
-		if (health < 1) {
+		if (health < 1 && isAlive == true) {
 			isAlive = false;
-			p->score += score;
+ 			p->score += score;
 		}
 
 	}
@@ -312,7 +312,19 @@ void Cannon::Draw(aie::Renderer2D* m_renderer)
 }
 //reset cannons position when game is reset
 void Cannon::Reset(int i) {
+	for (int i = 0; i < maxBullets; ++i)
+	{
+		bullets[i]->Reset();
+	}
+	cannonPosition = { 0,0 };
 	inPosition = false;
+	outsideCannon = false;
+	can1 = false;
+	can2 = false;
+	can3 = false;
+	can4 = false;
+	health = 50;
+
 	switch (i) {
 	case 0:
 		cannonPosition = cannonOne;

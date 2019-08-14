@@ -15,11 +15,13 @@ private:
 	float screenW			= 1280;
 	float planePositionX	= 900;
 	bool startSelected		= true;
+	bool startMouse			= false;
 	bool exitSelected		= false;
+	bool exitmouse		    = false;
 	int switchy = 0;
 	int enterCounter = 0;
-	vector2 mousePosition;
-
+	vector2* mousePosition;
+	void MouseOver();
 public:
 	MainMenu();
 	void startup();

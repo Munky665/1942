@@ -39,8 +39,8 @@ protected:
 		 can2 = false,
 		 can3 = false,
 		 can4 = false;
-	int score = 100;
-	int health = 50;
+	int score = 500;
+	int health = 30;
 	aie::Texture* destroyed;
 	DynamicArray<Bullet*> bullets;
 	Collider* coll;

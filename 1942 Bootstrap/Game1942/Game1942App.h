@@ -17,14 +17,17 @@
 #include "GameOver.h"
 #include "HealthPickUp.h"
 #include "Cannon.h"
+#include <SFML/Audio.hpp>
+#include <queue>
 
 
 class Game1942App : public aie::Application {
 public:
 
-	const int numOfBg	 = 4;
-	const int numOfSShips = 10;
-	const int maxBullets  = 100;
+	const int numOfBg		= 4;
+	const int numOfSShips	= 10;
+	const int maxBullets	= 100;
+
 	
 	Game1942App();
 	virtual ~Game1942App();
@@ -46,6 +49,7 @@ public:
 	void CheckEnemyCollision(int i);
 	void SpawnHealth(int i);
 	void PickUpHealth(float deltaTime);
+	void LoadSounds();
 	void BossState();
 	void DeathState();
 	void PausedState();
@@ -64,7 +68,13 @@ public:
 
 
 protected:
-	
+	int numberOfSounds = 4;
+	int shootVol = 40;
+	int explosionVol = 50;
+	int hitvol = 50;
+	int musicVol = 50;
+
+	int size;
 	bool isDead		= false;
 	bool firstpass	= true;
 	bool con		= false;
@@ -94,6 +104,10 @@ protected:
 	DynamicArray<Bullet*> m_bullet;
 	DynamicArray<Bullet*> m_eBullet;
 	DynamicArray<Cannon*> m_turrets;
+
+	sf::Music*						 music;
+	std::vector<sf::SoundBuffer>     buffer;
+	std::vector<sf::Sound>			 sound;
 
 	Boss*				m_boss;
 	HealthBar*			m_bar;

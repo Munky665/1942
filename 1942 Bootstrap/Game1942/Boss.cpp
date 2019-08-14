@@ -30,7 +30,7 @@ void Boss::Move(float deltaTime)
 
 		else if (magOne > 0) 
 		{
-			pos += downDistance.normalise(downDistance) * 200 * deltaTime;
+			pos -= moveDown * deltaTime;
 		}
 
 	}
@@ -47,7 +47,7 @@ void Boss::Move(float deltaTime)
 			left = true;
 		}
 		else if (magOne > 0) {
-			pos += rightDistance.normalise(rightDistance) * 200 * deltaTime;
+			pos += movement * deltaTime;
 		}
 
 	}
@@ -66,7 +66,7 @@ void Boss::Move(float deltaTime)
 		}
 
 		else if (magOne > 0) {
-			pos += leftDistance.normalise(leftDistance) * 200 * deltaTime;
+			pos -= movement * deltaTime;
 		}
 	}
 		
@@ -80,6 +80,8 @@ void Boss::Draw(aie::Renderer2D* renderer)
 
 void Boss::Reset(int i) {
 	inPosition = false;
+	left = false;
+	right = false;
 	pos.x = m_xPosition;
 	pos.y = m_startingY;
 }
