@@ -591,9 +591,8 @@ void Game1942App::PickUpHealth(float deltaTime)
 }
 void Game1942App::LoadSounds()
 {
-
-		music = new sf::Music();
 		if (bossActive == false) {
+			music = new sf::Music();
 			music->openFromFile("./Audio/BackgroundMusic.wav");
 		}
 		else
@@ -620,6 +619,7 @@ void Game1942App::BossState()
 	}
 	//prevent health pickups spawning while boss is active
 	m_healthPickUp->DeActivate();
+	music->stop();
 	LoadSounds();
 
 }
