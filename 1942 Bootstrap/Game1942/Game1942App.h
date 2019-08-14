@@ -86,7 +86,7 @@ protected:
 	bool quitState  = false;
 	bool deathState = false;
 	bool enemyState = false;
-	bool bossActive = false;
+	bool bossActive = true;
 	int startTimer  = 5;
 	int bossTimer	= 120;
 	int displacment = 100;
