@@ -216,24 +216,30 @@ void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 			}
 		}
 	}
-	if (isAlive == true) {
-		//fire rate count down.
-		if (inPosition == true && isAlive == true) {
-			duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-			if (duration >= fireWait) {
-				hasFired = false;
-				wait = clock();
-			}
+	if (isAlive == true)
+	{
 
+			hasFiredTimer();
 			//fires bullets from cannons and checks bullet collisions with player
 			CannonFired(deltaTime, p, pB);
 			//allow player to take damage again
 			p->immune = false;
-		}
 	}
 	else if (isAlive == false) {
 		for (int i = 0; i < maxBullets; ++i) {
 			bullets[i]->Reset();
+		}
+	}
+}
+bool Cannon::hasFiredTimer()
+{
+	//fire rate count down.
+	if (inPosition == true && isAlive == true) {
+		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
+		if (duration >= fireWait) {
+			hasFired = false;
+			wait = clock();
+			return true;
 		}
 	}
 }

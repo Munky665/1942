@@ -369,9 +369,10 @@ void Game1942App::BossAndEnemyTimer()
 	if (gameState != false && menuState == false) {
 		//starts countdown to boss
 		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-		if (duration > bossTimer) {
+		if (duration > bossTimer && bossActive == false) {
 			bossActive = true;
 			enemyState = false;
+			BossState();
 		}
 		//start timer to turn on enemys
 		if (enemyState == false && bossActive == false) {
@@ -403,7 +404,14 @@ void Game1942App::MoveBoss(float deltaTime)
 	if (bossActive == true) {
 		m_boss->Move(deltaTime);
 		for (int i = 0; i < m_turrets.size(); ++i) {
-			m_turrets[i]->Move(deltaTime, m_player, m_bullet);
+			m_turrets[i]->Move(deltaTime, m_player, m_bullet); 
+			if (m_turrets[i]->hasFiredTimer() == true)
+			{
+				buffer[2].loadFromFile("./Audio/enemyshoot.wav");
+				sound[2].setBuffer(buffer[2]);
+				sound[2].setVolume(shootVol);
+				sound[2].play();
+			}
 		}
 	}
 }
@@ -486,7 +494,7 @@ void Game1942App::MoveEnemyAndCheckFire(float deltaTime)
 {
 	for (int i = 0; i < numOfSShips; ++i)
 	{
-		if (enemyState == true)
+		if (enemyState == true && bossActive == false)
 			//pause ship flight and move
 			if (m_smallShip[i]->isAlive == true && m_smallShip[i]->hasStopped != true)
 			{
@@ -500,7 +508,7 @@ void Game1942App::MoveEnemyAndCheckFire(float deltaTime)
 					m_smallShip[i]->Move(deltaTime, screenWidth, screenHeight);
 			}
 		//move ship the rest of the way down the screen if it has stopped
-			else if (m_smallShip[i]->isAlive == true && m_smallShip[i]->hasStopped == true)
+			else if (m_smallShip[i]->isAlive == true && m_smallShip[i]->hasStopped == true && bossActive == false)
 			{
 				m_smallShip[i]->Move(deltaTime, screenWidth, screenHeight);
 			}
@@ -518,7 +526,7 @@ void Game1942App::MoveEnemyAndCheckFire(float deltaTime)
 				for (int j = 0; j < numOfSShips; ++j)
 				{
 					m_smallShip[j]->WaitToFire();
-					if (m_smallShip[j]->hasFired != true && m_smallShip[i]->pos.y < screenHeight)
+					if (m_smallShip[j]->hasFired != true && m_smallShip[i]->pos.y < screenHeight && bossActive == false)
 					{
 						m_eBullet[b]->EnemyFired(m_smallShip[j]);
 						buffer[2].loadFromFile("./Audio/enemyshoot.wav");
@@ -591,12 +599,14 @@ void Game1942App::PickUpHealth(float deltaTime)
 }
 void Game1942App::LoadSounds()
 {
-		if (bossActive == false) {
-			music = new sf::Music();
-			music->openFromFile("./Audio/BackgroundMusic.wav");
-		}
-		else
-			music->openFromFile("./Audio/bossfight.wav");
+	if (bossActive == false) {
+		music = new sf::Music();
+		music->openFromFile("./Audio/BackgroundMusic.wav");
+	}
+	else {
+		music->openFromFile("./Audio/bossfight.wav");
+		music->play();
+	}
 	for (int i = 0; i < numberOfSounds; ++i) {
 		sound.push_back(sf::Sound());
 		buffer.push_back(sf::SoundBuffer());
@@ -619,7 +629,7 @@ void Game1942App::BossState()
 	}
 	//prevent health pickups spawning while boss is active
 	m_healthPickUp->DeActivate();
-	music->stop();
+ 	music->stop();
 	LoadSounds();
 
 }

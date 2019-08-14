@@ -50,7 +50,7 @@ protected:
 public:
 	Cannon(int i);
 	void Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
-	
+	bool hasFiredTimer();
 	void Reset(int i) override;
 	void Draw(aie::Renderer2D* m_renderer) override;
 	bool toggled = false;
