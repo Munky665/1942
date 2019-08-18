@@ -2,10 +2,21 @@
 
 
 
+void Boss::addChild(Boss * child)
+{
+	//make sure no parent exists
+	assert(child->parent == nullptr);
+	//assign "this as parent
+	child->parent = this;
+	//add new child to vector
+	children.push_back(child);
+}
+
 Boss::Boss()
 {
 	m_renderer	= new aie::Renderer2D();
 	m_texture	= new aie::Texture("./textures/BossBase.png");
+	localTransform[2] = { m_xPosition, m_startingY, 1 };
 }
 
 
@@ -18,36 +29,62 @@ void Boss::Move(float deltaTime)
 {
 	//move from starting position to inposition
 	if (inPosition == false) {
-		vector2 downDistance = stoppingPointOne - pos;
-		downDistance.x = 0;
-		magOne = downDistance.magnitued();
-		if (magOne < 1)
-		{
-			//inPosition = true;
-			right = true;
-			inPosition = true;
+		if (parent != nullptr) {
+			if (parent->localTransform[2].y > stopPosition) 
+			{
+				//move child object relative to parent object
+				localTransform.translate(0, -moveDown.y * deltaTime);
+			}
+			else
+			{
+				inPosition = true;
+				right = true;
+			}
 		}
-
-		else if (magOne > 0) 
+		else
 		{
-			pos -= moveDown * deltaTime;
+			if (localTransform[2].y > stopPosition) {
+				//moves parent object down the screen
+				localTransform.translate(0, -moveDown.y * deltaTime);
+			}
+			else
+			{
+				inPosition = true;
+				right = true;
+			}
 		}
-
 	}
 
 	//move to right when in position
 	if (right == true) {
 
-		vector2 rightDistance = rightscreen - pos;
-		rightDistance.y = 0;
-		magOne = rightDistance.magnitued();
-		if (magOne < 1)
-		{
-			right = false;
-			left = true;
+		if (parent != nullptr) {
+			//if parent in position move cannons to left of screen
+			if (parent->localTransform[2].x < screenLeft)
+			{
+				right = false;
+				left = true;
+
+			}
+			else
+			{
+				localTransform.translate(-movement.x* deltaTime, 0);
+			}
 		}
-		else if (magOne > 0) {
-			pos += movement * deltaTime;
+		else
+		{
+			//move parent to left of screen when in position
+			if (localTransform[2].x < screenLeft)
+			{
+				left = true;
+				right = false;
+			}
+
+			else
+			{
+				localTransform.translate(-movement.x* deltaTime, 0);
+
+			}
 		}
 
 	}
@@ -55,26 +92,41 @@ void Boss::Move(float deltaTime)
 	//move to left if in position
 	else if (left == true)
 	{
+		if (parent != nullptr) {
+			//if parent at left of screen move cannons right
+			if (parent->localTransform[2].x > screenRight)
+			{
+				left = false;
+				right = true;
+			}
 
-		vector2 leftDistance = leftscreen - pos;
-		leftDistance.y = 0;
-		magOne = leftDistance.magnitued();
-		if (magOne < 1)
-		{
-			left = false;
-			right = true;
+			else
+			{
+				localTransform.translate(movement.x* deltaTime, 0);
+
+			}
 		}
+		else {
+			//move parent right
+			if (localTransform[2].x > screenRight)
+			{
+				left = false;
+				right = true;
+			}
 
-		else if (magOne > 0) {
-			pos -= movement * deltaTime;
+			else
+			{
+				localTransform.translate(movement.x* deltaTime, 0);
+
+			}
 		}
 	}
-		
+	updateTransform();
 }
 
 void Boss::Draw(aie::Renderer2D* renderer)
 {
-	renderer->drawSprite(m_texture, pos.x, pos.y,0,0,0,50);
+	renderer->drawSpriteTransformed3x3(m_texture, (float*)&globalTransform, 0, 0, 49);
 
 }
 
@@ -82,6 +134,30 @@ void Boss::Reset(int i) {
 	inPosition = false;
 	left = false;
 	right = false;
-	pos.x = m_xPosition;
-	pos.y = m_startingY;
+	localTransform[2].x = m_xPosition;
+	localTransform[2].y = m_startingY;
+	updateTransform();
+}
+
+
+void Boss::updateTransform()
+{
+	if (parent != nullptr)
+	{
+		globalTransform = parent->globalTransform * localTransform;
+	}
+	else
+	{
+		globalTransform = localTransform;
+	}
+
+	for (auto child : children)
+	{
+		child->updateTransform();
+	}
+}
+void Boss::translate(float x, float y)
+{
+	localTransform.translate(x, y);
+	updateTransform();
 }

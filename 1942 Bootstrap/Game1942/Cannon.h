@@ -8,16 +8,11 @@ class Cannon :
 protected:
 
 
-	vector2 stoppingPointTwo = { 0,295 };
-	vector2 cannonOne = { 390,1200 };
-	vector2 cannonTwo = { 172,1100 };
-	vector2 cannonThree = { 890,1200 };
-	vector2 cannonFour = { 1108,1100 }; //bottom right
-
-	vector2 rightscreenC{ 1272,0 };
-	vector2 rightscreenC2{ 1490,0 };
-	vector2 leftscreenC{ -48,0 };
-	vector2 leftscreenC2{ -266,0 };
+	Vector3 stoppingPointTwo = { 0,295,0 };
+	Vector3 cannonOne = { 390,1200,  1 };
+	Vector3 cannonTwo = { 172,1100  ,1 };
+	Vector3 cannonThree = { 890,1200,1 };
+	Vector3 cannonFour = { 1108,1100,1}; //bottom right
 
 	bool isActive = false;
 	float firstOffSetX = 250;
@@ -40,7 +35,8 @@ protected:
 		 can3 = false,
 		 can4 = false;
 	int score = 500;
-	int health = 30;
+	int maxHealth = 30;
+	int health = maxHealth;
 	aie::Texture* destroyed;
 	DynamicArray<Bullet*> bullets;
 	Collider* coll;
@@ -48,14 +44,14 @@ protected:
 	void CannonFired(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
 
 public:
+	bool sound = false;
 	Cannon(int i);
-	void Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
+	void Fire(float deltaTime, Player* p, DynamicArray<Bullet*> pB);
 	bool hasFiredTimer();
 	void Reset(int i) override;
 	void Draw(aie::Renderer2D* m_renderer) override;
 	bool toggled = false;
 	bool isAlive = true;
-	vector2 cannonPosition = { 0,0 };
 	float height = 54;
 	float width = 57;
 	~Cannon();

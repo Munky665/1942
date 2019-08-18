@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector2.h"
+#include <MathLib.h>
 #include "Texture.h"
 #include <Renderer2D.h>
 #include "Font.h"
@@ -11,7 +11,7 @@ class Player
 
 	float m_rightOfWindow		= 1250;
 	float m_leftOfWindow		= 30;
-	int m_livesPosX			= 40;
+	int m_livesPosX				= 40;
 	float m_livesPosY			= 40;
 	float m_livesWidthX			= 40;
 	float m_livesWidthY			= 40;
@@ -28,8 +28,8 @@ public:
 	int maxHealth			= 100;
 	bool healed = false;
 	int score				= 0;
-	vector2 pos				= { 600, 100 };
-	vector2 size			= { 50,60 };
+	Vector3 pos				= { 600, 100,0 };
+	Vector3 size			= { 50,60,0 };
 	int lives				= 3;
 	bool immune				= false;
 	bool playerFired		= false;

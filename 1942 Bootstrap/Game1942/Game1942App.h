@@ -21,6 +21,8 @@
 #include <queue>
 
 
+
+
 class Game1942App : public aie::Application {
 public:
 
@@ -68,11 +70,11 @@ public:
 
 
 protected:
-	int numberOfSounds = 4;
-	int shootVol = 40;
-	int explosionVol = 50;
-	int hitvol = 50;
-	int musicVol = 50;
+	float numberOfSounds = 4;
+	float shootVol = 40;
+	float explosionVol = 50;
+	float hitvol = 50;
+	float musicVol = 50;
 
 	int size;
 	bool isDead		= false;
@@ -87,8 +89,8 @@ protected:
 	bool deathState = false;
 	bool enemyState = false;
 	bool bossActive = false;
-	int startTimer  = 5;
-	int bossTimer	= 120;
+	int startTimer  = 2;
+	int bossTimer = 180;
 	int displacment = 100;
 	int m_duration	= 2;
 	int m_waitTime	= 2;

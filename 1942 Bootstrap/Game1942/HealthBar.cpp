@@ -35,7 +35,7 @@ void HealthBar::Draw(aie::Renderer2D* renderer)
 	
 	renderer->setRenderColour(1, 1, 1, 1);
 }
-void HealthBar::SetValue(float value) {
+void HealthBar::SetValue(int value) {
 	m_currentValue = value;
 }
 

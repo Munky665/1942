@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "SmallShip.h"
-#include "Vector2.h"
+#include <MathLib.h>
 class Bullet
 {
 
@@ -19,7 +19,7 @@ public:
 	int damage			= 0;
 
 	aie::Texture*		 texture;
-	vector2 pos = { 0,0 };
+	Vector3 pos = { 0,0,0 };
 	float size = 15;
 	Bullet();
 	void PlayerFired(Player* p);

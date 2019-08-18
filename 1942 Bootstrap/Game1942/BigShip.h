@@ -5,7 +5,7 @@ class BigShip :
 {
 private:
 	int temp			  = 0;
-	float respwan		  = rand() % 1280 + 1;
+	int respwan		  = rand() % 1280 + 1;
 	float BigPlaneBooster = 20;
 public:
 
