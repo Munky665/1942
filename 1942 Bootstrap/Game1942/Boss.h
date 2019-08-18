@@ -25,7 +25,7 @@ protected:
 	bool right = false;
 	float screenLeft = 200;
 	float screenRight = 1180;
-
+	
 
 	
 	vector2 stoppingPointOne = { 0,400 };
@@ -40,6 +40,7 @@ public:
 	virtual void Move(float deltaTime);
 	virtual void Draw(aie::Renderer2D* renderer);
 	virtual void Reset(int i);
+
 	~Boss();
 	float magOne;
 	vector2 pos = { m_xPosition, m_startingY };

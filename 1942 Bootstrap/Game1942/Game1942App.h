@@ -88,7 +88,7 @@ protected:
 	bool enemyState = false;
 	bool bossActive = false;
 	int startTimer  = 5;
-	int bossTimer = 15;//120;
+	int bossTimer = 120;
 	int displacment = 100;
 	int m_duration	= 2;
 	int m_waitTime	= 2;
