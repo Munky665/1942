@@ -89,7 +89,7 @@ void PauseMenu::Pause(bool &con, bool &exit)
 		break;
 	}
 }
-void PauseMenu::Draw(float x, float y)
+void PauseMenu::Draw(int x, int y)
 {	
 	m_renderer->begin();
 	m_renderer->setRenderColour(1, 1, 1, 1);

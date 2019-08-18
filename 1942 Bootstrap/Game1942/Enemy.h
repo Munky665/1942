@@ -24,8 +24,8 @@ public:
 	float sHeight		= 720;
 	float speed			= 300;
 	float maxFired		= 4;
-	float topSpawn		= rand() % 740 + 720;
-	float firstSpawn	= rand() % 1280 + 1;
+	int topSpawn		= rand() % 740 + 720;
+	int firstSpawn		= rand() % 1280 + 1;
 	bool collided		= false;
 	bool hasFired		= false;
 	bool isAlive		= false;

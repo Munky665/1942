@@ -42,7 +42,6 @@ void MainMenu::startup()
 	m_titleFont = new aie::Font("./font/1942.ttf", 54);
 	m_font		= new aie::Font("./font/1942.ttf", 32);
 	m_plane		= new aie::Texture("./textures/player.png");
-	m_renderer  = new aie::Renderer2D();
 	isActive = true;
 	enterCounter = 0;
 }
@@ -52,7 +51,6 @@ void MainMenu::shutdown()
 	delete m_titleFont;
 	delete m_font;
 	delete m_plane;
-	delete m_renderer;
 	std::cout << "Main Menu deleted" << std::endl;
 
 }
@@ -127,10 +125,9 @@ void MainMenu::Menu(bool &state, bool &quit)
 	}
 }
 
-void MainMenu::draw() 
+void MainMenu::draw(aie::Renderer2D* m_renderer)
 {
 	
-	m_renderer->begin();
 	m_renderer->drawSprite(m_plane, planePositionX, screenY * 0.5, 360, 400,0,2);
 	m_renderer->setRenderColour(1, 1, 1, 1);
 	m_renderer->drawText(m_titleFont, "Fighter Pilot", screenX, screenY * 0.5,2);
@@ -164,7 +161,6 @@ void MainMenu::draw()
 	if (instructions == false) {
 		m_renderer->drawText(m_font, "Exit Game", screenX + 100, (screenY - 150) * 0.5);
 	}
-	m_renderer->end();
 
 }
 void MainMenu::Reset() {

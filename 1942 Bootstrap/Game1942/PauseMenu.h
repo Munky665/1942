@@ -21,7 +21,7 @@ public:
 	void StartUp();
 	void ShutDown();
 	void Pause(bool &con, bool &exit);
-	void Draw(float x, float y);
+	void Draw(int x, int y);
 	~PauseMenu();
 
 	bool exists = false;

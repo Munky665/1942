@@ -12,7 +12,7 @@ class HealthBar
 public:
 	bool isActive = false;
 	HealthBar(float posX, float posY, float width, float height);
-	void SetValue(float value);
+	void SetValue(int value);
 	void Draw(aie::Renderer2D* renderer);
 	void Reset(float posX, float posY, float width, float height);
 	~HealthBar();

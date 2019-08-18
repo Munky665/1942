@@ -4,8 +4,8 @@
 class Background
 {
 
-	float topSpawn = rand() % 900 + 800;
-	float firstSpawn = rand() % 1280 + 1;
+	int topSpawn = rand() % 900 + 800;
+	int firstSpawn = rand() % 1280 + 1;
 public:
 	bool Active = true;
 	float landSpeed = 150;

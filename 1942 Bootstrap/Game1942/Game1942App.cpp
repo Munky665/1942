@@ -14,12 +14,13 @@ Game1942App::~Game1942App() {
 bool Game1942App::startup() 
 {
 	//if first time loading load menu items
-	if (menuState == true && firstpass == true ) 
+	if (menuState == true && firstpass == true)
 	{
 		//build menu
 		setBackgroundColour(0, 0, 0, 1);
 		m_menu = new MainMenu();
 		m_menu->startup();
+		m_2dRenderer = new aie::Renderer2D();
 		return true;
 	}
 	//if not the first time loading set screen colour to black, from blue
@@ -27,6 +28,8 @@ bool Game1942App::startup()
 		music->stop();
 		setBackgroundColour(0, 0, 0, 1);
 	}
+	else
+		assert("error loading menu state");
 	if (gameState == true)
 	{
 		//load items if first time loading
@@ -39,7 +42,11 @@ bool Game1942App::startup()
 		}
 		music->play();
 		music->setLoop(true);
-			return true;
+		return true;
+	}
+	else {
+		assert("gameState inactive");
+		return false;
 	}
 }
 
@@ -58,6 +65,7 @@ void Game1942App::shutdown()
 			DeActivate();
 		}
 	}
+	//con short for continue
 	con = false;
 
 }
@@ -88,7 +96,10 @@ void Game1942App::update(float deltaTime)
 	{
 
 		//counts down to show enemies, then counts down to change to boss state
-		BossAndEnemyTimer();
+		if (paused != true)
+		{
+			BossAndEnemyTimer();
+		}
 		//set health bar to player health level
 		m_bar->SetValue(m_player->health);
 		//set damage immunity to false
@@ -213,16 +224,18 @@ void Game1942App::draw()
 {
 	// wipe the screen to the background colour
 	clearScreen();
+	
+	m_2dRenderer->begin();
 	//check if menu should be drawn
 	if (menuState == true)
 	{
-		m_menu->draw();
+		m_menu->draw(m_2dRenderer);
 	}
 	//check if gamestate should be drawn
 	else if (gameState == true)
 	{
 		// begin drawing sprites
-		m_2dRenderer->begin();
+
 		//check if pause menu should be drawn
 		if (paused == true)
 		{
@@ -251,9 +264,10 @@ void Game1942App::draw()
 		}
 		//draws background it
 		DrawBackground(m_2dRenderer);
-		// done drawing sprites
-		m_2dRenderer->end();
+
 	}
+	// done drawing sprites
+	m_2dRenderer->end();
 }
 //creates all game items in memory
 void Game1942App::FirstBoot()
@@ -268,8 +282,6 @@ void Game1942App::FirstBoot()
 	m_bar = new HealthBar(screenWidth * 0.5f, screenHeight - 20, 400, 20);
 	//create player
 	m_player = new Player();
-	//create renderer
-	m_2dRenderer = new aie::Renderer2D();
 	//create font
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	//set background colour
@@ -715,7 +727,7 @@ void Game1942App::DrawBullets(aie::Renderer2D * renderer)
 				m_bullet[i]->size,
 				m_bullet[i]->size);
 		}
-		if (m_eBullet[i]->exists != false && enemyState == true)
+		else if (m_eBullet[i]->exists != false && enemyState == true)
 		{
 			renderer->drawSprite(m_eBullet[i]->texture,
 				m_eBullet[i]->pos.x,
@@ -723,6 +735,8 @@ void Game1942App::DrawBullets(aie::Renderer2D * renderer)
 				m_eBullet[i]->size,
 				m_eBullet[i]->size);
 		}
+		else
+			assert("No bullet Texture located");
 	}
 }
 //draws enemy ships

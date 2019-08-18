@@ -28,14 +28,13 @@ public:
 	void shutdown();
 	void Menu(bool &state, bool &quit);
 	void Reset();
-	void draw();
+	void draw(aie::Renderer2D* m_renderer);
 	 ~MainMenu();
 	 bool isActive = false;
 	 bool instructions = false;
 	 aie::Texture*		m_plane;
 	 aie::Font*			m_font;
 	 aie::Font*			m_titleFont;
-	 aie::Renderer2D*	m_renderer;
 	 aie::Input*		m_input;
 };
 
