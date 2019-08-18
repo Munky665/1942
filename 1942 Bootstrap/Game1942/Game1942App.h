@@ -21,6 +21,8 @@
 #include <queue>
 
 
+
+
 class Game1942App : public aie::Application {
 public:
 
@@ -88,7 +90,7 @@ protected:
 	bool enemyState = false;
 	bool bossActive = false;
 	int startTimer  = 5;
-	int bossTimer = 120;
+	int bossTimer = 180;
 	int displacment = 100;
 	int m_duration	= 2;
 	int m_waitTime	= 2;

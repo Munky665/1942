@@ -12,9 +12,9 @@ class Collider
 
 public:
 	//checks if background items are in the same place
-	bool BkgCollision(vector2 objOne, vector2 objTwo);
+	bool BkgCollision(Vector3 objOne, Vector3 objTwo);
 	//checks if player has collided with an enemy
-	bool Collision(vector2 player, vector2 enemy);
+	bool Collision(Vector3 player, Vector3 enemy);
 
 	bool CheckPVECollision(Player* p, Enemy* e);
 	bool CheckBVECollision(DynamicArray<Bullet*> b, Enemy* e, int bs, Player* p);

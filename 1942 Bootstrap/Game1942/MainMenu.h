@@ -5,7 +5,7 @@
 #include <Renderer2D.h>
 #include <Font.h>
 #include <iostream>
-#include "Vector2.h"
+#include  <MathLib.h>
 class MainMenu
 {
 private:
@@ -20,7 +20,7 @@ private:
 	bool exitmouse		    = false;
 	int switchy = 0;
 	int enterCounter = 0;
-	vector2* mousePosition;
+	Vector2* mousePosition;
 	void MouseOver();
 public:
 	MainMenu();

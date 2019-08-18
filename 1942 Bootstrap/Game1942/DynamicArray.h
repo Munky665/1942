@@ -10,6 +10,8 @@ public:
 	//default constructor
 	DynamicArray() : DynamicArray(0)
 	{};
+
+
 	//non default constructor
 	DynamicArray(int initial)
 	{
@@ -24,6 +26,18 @@ public:
 		total_allocated_memory = initial;
 
 	}
+
+	DynamicArray& begin() 
+	{
+
+		return allocatedSpace[0];
+	}
+
+	DynamicArray& end()
+	{
+		return allocatedSpace[count - 1];
+	}
+
 	//deconstructor
 	~DynamicArray()
 	{

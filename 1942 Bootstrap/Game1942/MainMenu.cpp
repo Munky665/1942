@@ -38,7 +38,7 @@ MainMenu::~MainMenu()
 void MainMenu::startup() 
 {
 	m_input = aie::Input::getInstance();
-	mousePosition = new vector2(m_input->getMouseX(), m_input->getMouseY());
+	mousePosition = new Vector2(m_input->getMouseX(), m_input->getMouseY());
 	m_titleFont = new aie::Font("./font/1942.ttf", 54);
 	m_font		= new aie::Font("./font/1942.ttf", 32);
 	m_plane		= new aie::Texture("./textures/player.png");

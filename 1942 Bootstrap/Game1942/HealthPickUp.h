@@ -2,7 +2,7 @@
 #include <Texture.h>
 #include <Renderer2D.h>
 #include <random>
-#include "Vector2.h"
+#include <MathLib.h>
 
 class HealthPickUp
 {
@@ -18,8 +18,8 @@ protected:
 
 public:
 
-	vector2 pos;
-	vector2 size = { 64, 64 };
+	Vector3 pos;
+	Vector3 size = { 64, 64,0 };
 
 	HealthPickUp();
 	void Move(float deltaTime);

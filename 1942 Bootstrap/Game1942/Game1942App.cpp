@@ -302,6 +302,7 @@ void Game1942App::FirstBoot()
 	}
 	for (int i = 0; i < 4; ++i) {
 		m_turrets.pushToEnd(new Cannon(i));
+		m_boss->addChild(m_turrets[i]);
 	}
 	firstpass = false;
 }
@@ -403,15 +404,26 @@ void Game1942App::MoveBoss(float deltaTime)
 	//move boss and cannons if boss is active
 	if (bossActive == true) {
 		m_boss->Move(deltaTime);
+
 		for (int i = 0; i < m_turrets.size(); ++i) {
-			m_turrets[i]->Move(deltaTime, m_player, m_bullet); 
-			if (m_turrets[i]->hasFiredTimer() == true)
+			m_turrets[i]->Move(deltaTime);
+			m_turrets[i]->Fire(deltaTime, m_player, m_bullet);
+			
+			if (m_turrets[i]->sound == true)
 			{
 				buffer[2].loadFromFile("./Audio/enemyshoot.wav");
 				sound[2].setBuffer(buffer[2]);
 				sound[2].setVolume(shootVol);
 				sound[2].play();
+				m_turrets[i]->sound = false;
 			}
+		}
+		if (m_player->immune == true)
+		{
+			buffer[3].loadFromFile("./Audio/hit.wav");
+			sound[3].setBuffer(buffer[3]);
+			sound[3].setVolume(100);
+			sound[3].play();
 		}
 	}
 }
@@ -554,14 +566,15 @@ void Game1942App::CheckPlayerCollision()
 				sound[3].setBuffer(buffer[3]);
 				sound[3].setVolume(100);
 				sound[3].play();
+
 			}
 	}
 }
-//checks if an enemy has collided with a player bullet or the player
+
 void Game1942App::CheckEnemyCollision(int i)
 {
-	
 }
+
 //spawns health randomly at position of destroyed enemy
 void Game1942App::SpawnHealth(int i)
 {

@@ -1,10 +1,12 @@
 #pragma once
 #include <Texture.h>
 #include <Renderer2D.h>
-#include "Vector2.h"
 #include "DynamicArray.h"
 #include "Bullet.h"
 #include <time.h>
+#include <MathLib.h>
+#include <assert.h>
+#include <vector>
 
 class Boss
 {
@@ -24,25 +26,34 @@ protected:
 	bool left = false;
 	bool right = false;
 	float screenLeft = 200;
-	float screenRight = 1180;
+	float screenRight = 1000;
 	
 
 	
-	vector2 stoppingPointOne = { 0,400 };
-	vector2 rightscreen = { 1020,0 };
-	vector2 leftscreen = { 200,0 };
-	vector2 movement = { 200,0 };
-	vector2 moveDown = { 0,200 };
+	Vector3 stoppingPointOne = { m_xPosition,400,1 };
+	Vector3 rightscreen = { 1020,0,0 };
+	Vector3 leftscreen = { 200,0,0 };
+	Vector3 movement = { 200,0,0 };
+	Vector3 moveDown = { 0,200,0 };
 	aie::Renderer2D*	m_renderer;
 	aie::Texture*		m_texture;
+
+	
+	Boss* parent = nullptr;
+	std::vector<Boss*> children;
+
 public:
 	Boss();
 	virtual void Move(float deltaTime);
 	virtual void Draw(aie::Renderer2D* renderer);
 	virtual void Reset(int i);
+	void updateTransform();
+	void translate(float x, float y);
+	void addChild(Boss* child);
 
 	~Boss();
 	float magOne;
-	vector2 pos = { m_xPosition, m_startingY };
+	Matrix3 globalTransform = Matrix3::identity;
+	Matrix3 localTransform = Matrix3::identity;
 };
 

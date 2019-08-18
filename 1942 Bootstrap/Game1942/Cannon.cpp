@@ -15,20 +15,20 @@ Cannon::Cannon(int i)
 	
 	switch (i) {
 	case 0:
-		cannonPosition = cannonOne;
+		localTransform[2] = cannonOne;
 		can1 = true;
 		break;
 	case 1:
-		cannonPosition = cannonTwo;
+		localTransform[2] = cannonTwo;
 		outsideCannon = true;
 		can2 = true;
 		break;
 	case 2:
-		cannonPosition = cannonThree;
+		localTransform[2] = cannonThree;
 		can3 = true;
 		break;
 	case 3:
-		cannonPosition = cannonFour;
+		localTransform[2] = cannonFour;
 		outsideCannon = true;
 		can4 = true;
 		break;
@@ -37,200 +37,29 @@ Cannon::Cannon(int i)
 	isAlive = true;
 }
 //moves cannons in place with the ship
-void Cannon::Move(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
+void Cannon::Fire(float deltaTime, Player* p, DynamicArray<Bullet*> pB)
 {
-	if (inPosition == false) {
-		//sets inside cannon position on plane wings
-		if (outsideCannon == false) {
-			vector2 downDistance = stoppingPointOne - cannonPosition;
-			downDistance.x = 0;
-			magOne = downDistance.magnitued();
-		//if distance from y position less than 1 unit
-		if (magOne < 1)
+	if (inPosition == true)
+	{
+		if (isAlive == true)
 		{
-			right = true;
-			inPosition = true;
-		}
-		//if distance from y position greater than 1 unit
-		else if (magOne > 0) {
-				cannonPosition -= moveDown * deltaTime;
-			}
-
-		}
-		//set outside cannon position on plane wings
-		else if (outsideCannon == true) 
-		{
-			vector2 downDistance = stoppingPointTwo - cannonPosition;
-			downDistance.x = 0;
-			magOne = downDistance.magnitued();
-			//if distance from y position greater than 1 unit
-			if (magOne < 1)
-			{
-				right = true;
-				inPosition = true;
-			}
-			//if distance from y position less than 1 unit
-			else if (magOne > 0) {
-				cannonPosition -= moveDown * deltaTime;
-			}
-
-		}
-	}
-	//once inposition move cannons with boss to the right.
-	if (right == true && inPosition == true)
-	{
-		if (outsideCannon == false) {
-			if (can3 == true) {
-				vector2 rightDistance = rightscreenC - cannonPosition;
-				rightDistance.y = 0;
-				magOne = rightDistance.magnitued();
-				//if distance from right side less than one
-				if (magOne < 1)
-				{
-					right = false;
-					left = true;
-				}
-				//if distance from right side greater than one
-				else if (magOne > 0) {
-					cannonPosition += movement * deltaTime;
-				}
-
-			}
-			else if (can1 == true) {
-				vector2 rightDistance = rightscreenC - cannonPosition;
-				rightDistance.y = 0;
-				magOne = rightDistance.magnitued();
-
-				if (magOne < 501)
-				{
-					right = false;
-					left = true;
-				}
-
-				else if (magOne > 500) {
-					cannonPosition += movement * deltaTime;
-				}
-
-			}
-		}
-		else if (outsideCannon == true) {
-			if (can4 == true) {
-				vector2 rightDistance = rightscreenC2 - cannonPosition;
-				rightDistance.y = 0;
-				magOne = rightDistance.magnitued();
-
-				if (magOne <= 1)
-				{
-					right = false;
-					left = true;
-				}
-
-				else if (magOne > 0) {
-					cannonPosition += movement * deltaTime;
-				}
-
-			}
-			else if (can2 == true) {
-				vector2 rightDistance = rightscreenC2 - cannonPosition;
-				rightDistance.y = 0;
-				magOne = rightDistance.magnitued();
-				if (magOne < 937)
-				{
-					right = false;
-					left = true;
-				}
-
-				else if (magOne > 936) {
-					cannonPosition += movement * deltaTime;
-				}
-
-			}
-		}
-	}
-	//once in position move cannons with boss to the left
-	if (left == true && inPosition == true)
-	{
-		if (outsideCannon == false) {
-			if (can1 == true) {
-				vector2 leftDistance = leftscreenC - cannonPosition;
-				leftDistance.y = 0;
-				magOne = leftDistance.magnitued();
-
-				if (magOne < 1)
-				{
-					right = true;
-					left = false;
-				}
-
-				else if (magOne > 0) {
-					cannonPosition -= movement * deltaTime;
-				}
-
-			}
-			else if (can3 == true) {
-				vector2 leftDistance = leftscreenC - cannonPosition;
-				leftDistance.y = 0;
-				magOne = leftDistance.magnitued();
-				if (magOne < 501)
-				{
-					right = true;
-					left = false;
-				}
-
-				else if (magOne > 500) {
-					cannonPosition -= movement * deltaTime;
-				}
-
-			}
-		}
-		if (outsideCannon == true) {
-			if (can2 == true) {
-				vector2 leftDistance = leftscreenC2 - cannonPosition;
-				leftDistance.y = 0;
-				magOne = leftDistance.magnitued();
-				if (magOne < 1)
-				{
-					right = true;
-					left = false;
-				}
-
-				else if (magOne > 0) {
-					cannonPosition -= movement * deltaTime;
-				}
-
-			}
-			else if (can4 == true) {
-				vector2 leftDistance = leftscreenC2 - cannonPosition;
-				leftDistance.y = 0;
-				magOne = leftDistance.magnitued();
-				if (magOne < 937)
-				{
-					right = true;
-					left = false;
-				}
-
-				else if (magOne > 935) {
-					cannonPosition -= movement * deltaTime;
-				}
-
-			}
-		}
-	}
-	if (isAlive == true)
-	{
-
 			hasFiredTimer();
 			//fires bullets from cannons and checks bullet collisions with player
 			CannonFired(deltaTime, p, pB);
 			//allow player to take damage again
 			p->immune = false;
-	}
-	else if (isAlive == false) {
-		for (int i = 0; i < maxBullets; ++i) {
-			bullets[i]->Reset();
+		}
+		else if (isAlive == false)
+		{
+			for (int i = 0; i < maxBullets; ++i)
+			{
+				bullets[i]->Reset();
+			}
 		}
 	}
 }
+
+
 bool Cannon::hasFiredTimer()
 {
 	//fire rate count down.
@@ -239,9 +68,13 @@ bool Cannon::hasFiredTimer()
 		if (duration >= fireWait) {
 			hasFired = false;
 			wait = clock();
+			sound = true;
 			return true;
 		}
 	}
+	else
+
+		return false;
 }
 //fires bullets from cannons and checks bullet collisions with player
 void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
@@ -251,8 +84,8 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
 	{
 		if (hasFired == false && bullets[i]->exists == false) {
 			bullets[i]->BossFired();
-			bullets[i]->pos.x = cannonPosition.x;
-			bullets[i]->pos.y = cannonPosition.y;
+			bullets[i]->pos.x = localTransform[2].x;
+			bullets[i]->pos.y = localTransform[2].y;
 			bullets[i]->pos.y -= 20;
 			hasFired = true;
 		}
@@ -278,8 +111,8 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
 			bullets[i]->Reset();
 		}
 		//check if player fire is hitting cannon
-		vector2 collider = pB[i]->pos - cannonPosition;
-		float col = collider.magnitued();
+		Vector3 collider = pB[i]->pos - localTransform[2];
+		float col = collider.magnitude();
 		//remove bullet if it collides with cannon and do 1 point of damage
 		if (pB[i]->exists == true) {
 			if (col < 50) {
@@ -293,6 +126,7 @@ void Cannon::CannonFired(float deltaTime, Player * p, DynamicArray<Bullet*> pB)
  			p->score += score;
 		}
 
+
 	}
 }
 
@@ -305,15 +139,15 @@ void Cannon::Draw(aie::Renderer2D* m_renderer)
 ;
 	//draw not destroyed cannon
 	if (isAlive == true) {
-		m_renderer->drawSprite(m_texture, cannonPosition.x, cannonPosition.y, 0, 0, 0, 50);
+		m_renderer->drawSpriteTransformed3x3(m_texture, (float*)&localTransform, 0, 0, 49);
 	}
 	//draw destroyed cannon
 	else if(isAlive == false) {
-		m_renderer->drawSprite(destroyed, cannonPosition.x, cannonPosition.y, 0, 0, 0, 50);
+		m_renderer->drawSpriteTransformed3x3(destroyed, (float*)&localTransform, 0, 0, 49);
 	}
 	for (int i = 0; i < maxBullets; ++i) {
 		if(bullets[i]->exists == true)
-		m_renderer->drawSprite(bullets[i]->texture, bullets[i]->pos.x, bullets[i]->pos.y, 20, 20, 0, 50);
+		m_renderer->drawSprite(bullets[i]->texture, bullets[i]->pos.x, bullets[i]->pos.y, 20, 20, 0, 49);
 	}
 }
 //reset cannons position when game is reset
@@ -322,33 +156,33 @@ void Cannon::Reset(int i) {
 	{
 		bullets[i]->Reset();
 	}
-	cannonPosition = { 0,0 };
-	inPosition = false;
-	outsideCannon = false;
 	can1 = false;
 	can2 = false;
 	can3 = false;
 	can4 = false;
-	health = 50;
-
 	switch (i) {
 	case 0:
-		cannonPosition = cannonOne;
+		localTransform[2] = cannonOne;
 		can1 = true;
 		break;
 	case 1:
-		cannonPosition = cannonTwo;
+		localTransform[2] = cannonTwo;
 		outsideCannon = true;
 		can2 = true;
 		break;
 	case 2:
-		cannonPosition = cannonThree;
+		localTransform[2] = cannonThree;
 		can3 = true;
 		break;
 	case 3:
-		cannonPosition = cannonFour;
+		localTransform[2] = cannonFour;
 		outsideCannon = true;
 		can4 = true;
 		break;
 	}
+	isAlive = true;
+	inPosition = false;
+	left = false;
+	right = false;
+	health = maxHealth;
 }

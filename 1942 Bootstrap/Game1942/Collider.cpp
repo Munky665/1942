@@ -11,10 +11,10 @@ Collider::~Collider()
 {
 }
 
-bool Collider::BkgCollision(vector2 objOne, vector2 objTwo)
+bool Collider::BkgCollision(Vector3 objOne, Vector3 objTwo)
 {
-	vector2 collider = objTwo - objOne;
-	float col = collider.magnitued();
+	Vector3 collider = objTwo - objOne;
+	float col = collider.magnitude();
 			//The backgrounds appear to overlap.
 	if (col < 299) {
 		return true;
@@ -25,10 +25,10 @@ bool Collider::BkgCollision(vector2 objOne, vector2 objTwo)
 	}
 }
 
-bool Collider::Collision(vector2 player, vector2 enemy)
+bool Collider::Collision(Vector3 player, Vector3 enemy)
 {
-	vector2 collider = player - enemy;
-	float col = collider.magnitued();
+	Vector3 collider = player - enemy;
+	float col = collider.magnitude();
 
 	if (col < 50) {
 		return true;
