@@ -380,18 +380,20 @@ void Game1942App::DeActivate() {
 void Game1942App::BossAndEnemyTimer()
 {
 	if (gameState != false && menuState == false) {
-		//starts countdown to boss
-		duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-		if (duration > bossTimer && bossActive == false) {
-			bossActive = true;
-			enemyState = false;
-			BossState();
-		}
-		//start timer to turn on enemys
-		if (enemyState == false && bossActive == false) {
+		if (paused != true) {
+			//starts countdown to boss
 			duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
-			if (duration > startTimer) {
-				enemyState = true;
+			if (duration > bossTimer && bossActive == false) {
+				bossActive = true;
+				enemyState = false;
+				BossState();
+			}
+			//start timer to turn on enemys
+			if (enemyState == false && bossActive == false) {
+				duration = (clock() - wait) / (float)CLOCKS_PER_SEC;
+				if (duration > startTimer) {
+					enemyState = true;
+				}
 			}
 		}
 	}
