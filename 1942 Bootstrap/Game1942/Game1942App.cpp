@@ -776,6 +776,8 @@ void Game1942App::DeleteFromMemory()
 {
 	delete music;
 	delete m_boss;
+	buffer.~vector();
+	sound.~vector();
 	m_bullet.~DynamicArray();
 	m_eBullet.~DynamicArray();
 	m_smallShip.~DynamicArray();
